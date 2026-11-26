@@ -941,6 +941,29 @@ a.chip:hover{background:var(--acctint);border-color:transparent}
   <p class="note">Every square is a moment from one of your rated Chess.com games (games against friends left out) where the engine found a clearly better move than the one played. Solve it on 4 separate days and it's mastered. Progress syncs between your devices when you open the Gym on claude.ai. Warmup puzzles come from the Lichess open puzzle database. Pieces: maestro set by sadsnake1 (CC BY-NC-SA 4.0), via Lichess.</p>
 </section>
 </main>
+<script>
+// Home-screen app on iPhone: WebKit makes the page shorter than the screen by the status-bar height when it draws behind
+// the status bar (viewport-fit=cover), which leaves a gap under the bottom bar. Size the shell to the real screen instead.
+(() => {
+  const standalone = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
+  if (!standalone) return;
+  const probe = document.createElement('div');
+  probe.style.cssText = 'position:fixed;top:0;left:0;width:0;visibility:hidden;pointer-events:none;padding-top:env(safe-area-inset-top)';
+  const fit = () => {
+    const nav = document.querySelector('nav'), de = document.documentElement, b = document.body;
+    if (!nav || !b) return;
+    if (!probe.isConnected) b.appendChild(probe);
+    if (innerWidth > 600) { de.style.height = b.style.height = ''; nav.style.top = ''; nav.style.bottom = ''; return; }
+    const top = probe.offsetHeight || 0, sh = innerWidth <= innerHeight ? Math.max(screen.width, screen.height) : Math.min(screen.width, screen.height);
+    const H = Math.min(sh, innerHeight + top);
+    de.style.height = b.style.height = H + 'px';
+    nav.style.bottom = 'auto'; nav.style.top = (H - nav.offsetHeight) + 'px';
+  };
+  addEventListener('resize', fit); addEventListener('orientationchange', () => setTimeout(fit, 300));
+  addEventListener('load', fit); document.addEventListener('DOMContentLoaded', fit);
+  setTimeout(fit, 400); setTimeout(fit, 1500);
+})();
+</script>
 <script type="module">
 import { Chess } from './chess.js';
 {
