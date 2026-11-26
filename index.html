@@ -849,6 +849,10 @@ html.standalone,html.standalone body{touch-action:pan-y}
 @media (orientation:landscape) and (max-height:500px){
   html.standalone .rotate{display:flex;position:fixed;inset:0;z-index:200;background:var(--bg,#0b0f15);color:var(--ink,#eee);align-items:center;justify-content:center;text-align:center;font-weight:600}
 }
+
+/* iPhone app: a solid strip under the status bar. iOS blurs the top edge unless a fixed, opaque element sits there. */
+#sbcap{display:none}
+html.standalone #sbcap{display:block;position:fixed;top:0;left:0;right:0;height:calc(env(safe-area-inset-top) + 6px);background:var(--bg);z-index:35;pointer-events:none}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/app-180.png">
@@ -859,6 +863,7 @@ html.standalone,html.standalone body{touch-action:pan-y}
 <meta name="theme-color" content="#0b0f15">
 </head>
 <body>
+<div id="sbcap" aria-hidden="true"></div>
 <div id="sheet" class="sheet" hidden></div>
 <div id="rotate" class="rotate" aria-hidden="true"><div><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18.5h2"/></svg><p>Turn your phone upright</p></div></div>
 <header class="top">
