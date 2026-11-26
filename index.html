@@ -904,8 +904,8 @@ html.standalone,html.standalone body{touch-action:pan-y}
     </div>
   </div>
   <div class="sect" id="gl-sect" hidden><h3>Process goals</h3><div class="card" id="gamelog"></div></div>
-  <div class="sect">
-    <h3>Links</h3>
+  <details class="sect more">
+    <summary>Links</summary>
     <div class="links">
       <a href="https://www.chess.com/play/online" target="_blank" rel="noopener"><b>Play a 15|10 game</b><span>Chess.com rapid. Pick 15 | 10.</span></a>
       <a href="https://claude.ai/artifact/KNakpXq9FkmcDMbEKGqhrB" target="_blank" rel="noopener"><b>Your training plan</b><span>Phases, routine, weekly progress log.</span></a>
@@ -915,7 +915,7 @@ html.standalone,html.standalone body{touch-action:pan-y}
       <a href="#positions"><b>Your positions wall</b><span>Every big mistake from your games, as a puzzle.</span></a>
     </div>
 
-  </div>
+  </details>
   <details class="sect more">
     <summary>Sync, offline copy and help</summary>
     <h4>Move progress between copies</h4>
@@ -2372,11 +2372,11 @@ import { Chess } from './chess.js';
     const due = P.filter(isDue).length, w = weakness();
     $('h-puz-sub').textContent = `${due} of your own positions to review · weakest area: ${w}`;
     const sd = dueCount(DR.safe), td = dueCount(DR.threat);
-    $('h-puz-chips').innerHTML = `<button class="chip" data-p="own">Your positions${due ? ` <b>${due}</b>` : ''}</button><button class="chip" data-p="threat">Their threat${td ? ` <b>${td}</b>` : ''}</button><button class="chip" data-p="safe">Is it safe?${sd ? ` <b>${sd}</b>` : ''}</button><button class="chip" data-p="wood">Woodpecker</button>` + ['mateIn1', 'mateIn2', 'fork', 'pin', 'hangingPiece', 'discoveredAttack'].map((k) => `<button class="chip" data-p="theme" data-a="${k}">${esc(THEMES[k])}</button>`).join('') + '<a class="chip" href="#practice">All themes →</a>';
+    $('h-puz-chips').innerHTML = `<button class="chip" data-p="own">Your positions${due ? ` <b>${due}</b>` : ''}</button><button class="chip" data-p="threat">Their threat${td ? ` <b>${td}</b>` : ''}</button><button class="chip" data-p="safe">Is it safe?${sd ? ` <b>${sd}</b>` : ''}</button><button class="chip" data-p="wood">Woodpecker</button>` + '<a class="chip" href="#practice">All themes →</a>';
     const lrn = O.filter((l) => st.lines[l.id] && (st.lines[l.id].clean || 0) >= 3).length, pd = devDue();
     $('h-op-sub').textContent = `${lrn} of ${O.length} lines learned · ${famsOf().length} openings · ${pd} traps to punish`;
     const top = famsOf().filter((f) => f.faced).sort((a, b) => b.faced - a.faced).slice(0, 3);
-    $('h-op-chips').innerHTML = `<button class="chip" data-p="openside" data-a="b">As Black</button><button class="chip" data-p="openside" data-a="w">As White</button><button class="chip punish" data-p="punish">Punish mistakes${pd ? ` <b>${pd}</b>` : ''}</button>` + top.map((f) => `<button class="chip" data-p="openfam" data-a="${esc(f.id)}">${esc(f.name.replace(/:.*/, ''))} <b>${f.side === 'w' ? 'W' : 'B'}</b></button>`).join('');
+    $('h-op-chips').innerHTML = `<button class="chip" data-p="openside" data-a="b">As Black</button><button class="chip" data-p="openside" data-a="w">As White</button><button class="chip punish" data-p="punish">Punish mistakes${pd ? ` <b>${pd}</b>` : ''}</button>`;
     $('h-pra-chips').innerHTML = `<button class="chip" data-p="pat">Mate patterns</button><button class="chip" data-p="ending" data-a="kpkw">Pawn endings</button><button class="chip" data-p="ending" data-a="rook">Lucena &amp; Philidor</button>` + Object.entries(ENDGAMES).map(([k, E]) => `<button class="chip" data-p="end" data-a="${k}">${esc(E.short)}${st.endgames[k] && st.endgames[k].wins ? ` <b>${st.endgames[k].wins}✓</b>` : ''}</button>`).join('') + `<button class="chip" data-p="coords">Coordinates${st.coordsBest.w ? ` <b>${st.coordsBest.w}</b>` : ''}</button>`;
   }
   function renderPractice() {
@@ -2452,7 +2452,8 @@ import { Chess } from './chess.js';
       const k = r.dataset.rt, s = st.session && st.session.date === today() ? st.session : null;
       st.routine = k;
       if (s && (s.routine || 'full') !== k) { if (s.step || s.count) { st.session = null; sess(); } else s.routine = k; }
-      save(); renderHome(); return;
+      const sc = $('scroller'), y = sc.scrollTop, wy = window.scrollY; // keep your place on the page
+      save(); renderHome(); sc.scrollTop = y; window.scrollTo(0, wy); return;
     }
     const b = e.target.closest('[data-p]'); if (!b) return;
     if (location.hash !== '#drill') history.pushState(null, '', '#drill');
