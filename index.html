@@ -1,0 +1,2415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Elliott's Chess Gym</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="pieces.css">
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+/* VOICE everyday training, game-like and proud of progress, never noisy
+   IDEA a club training room: walnut-framed board, a route card for today's session, a wall chart of positions mastered
+   PICTURE the live board, large; on the home screen, today's route drawn as a path of stations
+   COLOUR walnut frame band, maple/walnut board, white or night ground, green for progress, red for misses
+   TYPE Archivo wide heavy for figures and titles + Inter for text
+   LAYOUT laptop: stat band and nav, then board left and coach card right; phone: band, board, card */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#121110);--ink:light-dark(#171412,#f1ede6);--soft:light-dark(#6c655d,#a89f94);--panel:light-dark(#f5f4f1,#1c1a18);--line:light-dark(#e4e0d9,#2e2a26);--frame:light-dark(#3a271a,#1d140d);--frameink:#f6efe4;--go:light-dark(#178a4a,#3fcf7d);--gotint:light-dark(#dff3e6,#163322);--miss:light-dark(#c8382f,#ff6b5e);--misstint:light-dark(#fbe3e0,#3a1b18);--lt:#eae9d2;--dk:#4b7399;--hl:#75c8e9;--bframe:#2e4a63;--panelw:360px}
+:root[data-theme=light]{color-scheme:light}
+:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,.num{font-family:Inter,system-ui,sans-serif;font-stretch:112%;letter-spacing:-.02em;line-height:1.05;margin:0}
+button{font:inherit;color:inherit}
+a{color:var(--go)}
+[hidden]{display:none!important}
+.top{background:var(--frame);color:var(--frameink);padding:12px max(4vw,16px) 0}
+.topin{max-width:1240px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:12px 26px}
+.top h1{font-size:clamp(22px,2.8vw,30px);font-weight:850;margin-right:auto}
+.brand{color:inherit;text-decoration:none}
+.brand:hover{opacity:.85}
+.stat{display:flex;align-items:center;gap:9px}
+.stat .num{font-size:24px;font-weight:850}
+.stat .lab{font-size:13px;opacity:.75;line-height:1.2}
+.stat .lvlpc{position:static;width:36px;height:36px;background-size:cover;flex:none;transform:none}
+.xpbar{width:100px;height:6px;border-radius:3px;background:rgba(255,255,255,.18);margin-top:5px;overflow:hidden}
+.xpbar i{display:block;height:100%;background:#7fe0a5;border-radius:3px;transition:width .5s}
+.ring{width:40px;height:40px}
+.flame{width:28px;height:32px}
+.flame.off{opacity:.35;filter:grayscale(1)}
+.iconbtn{background:rgba(255,255,255,.1);border:0;border-radius:10px;width:44px;height:44px;cursor:pointer;color:var(--frameink);display:grid;place-items:center}
+.iconbtn:hover{background:rgba(255,255,255,.2)}
+nav{max-width:1240px;margin:10px auto 0;display:flex;gap:4px;overflow-x:auto}
+nav a{flex:none;color:var(--frameink);text-decoration:none;padding:10px 16px;border-radius:10px 10px 0 0;font-weight:650;opacity:.75;white-space:nowrap}
+nav a.on{background:var(--bg);color:var(--ink);opacity:1}
+.wrap{max-width:1240px;margin:0 auto;padding:22px max(4vw,16px) 40px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+.btn{height:44px;padding:0 18px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-weight:650;font-size:15px;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;color:var(--ink)}
+.btn:hover{border-color:var(--soft)}
+.btn.main{background:var(--go);border-color:var(--go);color:#fff}
+.btn.big{height:54px;font-size:17px;padding:0 26px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible,.chip:focus-visible,.cell:focus-visible,.iconbtn:focus-visible,nav a:focus-visible,.opt:focus-visible{outline:3px solid var(--go);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:0 14px;height:40px;cursor:pointer;font-size:14px;font-weight:600}
+.small{font-size:14px;color:var(--soft)}
+.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:24px;align-items:stretch}
+.hero h2{font-size:clamp(28px,3.4vw,40px);font-weight:850;margin-bottom:8px}
+.route{list-style:none;margin:16px 0 18px;padding:0}
+.route li{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:12px;align-items:center;padding:7px 0;position:relative}
+.route li::before{content:"";position:absolute;left:16px;top:-50%;height:100%;width:3px;background:var(--line);z-index:0}
+.route li:first-child::before{display:none}
+.route .dot{width:34px;height:34px;border-radius:50%;border:3px solid var(--line);background:var(--bg);display:grid;place-items:center;font:800 14px Inter,system-ui,sans-serif;z-index:1}
+.route li.done .dot{background:var(--go);border-color:var(--go);color:#fff}
+.route li.done::before,.route li.now::before{background:var(--go)}
+.route li.now .dot{border-color:var(--go);color:var(--go)}
+.route .t{font-weight:650}
+.route .d{font-size:13px;color:var(--soft)}
+.route .c{font:800 15px Inter,system-ui,sans-serif;white-space:nowrap}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.opt{text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:14px 16px;cursor:pointer;display:grid;gap:4px}
+.opt:hover{border-color:var(--go)}
+.opt b{font-size:16px}
+.opt span{font-size:14px;color:var(--soft)}
+.links{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.links a{display:block;border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink)}
+.links a:hover{border-color:var(--go)}
+.links a b{display:block}
+.links a span{font-size:14px;color:var(--soft)}
+.sect{margin-top:30px}
+.sect>h3{font-size:22px;font-weight:850;margin-bottom:12px}
+.trainer{display:grid;grid-template-columns:minmax(0,var(--bsize,600px)) var(--panelw);gap:28px;align-items:start;justify-content:center}
+.wrap:has(.trainer){max-width:max(1240px,calc(var(--bsize,600px) + var(--panelw) + 28px + 2 * max(4vw,16px) + 16px))}
+.grip{position:absolute;right:-16px;bottom:-16px;width:26px;height:26px;cursor:nwse-resize;z-index:7;border-radius:6px;background:var(--bframe);display:grid;place-items:center;touch-action:none}
+.grip::after{content:"";width:10px;height:10px;border-right:2px solid var(--frameink);border-bottom:2px solid var(--frameink);opacity:.8}
+.grip:hover::after{opacity:1}
+.stepbar{display:flex;gap:6px;margin:0 8px 12px}
+.stepbar span{height:8px;flex:1;border-radius:4px;background:var(--line)}
+.stepbar span.done{background:var(--go)}
+.stepbar span.now{background:color-mix(in srgb,var(--go) 45%,var(--line))}
+.boardwrap{position:relative;aspect-ratio:1;border-radius:8px;box-shadow:0 0 0 8px var(--bframe),0 14px 30px rgba(0,0,0,.25);margin:8px;width:calc(100% - 16px);touch-action:none;user-select:none;-webkit-user-select:none}
+.board{position:absolute;inset:0;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);border-radius:4px;overflow:hidden}
+.sq{position:relative}
+.sq.l{background:var(--lt)}.sq.d{background:var(--dk)}
+.sq.sel{box-shadow:inset 0 0 0 999px var(--hl)}
+.sq.hint{box-shadow:inset 0 0 0 999px rgba(255,200,40,.55);animation:pulse 1s ease-in-out infinite alternate}
+.sq.ok{box-shadow:inset 0 0 0 999px rgba(40,190,90,.6)}
+.sq.bad{box-shadow:inset 0 0 0 999px rgba(220,60,50,.6)}
+.sq.last{box-shadow:inset 0 0 0 999px var(--hl)}
+.sq.red::after{content:"";position:absolute;inset:0;background:rgba(235,60,45,.62)}
+.sq .dot{position:absolute;inset:36%;border-radius:50%;background:rgba(20,30,20,.28)}
+.sq .cap{position:absolute;inset:4%;border-radius:50%;border:5px solid rgba(20,30,20,.28)}
+.coord{position:absolute;font:600 11px Inter,sans-serif;opacity:.8;z-index:1}
+.coord.f{right:3px;bottom:1px}.coord.r{left:3px;top:1px}
+.sq.l .coord{color:var(--dk)}.sq.d .coord{color:var(--lt)}
+.nocoords .coord{display:none}
+.pieces{position:absolute;inset:0;pointer-events:none}
+.pc{position:absolute;width:12.5%;height:12.5%;background-size:cover;transition:transform .2s ease;will-change:transform;z-index:2}
+.pc.drag{transition:none;z-index:5;filter:drop-shadow(0 6px 6px rgba(0,0,0,.35))}
+.pc.gone{opacity:0;transition:opacity .15s}
+.arrows{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4}
+.boardwrap.shake{animation:shake .35s}
+@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+@keyframes pulse{to{box-shadow:inset 0 0 0 999px rgba(255,200,40,.25)}}
+.burst{position:absolute;width:9px;height:9px;border-radius:2px;pointer-events:none;animation:fly .9s ease-out forwards;z-index:6}
+@keyframes fly{to{transform:translate(var(--x),var(--y)) rotate(320deg);opacity:0}}
+.target{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:6}
+.target b{font:900 clamp(64px,14vw,140px) Inter,system-ui,sans-serif;color:rgba(255,255,255,.92);text-shadow:0 4px 18px rgba(0,0,0,.45)}
+.kind{font-size:14px;font-weight:700;color:var(--soft)}
+.prompt{font-size:clamp(24px,2.6vw,30px);font-weight:850;margin:6px 0 10px}
+.ctx{font-size:15px;color:var(--soft)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.tag{font-size:13px;padding:3px 9px;border-radius:6px;background:var(--bg);border:1px solid var(--line)}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.res{margin-top:16px;border-radius:12px;padding:14px 16px;display:none;position:relative}
+.res.show{display:block}
+.res.good{background:var(--gotint)}
+.res.bad{background:var(--misstint)}
+.res.info{background:var(--bg);border:1px solid var(--line)}
+.res h2{font-size:22px;font-weight:850;margin-bottom:6px}
+.res p{margin:6px 0;font-size:15px}
+.mv{font-weight:700}
+.counter{font:850 44px Inter,system-ui,sans-serif;line-height:1}
+.counter small{font-size:18px;color:var(--soft)}
+.xpfly{position:absolute;right:16px;top:-8px;font:850 22px Inter,system-ui,sans-serif;color:var(--go);animation:rise 1.1s ease-out forwards;pointer-events:none}
+@keyframes rise{from{transform:translateY(0);opacity:1}to{transform:translateY(-38px);opacity:0}}
+.checks{list-style:none;padding:0;margin:10px 0}
+.checks li{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line)}
+.checks li:last-child{border-bottom:0}
+.checks input{width:20px;height:20px;margin-top:2px;accent-color:var(--go)}
+.qs{counter-reset:q;list-style:none;padding:0;margin:10px 0}
+.qs li{counter-increment:q;position:relative;padding:7px 0 7px 36px}
+.qs li::before{content:counter(q);position:absolute;left:0;top:7px;width:26px;height:26px;border-radius:50%;background:var(--go);color:#fff;font:800 13px Inter,system-ui,sans-serif;display:grid;place-items:center}
+.lines{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-top:10px}
+.wallhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;margin-bottom:10px}
+.wallhead h3{font-size:22px;font-weight:850;margin-right:auto}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--soft)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.cells{display:grid;grid-template-columns:repeat(auto-fill,minmax(18px,1fr));gap:4px}
+.cell{aspect-ratio:1;border-radius:4px;border:1px solid var(--line);background:var(--bg);cursor:pointer;padding:0}
+.cell.b1{background:color-mix(in srgb,var(--go) 22%,var(--bg));border-color:transparent}
+.cell.b2{background:color-mix(in srgb,var(--go) 42%,var(--bg));border-color:transparent}
+.cell.b3{background:color-mix(in srgb,var(--go) 64%,var(--bg));border-color:transparent}
+.cell.b4,.cell.b5{background:var(--go);border-color:transparent}
+.cell.f{background:var(--misstint);border-color:var(--miss)}
+.sw{width:13px;height:13px;border-radius:3px;border:1px solid var(--line);display:inline-block}
+.note{font-size:13px;color:var(--soft);margin-top:14px}
+.syncst{font-size:12px;color:var(--frameink);opacity:.7}
+@media(max-width:900px){.trainer,.hero{grid-template-columns:minmax(0,1fr)}.boardwrap{max-width:min(var(--bsize,560px),100% - 16px);margin:8px auto}}
+@media(max-width:600px){.stat .num{font-size:20px}.xpbar{width:70px}.prompt{font-size:22px}.wrap{padding-top:16px}}
+/* phones: compact header, edge-to-edge board, no mouse hints */
+@media(max-width:600px){
+.top{padding:8px 12px 0}.topin{gap:6px 14px}h1{font-size:20px}
+.stat{gap:6px}.stat .num{font-size:17px}.stat .lab{font-size:12px}.lvlpc{width:26px;height:26px}.ring{width:28px;height:28px}.flame{width:20px;height:24px}.xpbar{width:56px}
+.iconbtn{width:36px;height:36px}.syncst{font-size:11px}
+nav{margin-top:6px}nav a{padding:8px 12px}
+.wrap:has(.trainer){padding:0 0 32px}
+.trainer{gap:12px}
+.boardwrap{width:100%;max-width:none;margin:0;border-radius:0;box-shadow:none}.board{border-radius:0}
+.grip,.boardhint{display:none}
+#panel{margin:0 10px}.stepbar{margin:8px 10px}
+}
+@media(hover:none) and (pointer:coarse){.boardhint,.grip{display:none}}
+/* ===== Redesign (Nov 23): sleek dark, one-line header, bottom tabs on phones. Overrides the rules above. ===== */
+:root{--bg:light-dark(#f3f5f9,#0d121b);--panel:light-dark(#ffffff,#141b27);--panel2:light-dark(#eef1f6,#1a2332);--ink:light-dark(#0f1722,#e8edf5);--soft:light-dark(#5d6b7f,#8f9db2);--line:light-dark(#dde3ec,#232e40);--acc:light-dark(#2f7bd6,#5aa2f0);--acctint:light-dark(#e3eefb,#16253a);--frame:light-dark(#ffffff,#0d121b);--frameink:var(--ink);--hdr:light-dark(rgba(255,255,255,.82),rgba(13,18,27,.82))}
+body{font:15px/1.55 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.num{font-family:Inter,system-ui,sans-serif;font-stretch:normal;letter-spacing:-.025em}
+a{color:var(--acc)}
+.top{position:sticky;top:0;z-index:30;background:var(--hdr);backdrop-filter:saturate(1.6) blur(14px);-webkit-backdrop-filter:saturate(1.6) blur(14px);border-bottom:1px solid var(--line);padding:0 max(3vw,16px)}
+.topin{max-width:1240px;height:60px;flex-wrap:nowrap;gap:18px}
+.top h1{font-size:17px;font-weight:750;margin:0;flex:none}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink)}
+.logo{width:30px;height:30px;border-radius:8px;display:block}
+nav{margin:0 auto 0 8px;gap:2px;overflow:visible}
+nav a{display:flex;align-items:center;gap:7px;padding:8px 12px;border-radius:9px;color:var(--soft);opacity:1;font-weight:600;font-size:14px}
+nav a svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linejoin:round;stroke-linecap:round}
+nav a:hover{color:var(--ink);background:var(--panel2)}
+nav a.on{background:var(--acctint);color:var(--acc)}
+.stats{display:flex;align-items:center;gap:16px;flex:none}
+.stat{gap:7px}
+.stat .num{font-size:16px;font-weight:750;font-variant-numeric:tabular-nums}
+.stat .lab{font-size:12px;opacity:1;color:var(--soft);line-height:1.1}
+.stat .lvlpc{width:26px;height:26px}
+.xpbar{width:64px;height:4px;margin-top:4px;background:var(--line)}
+.xpbar i{background:var(--go)}
+.ring{width:26px;height:26px}.flame{width:18px;height:22px}
+.ring circle:first-child{stroke:var(--line)}
+.iconbtn{width:38px;height:38px;border-radius:10px;background:var(--panel2);color:var(--ink);flex:none}
+.iconbtn:hover{background:var(--line)}
+.syncst{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--soft);opacity:1;white-space:nowrap;flex:none}
+.syncst::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--soft)}
+.syncst[data-s=ok]::before{background:var(--go)}
+.syncst[data-s=busy]::before{background:#e5a83b}
+.wrap{padding:28px max(3vw,16px) 48px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.btn{height:44px;border-radius:11px;background:var(--panel2);border:1px solid transparent;font-weight:600}
+.btn:hover{border-color:var(--line);background:var(--line)}
+.btn.main{--bt:light-dark(#2f7bd6,#2f74c8);background:var(--bt);border-color:var(--bt);color:#fff}
+.btn.main:hover{filter:brightness(1.08);background:var(--bt)}
+.btn:focus-visible,.chip:focus-visible,.cell:focus-visible,.iconbtn:focus-visible,nav a:focus-visible,.opt:focus-visible,summary:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.chip{background:var(--panel);border-color:var(--line);font-weight:600}
+.chip:hover{border-color:var(--acc)}
+.hero{gap:20px}
+.hero h2{font-size:clamp(24px,2.6vw,32px);font-weight:800}
+.h2s{font-size:22px!important;font-weight:750!important;margin-bottom:6px}
+.ptitle{font-size:clamp(26px,3vw,36px);font-weight:800;margin-bottom:6px}
+.route .dot{background:var(--panel);font-family:Inter,system-ui,sans-serif}
+.opt{background:var(--panel2);border:1px solid transparent;border-radius:12px;transition:border-color .15s,transform .15s}
+.opt:hover{border-color:var(--acc);transform:translateY(-1px)}
+.links a{background:var(--panel);border-color:var(--line);transition:border-color .15s}
+.links a:hover{border-color:var(--acc)}
+.sect{margin-top:36px}
+.sect>h3{font-size:18px;font-weight:750;margin-bottom:12px;color:var(--ink)}
+.more{border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:0 22px}
+.more summary{cursor:pointer;list-style:none;padding:18px 0;font-weight:650;display:flex;justify-content:space-between;align-items:center}
+.more summary::-webkit-details-marker{display:none}
+.more summary::after{content:"";width:9px;height:9px;border-right:2px solid var(--soft);border-bottom:2px solid var(--soft);transform:rotate(45deg);transition:transform .2s}
+.more[open] summary::after{transform:rotate(225deg)}
+.more h4{font-size:15px;margin:6px 0 4px}
+.more[open]{padding-bottom:20px}
+.more textarea{background:var(--panel2)!important}
+.tag{background:var(--panel2);border-color:transparent}
+.res.info{background:var(--panel2);border-color:transparent}
+.cell{background:var(--panel2);border-color:var(--line)}
+.prompt{font-weight:800}
+.hero>.card:first-child{display:flex;flex-direction:column}.hero>.card:first-child #h-go{order:2;align-self:flex-start;margin:4px 0 2px}.hero>.card:first-child .route{order:3;margin-bottom:0}
+@media(max-width:1100px){.stat .lab,.stat .xpbar{display:none}}
+@media(max-width:900px){nav a span{display:none}nav a{padding:9px}}
+/* phones: header = logo + stats + sound on one line, sections in a bottom tab bar */
+@media(max-width:600px){
+.top{padding:0 12px;backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--bg)}.topin{height:52px;gap:10px}
+.bname{display:none}.logo{width:28px;height:28px}
+.stats{gap:12px;margin-left:auto}.stat .num{font-size:15px}
+.syncst{font-size:0;gap:0}.syncst::before{width:9px;height:9px}
+.iconbtn{width:34px;height:34px}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:40;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--hdr);backdrop-filter:saturate(1.6) blur(14px);-webkit-backdrop-filter:saturate(1.6) blur(14px);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
+nav a{flex-direction:column;gap:3px;padding:6px 0;font-size:11px;border-radius:10px;justify-content:center}
+nav a span{display:block}
+nav a svg{width:22px;height:22px}
+nav a.on{background:none}
+html,body{height:100%;overflow:hidden}body{display:flex;flex-direction:column;padding-bottom:0}.top{position:relative;flex:none}
+#scroller{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+.wrap{padding:18px 14px 28px}
+.wrap:has(.trainer){padding:0 0 20px}
+.card{padding:18px;border-radius:14px}
+.more{padding:0 16px}
+}
+/* Openings page */
+.ophead{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 28px}
+.opsum{display:grid;grid-template-columns:auto 1fr;align-items:baseline;gap:2px 8px;min-width:220px}
+.opsum b{font-size:30px;font-weight:800;letter-spacing:-.03em}
+.opsum span{color:var(--soft);font-size:14px}
+.opbar{grid-column:1/-1;height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:6px}
+.opbar i{display:block;height:100%;background:var(--go);border-radius:3px}
+.opquick{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.opgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px;margin-top:12px}
+.lcard{display:grid;grid-template-columns:116px minmax(0,1fr);gap:14px;align-items:center;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;cursor:pointer;color:var(--ink);transition:border-color .15s,transform .15s}
+.lcard:hover{border-color:var(--acc);transform:translateY(-1px)}
+.lcard:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.mini{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:repeating-conic-gradient(var(--dk) 0 25%,var(--lt) 0 50%) 0 0/25% 25%}
+.mini .pc{left:0;top:0;transition:none}
+.lbody{display:grid;gap:4px}
+.lbody b{font-size:15px;line-height:1.25}
+.lpgn{font-size:12.5px;color:var(--soft);font-variant-numeric:tabular-nums}
+.lstat{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:12.5px;color:var(--soft);margin-top:2px}
+.lcard.done .lstat{color:var(--go)}
+.pips{display:inline-flex;gap:3px}
+.pips em{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.pips em.on{background:var(--go)}
+@media(max-width:600px){.opgrid{grid-template-columns:minmax(0,1fr)}.lcard{grid-template-columns:88px minmax(0,1fr)}.opquick .btn{flex:1}nav{grid-template-columns:repeat(5,1fr)}nav a{font-size:10.5px}}
+.btn.punish{background:light-dark(#fff3e0,#2a1f10);color:light-dark(#a45a00,#ffb347);border-color:transparent}
+.btn.punish:hover{background:light-dark(#ffe6c2,#3a2a14)}
+.btn .cnt{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:#ff9f1c;color:#1a1206;font-size:12px;font-weight:800}
+.optip{margin-top:10px}
+.lfaced{margin-left:auto;font-size:11.5px;font-weight:650;color:var(--acc);background:var(--acctint);padding:2px 8px;border-radius:999px}
+.lfaced+.ltrap{margin-left:6px}
+.ltrap{margin-left:auto;font-size:11.5px;font-weight:650;color:light-dark(#a45a00,#ffb347);background:light-dark(#fff3e0,#2a1f10);padding:2px 8px;border-radius:999px}
+@media(max-width:600px){.opquick .btn.punish{flex-basis:100%}}
+/* Home hubs (Nov 25) */
+.hub{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.hcard{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.hhead{display:flex;gap:12px;align-items:flex-start}
+.hhead h2{font-size:22px;font-weight:800;margin:0 0 2px}
+.hicon{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--acctint);color:var(--acc)}
+.hicon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linejoin:round;stroke-linecap:round}
+.h-ope .hicon{background:light-dark(#fff3e0,#2a1f10);color:light-dark(#a45a00,#ffb347)}
+.h-pra .hicon{background:light-dark(#e6f6ec,#10261a);color:var(--go)}
+.hcard .btn.big{width:100%;justify-content:center}
+.hcard .chips{display:flex;flex-wrap:wrap;gap:8px}
+.hcard .chip{padding:7px 12px;font-size:13px}
+.chip b{opacity:.75;margin-left:2px}
+.chip.punish{color:light-dark(#a45a00,#ffb347)}
+.scard .shead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
+.egrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:12px}
+/* Openings library by family */
+.tier>h3{font-size:22px}
+.fgroup{margin-top:18px}
+.fgroup h4{font-size:13px;text-transform:none;color:var(--soft);font-weight:700;margin:0 0 10px}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;align-items:start}
+.fcard{display:grid;align-content:start;grid-template-columns:96px minmax(0,1fr);gap:12px 14px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px}
+.fbody{display:grid;gap:6px;align-content:start}
+.fname{font-size:16px;line-height:1.25}
+.fmeta{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:12.5px;color:var(--soft)}
+.fmeta .lfaced,.fmeta .ltrap{margin-left:0}
+.facts{display:flex;gap:8px;flex-wrap:wrap}
+.btn.sm{height:34px;padding:0 12px;font-size:13px;border-radius:9px}
+.lrows{grid-column:1/-1;display:grid;gap:4px;border-top:1px solid var(--line);padding-top:8px}
+.lrow{display:flex;align-items:center;justify-content:space-between;gap:10px;background:none;border:0;border-radius:9px;padding:8px 8px;color:var(--ink);text-align:left;cursor:pointer;font:inherit;font-size:14px}
+.lrow:hover{background:var(--panel2)}
+.lrow:focus-visible{outline:2px solid var(--acc)}
+.lrow.done .lname{color:var(--go)}
+.lname{display:flex;align-items:center;gap:8px;min-width:0}
+.tagmain{font-style:normal;font-size:11px;font-weight:700;color:var(--acc);background:var(--acctint);padding:1px 7px;border-radius:999px}
+@media(max-width:1000px){.hub{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.fgrid{grid-template-columns:minmax(0,1fr)}.fcard{grid-template-columns:76px minmax(0,1fr)}.hcard{padding:16px}nav{grid-template-columns:repeat(5,1fr)}}
+@media(prefers-reduced-motion:reduce){.pc{transition:none}.burst,.xpfly,.boardwrap.shake,.sq.hint{animation:none}}
+/* study additions */
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 4px}
+.choice .btn{justify-content:center;font-weight:700}
+.rtpick{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px}
+.chip.on{background:var(--acc,#3fcf7d);color:#07210f;border-color:transparent}
+.kv{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;font-size:13px;opacity:.85}
+.kv b{font-size:16px;margin-right:3px}
+.boardwrap.blind .board .sq{background:#2a3441!important}
+.boardwrap.blind .coord{display:none}
+</style>
+<style id="fable">
+/* =====================================================================
+   Chess Gym: visual pass ("cut from the board")
+   Goes in its own style block, straight after the app's existing one.
+   Pure CSS against the existing ids/classes. No markup or JS changes.
+
+   Idea: the whole interface is cut from his board. Surfaces are the night
+   version of the board's steel blue, text is the ivory of the light squares,
+   the one accent is the dark-square blue. Green only ever means progress,
+   amber only ever means "punish", red only ever means a miss.
+   ===================================================================== */
+
+/* ---------- 1. Tokens ---------- */
+:root{
+  /* surfaces, darkest to lightest */
+  --bg:light-dark(#f1f3f6,#0b0f15);
+  --panel:light-dark(#ffffff,#121821);
+  --panel2:light-dark(#e9edf2,#19212d);
+  --panel3:light-dark(#dde3ea,#222c3a);
+  --line:light-dark(#d9dfe7,#232d3b);
+  --hair:light-dark(rgba(16,28,45,.10),rgba(226,232,240,.075));
+  --hair2:light-dark(rgba(16,28,45,.18),rgba(226,232,240,.14));
+  /* text: ivory, from the light squares */
+  --ink:light-dark(#111822,#ecebe1);
+  --soft:light-dark(#566375,#98a3b3);
+  --faint:light-dark(#808998,#6b7687);
+  /* accent: the dark squares, lifted for text; the square colour itself for fills */
+  --acc:light-dark(#2d6397,#7fb2e0);
+  --accfill:light-dark(#3f6a94,#45729f);
+  --accfill2:light-dark(#365d84,#4f7eac);
+  --accink:#f7f6ea;
+  --acctint:light-dark(#e2ecf6,#172536);
+  --acctint2:light-dark(#d3e2f1,#1d3047);
+  /* meaning colours */
+  --go:light-dark(#178a4a,#4fd08a);
+  --gotint:light-dark(#e1f4e8,#12281d);
+  --miss:light-dark(#c8382f,#ff7a6b);
+  --misstint:light-dark(#fbe6e3,#2d1917);
+  --warn:light-dark(#9a5700,#f0b55f);
+  --warntint:light-dark(#fdf1dd,#2a2013);
+  --warntint2:light-dark(#fae5c3,#372a17);
+  /* chrome */
+  --frame:var(--bg);--frameink:var(--ink);
+  --hdr:light-dark(rgba(241,243,246,.86),rgba(11,15,21,.86));
+  --bframe:light-dark(#2e4a63,#1f3044);
+  /* shape, depth, motion */
+  --r-s:9px;--r-m:12px;--r-l:16px;--r-xl:20px;
+  --sh-1:0 1px 0 light-dark(rgba(255,255,255,.7),rgba(255,255,255,.035)) inset,0 1px 2px light-dark(rgba(16,28,45,.06),rgba(0,0,0,.3));
+  --sh-2:0 1px 0 light-dark(rgba(255,255,255,.7),rgba(255,255,255,.04)) inset,0 10px 30px -12px light-dark(rgba(16,28,45,.18),rgba(0,0,0,.65));
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --t:.16s;
+}
+
+/* ---------- 2. Base ---------- */
+html{-webkit-text-size-adjust:100%;scrollbar-color:var(--panel3) transparent}
+body{font:15px/1.5 Inter,system-ui,-apple-system,sans-serif;font-feature-settings:"calt","case";text-rendering:optimizeLegibility;-webkit-tap-highlight-color:transparent;background:var(--bg);color:var(--ink)}
+*{scrollbar-width:thin;scrollbar-color:var(--panel3) transparent}
+::selection{background:color-mix(in srgb,var(--accfill) 55%,transparent);color:var(--accink)}
+h1,h2,h3,h4,.num{letter-spacing:-.021em;line-height:1.15;text-wrap:balance}
+p{text-wrap:pretty}
+a{color:var(--acc);text-underline-offset:3px;text-decoration-thickness:1px}
+button,.btn,.chip,.opt,.lrow,.cell,nav a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.small{font-size:13.5px;line-height:1.5;color:var(--soft)}
+.note{font-size:12.5px;line-height:1.55;color:var(--faint);margin-top:18px;max-width:78ch}
+.note b{color:var(--soft);font-weight:600}
+.mv{font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:-.005em;color:var(--ink)}
+
+/* one focus ring everywhere */
+.btn:focus-visible,.chip:focus-visible,.cell:focus-visible,.iconbtn:focus-visible,nav a:focus-visible,.opt:focus-visible,summary:focus-visible,.lrow:focus-visible,.lcard:focus-visible,.links a:focus-visible,.brand:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+
+/* ---------- 3. Header ---------- */
+.top{background:var(--hdr);border-bottom:1px solid var(--hair);padding:0 max(3vw,16px)}
+.topin{height:56px;gap:14px}
+.top h1{font-size:15.5px;font-weight:700;letter-spacing:-.015em}
+.brand{gap:9px;border-radius:9px;transition:opacity var(--t)}
+.brand:hover{opacity:.82}
+.logo{width:28px;height:28px;border-radius:8px;box-shadow:0 0 0 1px var(--hair)}
+
+nav{flex:none;margin:0 auto 0 10px;gap:2px}
+nav a{height:34px;padding:0 11px;border-radius:9px;color:var(--soft);font-size:13.5px;font-weight:550;letter-spacing:-.005em;transition:background var(--t),color var(--t),transform var(--t) var(--ease)}
+nav a svg{width:17px;height:17px;stroke-width:1.8;transition:color var(--t)}
+nav a:hover{color:var(--ink);background:var(--panel2)}
+nav a:active{transform:scale(.97)}
+nav a.on{background:var(--panel2);color:var(--ink);box-shadow:inset 0 0 0 1px var(--hair)}
+nav a.on svg{color:var(--acc)}
+
+/* the three stats live in one quiet capsule */
+.stats{gap:0;height:40px;padding:0 3px;background:var(--panel);border:1px solid var(--hair);border-radius:12px}
+.stat{gap:8px;height:100%;padding:0 12px;cursor:default}
+.stat+.stat{box-shadow:-1px 0 0 var(--hair)}
+.stat>div:not(.lvlpc){display:grid;grid-template-columns:auto auto;align-items:baseline;justify-content:start;column-gap:6px}
+.stat .num{font-size:15px;font-weight:700;line-height:1.2;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.stat .lab{font-size:12px;line-height:1.2;color:var(--soft);white-space:nowrap}
+.stat .lvlpc{width:24px;height:24px}
+.stat .xpbar{display:block;grid-column:1/-1;width:100%;min-width:34px;height:3px;margin-top:3px;border-radius:2px;background:var(--panel3)}
+.xpbar i{background:var(--go);border-radius:2px;transition:width .6s var(--ease)}
+.ring{width:22px;height:22px}
+.ring circle:first-child{stroke:var(--panel3)}
+#ringarc{stroke:var(--go)}
+.flame{width:16px;height:20px;transition:opacity .3s,filter .3s}
+.flame.off{opacity:.4}
+
+/* sync: a status dot with its sentence; the sentence gives way first when space is short */
+.syncst{position:relative;display:block;flex:0 1 auto;min-width:9px;max-width:270px;padding-left:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;line-height:20px;color:var(--soft)}
+.syncst::before{position:absolute;left:0;top:50%;width:8px;height:8px;margin-top:-4px;background:var(--faint);box-shadow:0 0 0 3px color-mix(in srgb,var(--faint) 18%,transparent)}
+.syncst[data-s=ok]::before{background:var(--go);box-shadow:0 0 0 3px color-mix(in srgb,var(--go) 18%,transparent)}
+.syncst[data-s=busy]::before{background:var(--warn);box-shadow:0 0 0 3px color-mix(in srgb,var(--warn) 18%,transparent);animation:fb-breathe 1.1s ease-in-out infinite alternate}
+@keyframes fb-breathe{to{opacity:.35}}
+
+.iconbtn{width:38px;height:38px;border-radius:11px;background:var(--panel);border:1px solid var(--hair);color:var(--soft);transition:background var(--t),color var(--t),transform var(--t) var(--ease)}
+.iconbtn svg{width:19px;height:19px}
+.iconbtn:hover{background:var(--panel2);color:var(--ink)}
+.iconbtn:active{transform:scale(.94)}
+
+@media(max-width:1320px){.syncst{max-width:9px;padding-left:9px;font-size:0}}
+@media(max-width:1200px){
+  .stat .lab{display:none}
+  .stat{padding:0 10px;gap:6px}
+  .stat>div:not(.lvlpc){grid-template-columns:auto;justify-items:center}
+  .stat .xpbar{width:22px;min-width:22px}
+}
+@media(max-width:900px){nav{margin-left:4px}nav a{padding:0 9px}}
+
+/* ---------- 4. Page frame ---------- */
+.wrap{padding:32px max(3vw,16px) 64px}
+.wrap:not([hidden]){animation:fb-in .22s var(--ease) both}
+@keyframes fb-in{from{opacity:0}to{opacity:1}}
+.ptitle{font-size:clamp(26px,2.4vw,32px);font-weight:750;letter-spacing:-.028em;margin-bottom:6px}
+.ptitle+.small,.ophead .small{font-size:14.5px;max-width:62ch;margin:0}
+.sect{margin-top:40px}
+.sect>h3{font-size:17px;font-weight:700;letter-spacing:-.018em;margin-bottom:12px}
+.sect>h3+p.small{margin:-6px 0 14px;max-width:70ch}
+
+/* ---------- 5. Surfaces ---------- */
+.card{background:var(--panel);border:1px solid var(--hair);border-radius:var(--r-xl);padding:22px;box-shadow:var(--sh-1)}
+.card .card,.more .card{background:var(--panel2);box-shadow:none;border-radius:var(--r-l)}
+.card>:first-child{margin-top:0}
+.card>p:last-child{margin-bottom:0}
+
+/* ---------- 6. Buttons ---------- */
+.btn{height:42px;padding:0 16px;border-radius:var(--r-m);background:var(--panel2);border:1px solid var(--hair);color:var(--ink);font-size:14.5px;font-weight:600;letter-spacing:-.008em;white-space:nowrap;user-select:none;-webkit-user-select:none;transition:background var(--t),border-color var(--t),color var(--t),box-shadow var(--t),transform var(--t) var(--ease),filter var(--t)}
+.btn:hover{background:var(--panel3);border-color:var(--hair2)}
+.btn:active{transform:scale(.97)}
+.btn.main{--bt:var(--accfill);background:var(--accfill);border-color:transparent;color:var(--accink);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 1px 2px rgba(0,0,0,.3)}
+.btn.main:hover{background:var(--accfill2);border-color:transparent;filter:none}
+.btn.big{height:52px;padding:0 24px;border-radius:14px;font-size:16px;font-weight:650}
+.btn.sm{height:32px;padding:0 12px;border-radius:var(--r-s);font-size:13px}
+.btn.punish{background:var(--warntint);border-color:transparent;color:var(--warn)}
+.btn.punish:hover{background:var(--warntint2);border-color:transparent}
+.btn .cnt{min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--warn);color:light-dark(#fff,#221603);font-size:11.5px;font-weight:750;font-variant-numeric:tabular-nums}
+.btn:disabled{opacity:.4;transform:none}
+.acts{gap:8px;margin-top:18px}
+
+/* a two-way choice: equal halves, both equally loud */
+.choice{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
+.choice .btn{width:100%;padding:0 12px;white-space:normal;line-height:1.2}
+.choice .btn.big{height:56px}
+
+/* ---------- 7. Chips ---------- */
+.chips{gap:8px}
+.chip{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 13px;border-radius:999px;background:var(--panel2);border:1px solid var(--hair);color:var(--ink);font-size:13.5px;font-weight:550;letter-spacing:-.005em;text-decoration:none;white-space:nowrap;user-select:none;-webkit-user-select:none;transition:background var(--t),border-color var(--t),color var(--t),transform var(--t) var(--ease)}
+.chip:hover{background:var(--panel3);border-color:var(--hair2)}
+.chip:active{transform:scale(.96)}
+.hcard .chip{padding:0 13px;font-size:13.5px}
+.chip b{margin-left:0;opacity:1;min-width:20px;padding:1px 6px;border-radius:999px;background:var(--hair);color:var(--soft);font-size:11.5px;font-weight:650;line-height:16px;text-align:center;font-variant-numeric:tabular-nums}
+.chip b[style]{opacity:1!important}
+a.chip{background:transparent;border-color:transparent;color:var(--acc);padding:0 8px}
+a.chip:hover{background:var(--acctint);border-color:transparent}
+.chip.punish{background:var(--warntint);border-color:transparent;color:var(--warn)}
+.chip.punish:hover{background:var(--warntint2);border-color:transparent}
+.chip.punish b{background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn)}
+.chip.on,.chip[aria-pressed=true]{background:var(--acctint2);border-color:color-mix(in srgb,var(--acc) 55%,transparent);color:var(--ink)}
+.chip.on b{background:color-mix(in srgb,var(--acc) 22%,transparent);color:var(--acc)}
+
+/* routine picker: a segmented control */
+.rtpick{display:flex;flex-wrap:wrap;gap:3px;padding:3px;margin:12px 0;background:var(--panel2);border:1px solid var(--hair);border-radius:13px;width:fit-content;max-width:100%}
+.rtpick .chip{flex:1 1 auto;justify-content:center;height:34px;padding:0 14px;border-radius:10px;background:transparent;border-color:transparent;color:var(--soft)}
+.rtpick .chip:hover{background:var(--hair);color:var(--ink)}
+.rtpick .chip.on{background:var(--accfill);border-color:transparent;color:var(--accink);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 1px 3px rgba(0,0,0,.35)}
+.rtpick .chip.on b{background:rgba(255,255,255,.18);color:var(--accink)}
+
+/* stats row: big figure, small label */
+.kv{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.kv>span{flex:1 1 0;min-width:88px;display:flex;flex-direction:column;gap:2px;padding:11px 14px 12px;border-radius:var(--r-m);background:var(--panel2);border:1px solid var(--hair);font-size:12.5px;line-height:1.3;color:var(--soft)}
+.kv b{font-size:21px;font-weight:700;line-height:1.15;letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums}
+.card .card .kv>span,.res .kv>span{background:var(--hair)}
+
+/* tags */
+.tags{gap:6px;margin-top:12px}
+.tag,.tagmain,.lfaced,.ltrap{font-size:11.5px;font-weight:600;line-height:18px;padding:1px 8px;border-radius:999px;border:0;letter-spacing:0}
+.tag{background:var(--panel2);color:var(--soft);box-shadow:inset 0 0 0 1px var(--hair)}
+.tagmain,.lfaced{background:var(--acctint2);color:var(--acc)}
+.ltrap{background:var(--warntint);color:var(--warn)}
+
+/* ---------- 8. Option buttons and link tiles ---------- */
+.opts{gap:10px}
+.egrid{gap:10px;margin-top:14px}
+.opt,.links a{position:relative;background:var(--panel);border:1px solid var(--hair);border-radius:var(--r-l);padding:14px 40px 15px 16px;gap:3px;align-content:start;color:var(--ink);box-shadow:var(--sh-1);transition:background var(--t),border-color var(--t),transform var(--t) var(--ease)}
+.opt:hover,.links a:hover{background:var(--panel2);border-color:var(--hair2);transform:none}
+.opt:active,.links a:active{transform:scale(.985)}
+.opt b,.links a b{font-size:15px;font-weight:650;letter-spacing:-.012em;line-height:1.3}
+.opt span,.links a span{font-size:13px;line-height:1.45;color:var(--soft)}
+.opt::after,.links a::after{content:"";position:absolute;right:17px;top:50%;width:7px;height:7px;margin-top:-4px;border-right:1.5px solid var(--faint);border-top:1.5px solid var(--faint);transform:rotate(45deg);opacity:.75;transition:transform var(--t) var(--ease),border-color var(--t),opacity var(--t)}
+.opt:hover::after,.links a:hover::after{transform:translateX(3px) rotate(45deg);border-color:var(--acc);opacity:1}
+.links{gap:10px}
+
+/* ---------- 9. Home ---------- */
+.hub{gap:14px}
+.hcard{background:var(--panel);border:1px solid var(--hair);border-radius:var(--r-xl);padding:20px;gap:16px;box-shadow:var(--sh-1)}
+.hhead{gap:13px;align-items:center}
+.hhead h2{font-size:19px;font-weight:700;letter-spacing:-.022em;margin:0}
+.hhead p{margin:3px 0 0;line-height:1.4}
+.hicon{width:40px;height:40px;border-radius:12px;background:var(--acctint2);color:var(--acc)}
+.hicon svg{width:20px;height:20px;stroke-width:1.8}
+.h-ope .hicon{background:var(--warntint2);color:var(--warn)}
+.h-pra .hicon{background:var(--gotint);color:var(--go)}
+/* one loud button per screen: the first card keeps the filled button, the others go tonal */
+.hcard~.hcard .btn.main{background:var(--acctint2);color:var(--acc);box-shadow:none}
+.hcard~.hcard .btn.main:hover{background:color-mix(in srgb,var(--accfill) 42%,var(--panel))}
+.hcard .chips{gap:7px}
+
+/* today's session */
+.scard .shead{gap:12px;margin-bottom:10px}
+.shead p{margin:0;flex:1 1 220px}
+.route{margin:8px 0 2px}
+.route li{grid-template-columns:28px minmax(0,1fr) auto;gap:14px;padding:9px 0}
+.route li::before{left:13px;width:2px;border-radius:1px}
+.route .dot{width:28px;height:28px;border-width:2px;background:var(--panel);color:var(--soft);font:650 12.5px/1 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;transition:background .3s,border-color .3s}
+.route li>span:nth-child(2){line-height:1.35}
+.route .t{font-size:14.5px;font-weight:600;letter-spacing:-.008em;color:var(--soft)}
+.route .d{font-size:13px;color:var(--faint)}
+.route .c{font:600 13px/1 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;color:var(--faint)}
+.route li.done .dot{background:var(--go);border-color:var(--go);color:light-dark(#fff,#06200f)}
+.route li.now .dot{border-color:var(--go);color:var(--go);box-shadow:0 0 0 4px color-mix(in srgb,var(--go) 16%,transparent)}
+.route li.now .t{color:var(--ink);font-weight:650}
+.route li.now .d{color:var(--soft)}
+.route li.now .c{color:var(--go)}
+@media(min-width:1001px){
+  .scard{display:grid;grid-template-columns:minmax(240px,320px) minmax(0,1fr);gap:8px 48px;padding:26px 28px}
+  .scard .shead{flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:16px;margin:4px 0 0}
+  .scard .shead p{flex:none;font-size:14.5px}
+  .scard .route{margin:0;max-width:620px}
+  .scard>.opts{grid-column:1/-1}
+}
+
+/* fold-out help */
+.more{border:1px solid var(--hair);border-radius:var(--r-xl);background:var(--panel);box-shadow:var(--sh-1)}
+.more summary{padding:17px 0;font-size:14.5px;font-weight:600;color:var(--soft);transition:color var(--t)}
+.more summary:hover,.more[open] summary{color:var(--ink)}
+.more summary::after{width:7px;height:7px;border-width:1.5px;border-color:var(--faint);margin-right:4px;transition:transform .2s var(--ease)}
+.more h4{font-size:14px;font-weight:650;margin:10px 0 8px}
+.more textarea,textarea{border-radius:10px!important;border-color:var(--hair2)!important;background:var(--bg)!important;transition:border-color var(--t)}
+
+/* ---------- 10. Trainer ---------- */
+.stepbar{gap:5px;margin:0 8px 14px}
+.stepbar:empty{display:none}
+.stepbar span{height:5px;border-radius:3px;background:var(--panel3);transition:background .3s}
+.stepbar span.done{background:var(--go)}
+.stepbar span.now{background:color-mix(in srgb,var(--go) 45%,var(--panel3))}
+.boardwrap{border-radius:7px;box-shadow:0 0 0 8px var(--bframe),0 0 0 9px var(--hair),0 28px 60px -18px rgba(0,0,0,.7),0 8px 20px -8px rgba(0,0,0,.45)}
+.board{border-radius:5px}
+.grip{right:-17px;bottom:-17px;width:22px;height:22px;border-radius:7px;background:var(--panel3);box-shadow:0 0 0 1px var(--hair2),0 2px 6px rgba(0,0,0,.4);opacity:.55;transition:opacity var(--t),background var(--t)}
+.grip::after{width:8px;height:8px;border-width:1.5px;border-color:var(--ink);margin:-3px 0 0 -3px}
+.boardwrap:hover .grip,.grip:hover{opacity:1}
+.grip:hover{background:var(--accfill)}
+.boardhint{font-size:12.5px!important;line-height:1.5;color:var(--faint)!important;max-width:60ch;margin:14px auto 0!important;text-wrap:balance}
+
+#panel{padding:22px;border-radius:var(--r-xl);box-shadow:var(--sh-2)}
+.kind{font-size:12.5px;font-weight:600;line-height:1.45;color:var(--soft);letter-spacing:0}
+.prompt{font-size:23px;font-weight:750;line-height:1.18;letter-spacing:-.026em;margin:8px 0 8px;text-wrap:balance}
+.ctx{font-size:14.5px;line-height:1.5;color:var(--soft)}
+.ctx:empty,.tags:empty,.kind:empty{display:none}
+.counter{font:750 40px/1 Inter,system-ui,sans-serif;letter-spacing:-.035em;font-variant-numeric:tabular-nums;margin-top:16px!important}
+.counter small{font-size:14px;font-weight:500;letter-spacing:-.005em;color:var(--soft);margin-left:2px}
+.qs{margin:14px 0 4px}
+.qs li{padding:6px 0 6px 34px;font-size:14px;line-height:1.5;color:var(--soft)}
+.qs li b{color:var(--ink);font-weight:600}
+.qs li::before{top:6px;width:22px;height:22px;background:var(--acctint2);color:var(--acc);font:650 12px/1 Inter,system-ui,sans-serif}
+.checks{margin:14px 0 4px}
+.checks li{gap:12px;padding:10px 0;border-color:var(--hair);font-size:14.5px;line-height:1.45}
+.checks input{width:19px;height:19px;margin-top:1px;flex:none;accent-color:var(--go)}
+.checks label{cursor:pointer}
+.checks input:checked+label{color:var(--soft)}
+
+/* result box */
+.res{margin-top:18px;border-radius:var(--r-l);padding:15px 16px 14px;border:1px solid transparent}
+.res.show{animation:fb-res .26s var(--ease) both}
+@keyframes fb-res{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.res h2{font-size:17px;font-weight:700;letter-spacing:-.018em;line-height:1.25;margin-bottom:4px}
+.res p{margin:5px 0 0;font-size:14px;line-height:1.5;color:color-mix(in srgb,var(--ink) 82%,transparent)}
+.res p.small{font-size:13px;color:var(--soft)}
+.res.good{background:var(--gotint);border-color:color-mix(in srgb,var(--go) 24%,transparent)}
+.res.good h2{color:var(--go)}
+.res.bad{background:var(--misstint);border-color:color-mix(in srgb,var(--miss) 24%,transparent)}
+.res.bad h2{color:var(--miss)}
+.res.info{background:var(--panel2);border-color:var(--hair)}
+.xpfly{right:14px;top:-10px;font:700 17px/1 Inter,system-ui,sans-serif;letter-spacing:-.01em;color:var(--go);font-variant-numeric:tabular-nums}
+
+@media(min-width:901px){
+  /* default board fills the height of the window; dragging the corner still overrides it */
+  :root{--bsize:clamp(520px,calc(100vh - 196px),920px)}
+  @supports(height:100dvh){:root{--bsize:clamp(520px,calc(100dvh - 196px),920px)}}
+  .wrap:has(.trainer){padding-top:26px;padding-bottom:32px}
+  #panel{position:sticky;top:82px;margin-top:8px}
+}
+
+/* ---------- 11. Openings ---------- */
+.ophead{gap:18px 32px}
+.opsum{min-width:230px;gap:2px 8px}
+.opsum b{font-size:30px;font-weight:750;line-height:1;font-variant-numeric:tabular-nums}
+.opsum span{font-size:13.5px}
+.opbar{height:5px;margin-top:9px;background:var(--panel3)}
+.opbar i{transition:width .6s var(--ease)}
+.opquick{gap:8px;margin-top:22px}
+.optip{margin:12px 0 0;max-width:78ch;font-size:13px;color:var(--faint)}
+.tier>h3{font-size:19px;font-weight:700}
+.fgroup{margin-top:22px}
+.fgroup h4{font-size:12.5px;font-weight:600;color:var(--soft);margin:0 0 10px;display:flex;align-items:center;gap:12px}
+.fgroup h4::after{content:"";flex:1;height:1px;background:var(--hair)}
+.fgrid{gap:12px}
+.fcard,.lcard{background:var(--panel);border:1px solid var(--hair);border-radius:var(--r-xl);padding:14px;box-shadow:var(--sh-1)}
+.lcard{transition:background var(--t),border-color var(--t),transform var(--t) var(--ease)}
+.lcard:hover{background:var(--panel2);border-color:var(--hair2);transform:none}
+.lcard:active{transform:scale(.985)}
+.mini{border-radius:9px;box-shadow:0 0 0 1px var(--hair2)}
+.fbody{gap:7px}
+.fname,.lbody b{font-size:15.5px;font-weight:650;letter-spacing:-.015em}
+.fmeta,.lstat,.lpgn{font-size:12.5px;color:var(--soft)}
+.facts{gap:6px;margin-top:1px}
+.lrows{gap:1px;border-top:1px solid var(--hair);padding-top:8px;margin:2px -4px -4px}
+.lrow{min-height:38px;padding:7px 10px;border-radius:10px;font-size:13.5px;color:var(--ink);transition:background var(--t)}
+.lrow:hover{background:var(--panel2)}
+.lrow:active{background:var(--panel3)}
+.lrow.done .lname{color:var(--go)}
+.pips{gap:4px;flex:none}
+.pips em{width:6px;height:6px;background:var(--panel3)}
+.pips em.on{background:var(--go)}
+.lines{gap:10px}
+
+/* ---------- 12. Positions wall ---------- */
+.wallhead{gap:10px 20px;margin-bottom:18px;align-items:center}
+.wallhead h3{font-size:clamp(24px,2.2vw,30px);font-weight:750;letter-spacing:-.028em}
+.legend{gap:8px 16px;font-size:12.5px}
+.sw{width:11px;height:11px;border-radius:3px;border-color:var(--hair2)}
+.cells{grid-template-columns:repeat(auto-fill,minmax(22px,1fr));gap:5px;padding:18px;background:var(--panel);border:1px solid var(--hair);border-radius:var(--r-xl);box-shadow:var(--sh-1)}
+.cell{border-radius:5px;background:var(--panel3);border:0;transition:transform .12s var(--ease),box-shadow .12s,filter .12s}
+.cell:hover{transform:scale(1.25);box-shadow:0 0 0 2px var(--panel),0 0 0 3.5px var(--acc);position:relative;z-index:1}
+.cell.b1{background:color-mix(in srgb,var(--go) 26%,var(--panel2))}
+.cell.b2{background:color-mix(in srgb,var(--go) 46%,var(--panel2))}
+.cell.b3{background:color-mix(in srgb,var(--go) 68%,var(--panel2))}
+.cell.b4,.cell.b5{background:var(--go)}
+.cell.f{background:color-mix(in srgb,var(--miss) 30%,var(--panel));box-shadow:inset 0 0 0 1.5px var(--miss)}
+.cell.f:hover{box-shadow:inset 0 0 0 1.5px var(--miss),0 0 0 2px var(--panel),0 0 0 3.5px var(--acc)}
+
+/* ---------- 13. Phone: app shell ---------- */
+@media(max-width:600px){
+  body{font-size:15px}
+  .top{padding:0 12px;background:var(--bg);border-bottom-color:var(--hair)}
+  .topin{height:52px;gap:10px}
+  .logo{width:30px;height:30px;border-radius:9px}
+  .stats{height:36px;padding:0 2px;margin-left:auto;border-radius:11px}
+  .stat{padding:0 9px;gap:5px}
+  .stat .num{font-size:14.5px}
+  .stat .lvlpc{width:22px;height:22px}
+  .stat .xpbar{width:20px;min-width:20px;height:2.5px;margin-top:2px}
+  .ring{width:20px;height:20px}.flame{width:14px;height:18px}
+  .syncst{max-width:9px;min-width:9px;padding-left:9px;font-size:0;flex:none;overflow:visible}
+  .iconbtn{width:36px;height:36px;border-radius:11px}
+
+  /* bottom tab bar: always there, thumb-sized, the current tab sits in a pill */
+  nav{margin:0;gap:0;padding:7px 6px calc(5px + env(safe-area-inset-bottom));background:color-mix(in srgb,var(--bg) 93%,transparent);border-top:1px solid var(--hair)}
+  nav a{height:auto;padding:0 0 2px;gap:2px;border-radius:12px;font-size:10.5px;font-weight:550;letter-spacing:0;color:var(--faint)}
+  nav a svg{width:22px;height:22px;padding:4px 15px;box-sizing:content-box;border-radius:999px;stroke-width:1.7;transition:background .2s,color .2s}
+  nav a:hover{background:none;color:var(--faint)}
+  nav a.on,nav a.on:hover{background:none;box-shadow:none;color:var(--ink)}
+  nav a.on svg{background:var(--acctint2);color:var(--acc)}
+  nav a:active{transform:none}
+  nav a:active svg{background:var(--panel2)}
+  #scroller{padding-bottom:calc(72px + env(safe-area-inset-bottom));scrollbar-width:none}
+  #scroller::-webkit-scrollbar{display:none}
+
+  .wrap{padding:18px 14px 28px}
+  .wrap:has(.trainer){padding:0 0 12px}
+  .sect{margin-top:32px}
+  .sect>h3{font-size:17px}
+  .ptitle{font-size:27px}
+  .card{padding:18px;border-radius:18px}
+  .hcard{padding:16px;border-radius:18px;gap:14px}
+  .hub{gap:12px}
+  .more{padding:0 16px;border-radius:18px}
+
+  /* touch targets */
+  .btn{height:46px;font-size:15px}
+  .btn.big{height:52px}
+  .btn.sm{height:36px;font-size:13.5px}
+  .chip{height:38px;padding:0 14px}
+  .hcard .chip{padding:0 14px}
+  .rtpick{width:100%}
+  .rtpick .chip{height:38px;padding:0 10px}
+  .lrow{min-height:44px}
+  .opt,.links a{padding:14px 38px 15px 16px}
+  .opts,.egrid,.links{grid-template-columns:minmax(0,1fr);gap:8px}
+  .opquick{gap:8px;margin-top:18px}
+
+  /* trainer: board edge to edge, then the coach sheet directly under it */
+  .stepbar{margin:8px 12px}
+  .boardwrap{border-radius:0;box-shadow:none}
+  .board{border-radius:0}
+  .trainer{gap:0}
+  #panel{margin:0;padding:16px 16px 8px;border:0;border-radius:0;background:none;box-shadow:none}
+  .prompt{font-size:22px;margin:6px 0 6px}
+  #panel .acts{gap:8px;margin-top:16px}
+  #panel .acts .btn{flex:1 1 auto;padding:0 12px}
+  .res{margin-top:14px}
+
+  .cells{grid-template-columns:repeat(auto-fill,minmax(20px,1fr));gap:5px;padding:14px;border-radius:18px}
+  .cell:hover{transform:none}
+  .fcard,.lcard{border-radius:18px}
+  .scard .shead{margin-bottom:6px}
+}
+
+/* no hover on touch: don't leave hover states stuck after a tap */
+@media(hover:none){
+  .btn:hover{background:var(--panel2);border-color:var(--hair)}
+  .btn.main:hover{background:var(--accfill)}
+  .hcard~.hcard .btn.main:hover{background:var(--acctint2)}
+  .btn.punish:hover{background:var(--warntint)}
+  .chip:hover{background:var(--panel2);border-color:var(--hair)}
+  a.chip:hover{background:transparent}
+  .chip.punish:hover{background:var(--warntint)}
+  .chip.on:hover{background:var(--acctint2);border-color:color-mix(in srgb,var(--acc) 55%,transparent)}
+  .rtpick .chip:hover{background:transparent;color:var(--soft)}
+  .rtpick .chip.on:hover{background:var(--accfill);color:var(--accink)}
+  .opt:hover,.links a:hover,.lcard:hover{background:var(--panel);border-color:var(--hair)}
+  .opt:hover::after,.links a:hover::after{transform:rotate(45deg);border-color:var(--faint);opacity:.75}
+  .lrow:hover{background:none}
+  .btn:active,.chip:active{filter:brightness(1.25)}
+  .lrow:active,.opt:active,.links a:active{background:var(--panel2)}
+}
+
+/* ---------- 14. Motion preferences ---------- */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms!important}
+  .wrap:not([hidden]),.res.show,.syncst[data-s=busy]::before{animation:none}
+  .btn:active,.chip:active,.opt:active,.links a:active,.lcard:active,.iconbtn:active,nav a:active,.cell:hover{transform:none}
+}
+
+
+/* integration tweaks */
+@media (min-width:901px){
+  .scard .rtpick{grid-column:1;grid-row:2;align-self:start;width:auto;margin:6px 0 0}
+  .scard .route{grid-column:2;grid-row:1/span 3}
+}
+@media (max-width:600px){
+  #panel{display:flex;flex-direction:column}
+  #panel>*{min-width:0}
+  #panel .res{order:1}
+  #panel .acts{order:2}
+}
+
+.gq{margin:10px 0}.gq .chips{margin-top:6px}
+.glrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 0}
+.glrow>span:first-child{font-size:13.5px;color:var(--soft)}
+.gds{display:flex;gap:6px}
+.gd{width:14px;height:14px;border-radius:50%;display:inline-block;background:var(--panel3,#333)}
+.gd.g2{background:var(--go,#4fd08a)}.gd.g1{background:var(--warn,#f0b55f)}.gd.g0{background:var(--miss,#ff7a6b)}
+
+:root{color-scheme:dark}
+.top{padding-top:env(safe-area-inset-top)!important}
+</style>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Chess Gym">
+<meta name="theme-color" content="#0b0f15">
+</head>
+<body>
+<header class="top">
+  <div class="topin">
+    <h1><a href="#home" class="brand" title="Home"><img class="logo" src="favicon.png" alt=""><span class="bname">Chess Gym</span></a></h1>
+    <nav aria-label="Sections"><a href="#home" data-nav="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a><a href="#openings" data-nav="openings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5zM4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg><span>Openings</span></a><a href="#practice" data-nav="practice"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a4 4 0 0 1 4 4c0 1.3-.6 2.4-1.5 3.1L16 18H8l1.5-7.9A4 4 0 0 1 12 3zM6 21h12"/></svg><span>Practice</span></a><a href="#positions" data-nav="positions"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Positions</span></a><a href="#session" data-nav="session"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z"/></svg><span>Session</span></a></nav>
+    <div class="stats">
+    <div class="stat" title="Level"><div class="lvlpc pc" id="lvlpc"></div><div><div class="num" id="lvl">1</div><div class="lab" id="lvlname">Pawn</div><div class="xpbar"><i id="xpbar"></i></div></div></div>
+    <div class="stat" title="Day streak: days with 10+ puzzles or a finished session"><svg class="flame" id="flame" viewBox="0 0 30 34" aria-hidden="true"><path d="M15 1c2 7 9 10 9 19a9 9 0 0 1-18 0c0-5 3-7 4-11 1 3 3 4 4 4-1-4-1-8 1-12z" fill="#ff8a2b"/><path d="M15 15c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 3-6 1 1 1 2 2 2 0-2-1-4 0-6z" fill="#ffd34d"/></svg><div><div class="num" id="streak">0</div><div class="lab">day streak</div></div></div>
+    <div class="stat" title="Puzzles solved today"><svg class="ring" viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="17" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="6"/><circle id="ringarc" cx="21" cy="21" r="17" fill="none" stroke="#7fe0a5" stroke-width="6" stroke-linecap="round" transform="rotate(-90 21 21)" stroke-dasharray="106.8" stroke-dashoffset="106.8" style="transition:stroke-dashoffset .5s"/></svg><div><div class="num" id="today">0</div><div class="lab">puzzles today</div></div></div>
+    </div>
+    <span class="syncst" id="sync" hidden title="Progress sync between your devices"></span>
+    <button class="iconbtn" id="snd" aria-label="Sound" title="Sound"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9h4l5-4v14l-5-4H4z"/><path id="sndw" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg></button>
+  </div>
+</header>
+<main id="scroller">
+
+<section class="wrap" id="v-home">
+  <div class="hub">
+    <div class="hcard h-puz">
+      <div class="hhead"><span class="hicon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span><div><h2>Puzzles</h2><p class="small" id="h-puz-sub">Your own positions plus themed tactics.</p></div></div>
+      <button class="btn main big" type="button" data-p="weak" id="h-puz-go">Solve puzzles</button>
+      <div class="chips" id="h-puz-chips"></div>
+    </div>
+    <div class="hcard h-ope">
+      <div class="hhead"><span class="hicon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5zM4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg></span><div><h2>Openings</h2><p class="small" id="h-op-sub">Your repertoire, the sidelines you meet, and their traps.</p></div></div>
+      <a class="btn main big" href="#openings">Open the library</a>
+      <div class="chips" id="h-op-chips"></div>
+    </div>
+    <div class="hcard h-pra">
+      <div class="hhead"><span class="hicon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><h2>Practice</h2><p class="small">Mate patterns, endings, Woodpecker and board vision.</p></div></div>
+      <a class="btn main big" href="#practice">All practice</a>
+      <div class="chips" id="h-pra-chips"></div>
+    </div>
+  </div>
+  <div class="sect">
+    <h3>Today's session</h3>
+    <div class="card scard">
+      <div class="shead"><p class="small" id="h-sub">About 35 minutes of warmup, then your game. Every step counts itself.</p><a class="btn" href="#session" id="h-go">Start session</a></div>
+      <div class="rtpick" id="rtpick" role="group" aria-label="Pick today's routine"></div>
+      <ol class="route" id="route"></ol>
+      <div class="opts" id="opts-home" hidden></div>
+    </div>
+  </div>
+  <div class="sect" id="gl-sect" hidden><h3>Process goals</h3><div class="card" id="gamelog"></div></div>
+  <div class="sect">
+    <h3>Links</h3>
+    <div class="links">
+      <a href="https://www.chess.com/play/online" target="_blank" rel="noopener"><b>Play a 15|10 game</b><span>Chess.com rapid. Pick 15 | 10.</span></a>
+      <a href="https://claude.ai/artifact/KNakpXq9FkmcDMbEKGqhrB" target="_blank" rel="noopener"><b>Your training plan</b><span>Phases, routine, weekly progress log.</span></a>
+      <a href="https://claude.ai/artifact/AfgsGVNYnUyKyKuhuwbNCo" target="_blank" rel="noopener"><b>Progress dashboard</b><span>Rating, big errors per game, clock use. Updated Sundays.</span></a>
+      <a href="https://www.chess.com/games/archive/ElliottPurdue" target="_blank" rel="noopener"><b>Your game archive</b><span>Open a game to review it.</span></a>
+      <a href="https://lichess.org/analysis" target="_blank" rel="noopener"><b>Free analysis board</b><span>Lichess, unlimited engine. Paste a PGN.</span></a>
+      <a href="#positions"><b>Your positions wall</b><span>Every big mistake from your games, as a puzzle.</span></a>
+    </div>
+
+  </div>
+  <details class="sect more">
+    <summary>Sync, offline copy and help</summary>
+    <h4>Move progress between copies</h4>
+    <div class="card">
+      <p class="small">Copy your progress here, then paste it into the other copy of the Gym (the offline one at localhost, or the online one on claude.ai). Pasting adds to what is already there: no puzzle reviews, XP or streak days are lost, and the pasted copy's ratings and session win.</p>
+      <div class="acts"><button class="btn" id="mv-copy" type="button">Copy my progress</button></div>
+      <label class="small" for="mv-text" style="display:block;margin-top:14px">Paste progress from the other copy</label>
+      <textarea id="mv-text" rows="3" spellcheck="false" style="width:100%;font:13px ui-monospace,monospace;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);margin-top:6px"></textarea>
+      <div class="acts"><button class="btn main" id="mv-import" type="button">Add pasted progress</button></div>
+      <p class="small" id="mv-msg" aria-live="polite" style="margin-top:10px"></p>
+    </div>
+    <div id="gistbox" hidden>
+      <h4>Sync this copy (home-screen app and PC)</h4>
+      <div class="card" id="gistcard"></div>
+    </div>
+  
+    <h4>Good to know</h4>
+    <p class="note" id="localnote" hidden><b>This is the offline copy running on your PC.</b> Progress here is saved separately from your <a href="https://claude.ai/artifact/DLDRF2pEFB1NyCJyanaYj6" target="_blank" rel="noopener">online Chess Gym</a>, and Sunday's new positions only reach the online one.</p>
+    <p class="note">The Chess Coach overlay (the Chrome extension from our chat) runs on Chess.com: it tracks your rapid results and locks for review after a loss. The weekly review runs Sunday evenings and adds new positions here.</p>
+  </details>
+</section>
+
+<section class="wrap" id="v-train" hidden>
+  <div class="trainer">
+    <div>
+      <div class="stepbar" id="stepbar"></div>
+      <div class="boardwrap" id="bw"><div class="board" id="board"></div><div class="pieces" id="pieces"></div><svg class="arrows" viewBox="0 0 8 8" aria-hidden="true"><defs><marker id="ah" viewBox="0 0 10 10" refX="3" refY="5" markerWidth="2.6" markerHeight="2.6" orient="auto"><path d="M0 0L10 5L0 10z" fill="rgba(255,170,0,.8)"/></marker></defs><g id="arrowg"></g></svg><div class="target" id="target" hidden><b id="targetsq"></b></div><div class="grip" id="grip" title="Drag to resize the board (double-click to reset)"></div></div>
+      <p class="small boardhint" style="text-align:center;margin:8px 0 0">Right-click a square to mark it red, right-drag to draw an arrow, left-click to clear. Right-click while dragging a piece cancels the move. Drag the corner to resize the board.</p>
+    </div>
+    <div class="card" id="panel">
+      <div class="kind" id="kind"></div>
+      <div class="prompt" id="prompt"></div>
+      <div class="ctx" id="ctx"></div>
+      <div class="tags" id="tags"></div>
+      <div id="choice"></div><div id="extra"></div>
+      <div class="acts" id="acts"></div>
+      <div class="res" id="res"></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="v-practice" hidden>
+  <h2 class="ptitle">Practice</h2>
+  <p class="small">For after your games, or a night when you're too tired to play.</p>
+  <div class="opts" id="opts-all" style="margin-top:16px"></div>
+  <div class="sect"><h3>Blunder check</h3><p class="small">Built from your own games: the moments right before your blunders, and moves you got right. Spotting their threat and checking your own move are the two habits that stop most blunders.</p><div class="opts" id="blunderlist"></div></div>
+  <div class="sect"><h3>Woodpecker</h3><p class="small" id="woodsub"></p><div class="opts" id="woodbox"></div></div>
+  <div class="sect"><h3>Mate patterns</h3><p class="small">The classic finishing patterns. Learn the picture once and you'll see it in your games.</p><div class="chips" id="patchips"></div></div>
+  <div class="sect"><h3>Endgame essentials</h3><p class="small">The few endings that decide the most games: king and pawn (opposition, key squares, the square of the pawn) and the two rook endings every player needs.</p><div class="opts" id="essentials"></div></div>
+  <div class="sect"><h3>Endgame mates</h3><p class="small">Mate a defending king within the move target. Your record is next to each.</p><div class="egrid" id="endlist"></div></div>
+  <div class="sect"><h3>Board vision</h3><p class="small">Quick sprints that make the board feel automatic.</p><div class="opts" id="visionlist"></div></div>
+  <div class="sect"><h3>Puzzles by theme</h3><p class="small">The number is your rating for that theme. It moves with every puzzle.</p><div class="chips" id="themechips"></div></div>
+  <div class="sect"><h3>Openings</h3><p class="small">Your repertoire has its own page now, grouped by what your opponent plays, with your progress on every line.</p><div class="acts"><a class="btn" href="#openings">Open the Openings page</a></div><div class="lines" id="openlist" hidden></div></div>
+</section>
+
+<section class="wrap" id="v-openings" hidden>
+  <div class="ophead">
+    <div><h2 class="ptitle">Openings</h2><p class="small">Play your side; the book replies are played for you. Three clean runs and a line counts as learned.</p></div>
+    <div class="opsum" id="opsum"></div>
+  </div>
+  <div class="opquick"><button class="btn main" type="button" data-p="openside" data-a="b">Practice as Black</button><button class="btn" type="button" data-p="openside" data-a="w">Practice as White</button><button class="btn punish" type="button" data-p="punish" id="punishbtn">Punish their mistakes</button></div>
+  <p class="small optip">About one run in three, your opponent leaves the book with a real mistake: find the move that punishes it. Lines you meet most in your games are listed first.</p>
+  <div id="opgroups"></div>
+</section>
+<section class="wrap" id="v-positions" hidden>
+  <div class="wallhead"><h3 id="wallt">Your positions</h3>
+    <div class="legend"><span><i class="sw"></i>New</span><span><i class="sw" style="background:var(--misstint);border-color:var(--miss)"></i>Missed, due again</span><span><i class="sw" style="background:color-mix(in srgb,var(--go) 40%,var(--bg));border:0"></i>Learning</span><span><i class="sw" style="background:var(--go);border:0"></i>Mastered</span></div></div>
+  <div class="cells" id="cells"></div>
+  <p class="note">Every square is a moment from one of your rated Chess.com games (games against friends left out) where the engine found a clearly better move than the one played. Solve it on 4 separate days and it's mastered. Progress syncs between your devices when you open the Gym on claude.ai. Warmup puzzles come from the Lichess open puzzle database. Pieces: maestro set by sadsnake1 (CC BY-NC-SA 4.0), via Lichess.</p>
+</section>
+</main>
+<script type="module">
+import { Chess } from './chess.js';
+{
+  const $ = (id) => document.getElementById(id);
+  const DAY = 864e5, GOAL = 10, GAPS = [0, 1, 3, 7, 16, 35];
+  const TIERS = [['Pawn', 'p'], ['Knight', 'n'], ['Bishop', 'b'], ['Rook', 'r'], ['Queen', 'q'], ['King', 'k']];
+  const THEMES = { mateIn1: 'Mate in 1', mateIn2: 'Mate in 2', fork: 'Fork', pin: 'Pin', hangingPiece: 'Hanging piece', discoveredAttack: 'Discovered attack', defensiveMove: 'Defensive move', backRankMate: 'Back-rank mate', skewer: 'Skewer' };
+  const START_RATING = { mateIn1: 650, mateIn2: 900, fork: 950, pin: 950, hangingPiece: 800, discoveredAttack: 1000, defensiveMove: 1000, backRankMate: 850, skewer: 1000 };
+  // more themes (Lichess open puzzle database, themes2.json): names and starting ratings
+  Object.assign(THEMES, { mateIn3: 'Mate in 3', smotheredMate: 'Smothered mate', anastasiaMate: "Anastasia's mate", arabianMate: 'Arabian mate', bodenMate: "Boden's mate", doubleBishopMate: 'Two-bishop mate', hookMate: 'Hook mate', dovetailMate: 'Dovetail mate',
+    kingsideAttack: 'Kingside attack', exposedKing: 'Exposed king', doubleCheck: 'Double check', deflection: 'Deflection', attraction: 'Attraction', clearance: 'Clearance', interference: 'Interference', xRayAttack: 'X-ray', trappedPiece: 'Trapped piece', intermezzo: 'In-between move', quietMove: 'Quiet move',
+    pawnEndgame: 'Pawn endgame', rookEndgame: 'Rook endgame', zugzwang: 'Zugzwang' });
+  for (const k of Object.keys(THEMES)) if (!START_RATING[k]) START_RATING[k] = /Mate$/.test(k) ? 950 : /Endgame$|zugzwang/.test(k) ? 1000 : 1050;
+  const THEME_GROUPS = [['Tactics', ['fork', 'pin', 'skewer', 'hangingPiece', 'discoveredAttack', 'doubleCheck', 'deflection', 'attraction', 'clearance', 'interference', 'xRayAttack', 'trappedPiece', 'intermezzo', 'quietMove', 'defensiveMove']],
+                        ['Checkmates', ['mateIn1', 'mateIn2', 'mateIn3', 'backRankMate', 'smotheredMate', 'anastasiaMate', 'arabianMate', 'bodenMate', 'doubleBishopMate', 'hookMate', 'dovetailMate', 'kingsideAttack', 'exposedKing']],
+                        ['Endgames', ['pawnEndgame', 'rookEndgame', 'zugzwang']]];
+  const WEAK_TO_THEME = { 'Missed their threat': 'defensiveMove', 'Hung the moved piece': 'hangingPiece', 'Left a piece hanging': 'hangingPiece', 'Missed mate': 'mateIn2', 'Allowed mate': 'backRankMate', 'Missed their mistake': 'fork', 'Missed a forcing move': 'fork', 'Allowed a check tactic': 'discoveredAttack' };
+  const STEPS = [
+    { id: 'coords', title: 'Board vision', desc: 'One 30-second coordinates sprint', target: 1 },
+    { id: 'm1', title: 'Mate in 1', desc: '10 puzzles, back to back', target: 10, themes: ['mateIn1'] },
+    { id: 'm2', title: 'Mate in 2', desc: '10 puzzles', target: 10, themes: ['mateIn2'] },
+    { id: 'tac', title: 'Tactics mix', desc: 'Forks, pins, hanging pieces, discoveries', target: 10, themes: ['fork', 'pin', 'hangingPiece', 'discoveredAttack'] },
+    { id: 'own', title: 'From your games', desc: '5 of your own positions, due ones first', target: 5 },
+    { id: 'end', title: 'Endgame mate', desc: 'Mate the lone king, no stalemate', target: 1 },
+    { id: 'play', title: 'Play 15|10', desc: 'The checklist on every move', target: 1 },
+    { id: 'review', title: 'Review it', desc: 'Think first, then engine, then log', target: 1 },
+  ];
+  // Routines: the same session engine, different menus for different days. 'full' is the original warmup.
+  const stp = (id, title, desc, target, more) => ({ id, title, desc, target, ...(more || {}) });
+  const PLAY = stp('play', 'Play 15|10', 'The checklist on every move', 1), REVIEW = stp('review', 'Review it', 'Think first, then engine, then log', 1);
+  const ROUTINES = {
+    full: { name: 'Full warmup', mins: '35 min + game', desc: 'The standard: warm up, play a 15|10, review it.', steps: STEPS },
+    safety: { name: 'Blunder-proof', mins: '25 min + game', desc: 'Aimed at your biggest leak: missed threats and unsafe moves, from your own games.', steps: [
+      stp('threat', 'Their threat', 'What would they play if you passed?', 8), stp('safe', 'Is it safe?', 'Your own moves: safe, or a blunder?', 10),
+      stp('def', 'Defensive moves', 'Puzzles where the only good move is a defence', 5, { themes: ['defensiveMove'] }), stp('own', 'From your games', '5 of your own positions', 5), PLAY, REVIEW] },
+    pregame: { name: 'Pre-game primer', mins: '10 min + game', desc: 'Short and easy: wake up your eyes, then play.', steps: [
+      stp('m1', 'Mate in 1', '5 quick ones', 5, { themes: ['mateIn1'] }), stp('threat', 'Their threat', '3 positions', 3), stp('safe', 'Is it safe?', '3 moves', 3), PLAY, REVIEW] },
+    quick: { name: 'Quick 15', mins: '15 min, no game', desc: 'A real workout when there is no time to play.', steps: [
+      stp('m2', 'Mate in 2', '5 puzzles', 5, { themes: ['mateIn2'] }), stp('threat', 'Their threat', '5 positions', 5), stp('safe', 'Is it safe?', '5 moves', 5),
+      stp('tac', 'Tactics mix', 'Forks, pins, hanging pieces, discoveries', 5, { themes: ['fork', 'pin', 'hangingPiece', 'discoveredAttack'] })] },
+    away: { name: 'Away from home', mins: '20 min, no game', desc: 'Noisy room, laptop, no headphones: train instead of playing.', steps: [
+      stp('threat', 'Their threat', '5 positions', 5), stp('safe', 'Is it safe?', '5 moves', 5), stp('tac', 'Tactics mix', '8 puzzles', 8, { themes: ['fork', 'pin', 'hangingPiece', 'discoveredAttack'] }),
+      stp('punish', 'Punish opening mistakes', '4 traps from your repertoire', 4), stp('kpk', 'Pawn endings', '2 king and pawn endings', 2)] },
+    endgame: { name: 'Endgame day', mins: '20 min, no game', desc: 'Mate patterns, pawn endings, and the two rook endings everyone must know.', steps: [
+      stp('pat', 'Mate patterns', '3 classic mates', 3), stp('kpk', 'Pawn endings', 'Win or hold against perfect defence', 5), stp('rook', 'Rook endings', 'Lucena and Philidor', 2), stp('end', 'Endgame mate', 'Mate the lone king', 1)] },
+    tired: { name: 'Tired night', mins: '10 min, no game', desc: "Low energy? Easy wins that still count. Stop whenever you like.", steps: [
+      stp('m1', 'Mate in 1', '8 easy ones', 8, { themes: ['mateIn1'] }), stp('safe', 'Is it safe?', '5 moves', 5)] },
+  };
+  const ROUTINE_ORDER = ['full', 'safety', 'pregame', 'quick', 'away', 'endgame', 'tired'];
+  const routineOf = (s) => ROUTINES[(s && s.routine) || st.routine || 'full'] || ROUTINES.full;
+  const ENDGAMES = {
+    krr: { name: 'Two-rook ladder', short: 'Two rooks', pieces: ['R', 'R'], limit: 12, tip: 'Rooks take turns checking and cutting off a rank. Keep them far from the king.' },
+    kqr: { name: 'Queen and rook vs king', short: 'Queen + rook', pieces: ['Q', 'R'], limit: 8, tip: 'Same ladder as two rooks, only faster. Watch for stalemate at the edge.' },
+    kq: { name: 'King and queen vs king', short: 'Queen', pieces: ['Q'], limit: 15, tip: "Shrink the box with knight-move jumps of the queen, then bring your king. Don't stalemate." },
+    kr: { name: 'King and rook vs king', short: 'Rook', pieces: ['R'], limit: 25, tip: 'Cut the king off with the rook, walk your king up in opposition, then check from the side.' },
+    kbb: { name: 'Two bishops vs king', short: 'Two bishops', pieces: ['B', 'B'], limit: 22, oppB: true, tip: 'Put the bishops side by side as a wall, push the king to the edge and then into a corner. Your king must help.' },
+    kbn: { name: 'Bishop and knight vs king', short: 'Bishop + knight', pieces: ['B', 'N'], limit: 34, tip: "The hardest basic mate: you can only mate in a corner your bishop's color controls. Drive the king there with king, knight and bishop together." },
+  };
+  const today = () => new Date().toLocaleDateString('en-CA');
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  let P = [], byId = {}, T = {}, O = [], D = [], devByLine = {}, DR = { safe: [], threat: [] }, SD = { mates: [], endings: [] };
+  let st = { cards: {}, xp: 0, days: {}, combo: 0, best: 0, sound: true, prate: {}, lseen: {}, coordsBest: {}, lines: {}, endgames: {}, gamelog: {}, session: null };
+  try { Object.assign(st, JSON.parse(localStorage.getItem('gym-v1') || '{}')); } catch (e) {}
+  for (const k of ['prate', 'lseen', 'coordsBest', 'lines', 'endgames', 'cards', 'days', 'gamelog']) st[k] = st[k] || {};
+  if (window.claude?.hot?.data?.st) Object.assign(st, window.claude.hot.data.st);
+  window.claude?.hot?.snapshot?.(() => ({ st }));
+  // ---------- progress: localStorage 'gym-v1' on each device, mirrored to the cloud ----------
+  // On claude.ai the same progress is kept in the viewer's private db doc data/users/<id>/gym, field json (the st object as JSON),
+  // so PC and phone share streak, XP, puzzle boxes and session. Merge is monotonic (cards: more reviews win; days and xp: max),
+  // everything else comes from the copy saved last (st._t). boardSize and sound stay per device. The localhost copy skips this.
+  const PER_DEVICE = ['boardSize', 'sound'];
+  let syncReady = false, pulled = false, cloudRef = null, cloudBusy = false, cloudAgain = false, cloudTimer = null, lastCloudJson = '';
+  const save = () => {
+    if (syncReady) st._t = Date.now();
+    try { localStorage.setItem('gym-v1', JSON.stringify(st)); } catch (e) {}
+    if (cloudRef) { clearTimeout(cloudTimer); cloudTimer = setTimeout(pushCloud, 1500); }
+  };
+  function shareable(o) { const c = { ...o }; for (const k of PER_DEVICE) delete c[k]; return c; }
+  const sortKeys = (v) => Array.isArray(v) ? v.map(sortKeys) : v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort().map((k) => [k, sortKeys(v[k])])) : v;
+  const canon = (o) => JSON.stringify(sortKeys(o));
+  function mergeStates(a, b) {
+    const [newer, older] = (a._t || 0) >= (b._t || 0) ? [a, b] : [b, a];
+    const m = { ...older, ...newer };
+    for (const k of ['prate', 'lseen', 'coordsBest', 'lines', 'endgames', 'gamelog']) m[k] = { ...(older[k] || {}), ...(newer[k] || {}) };
+    m.cards = { ...(older.cards || {}) };
+    for (const [id, c] of Object.entries(newer.cards || {})) { const o = m.cards[id]; m.cards[id] = !o || (c.seen || 0) >= (o.seen || 0) ? c : o; }
+    m.days = { ...(older.days || {}) };
+    for (const [d, n] of Object.entries(newer.days || {})) m.days[d] = Math.max(n || 0, m.days[d] || 0);
+    m.xp = Math.max(a.xp || 0, b.xp || 0); m.best = Math.max(a.best || 0, b.best || 0);
+    m._t = Math.max(a._t || 0, b._t || 0);
+    return m;
+  }
+  function takeCloud(json) {
+    if (!json || json === lastCloudJson) return;
+    let remote; try { remote = JSON.parse(json); } catch (e) { return; }
+    lastCloudJson = json = canon(remote);
+    const mine = {}; for (const k of PER_DEVICE) if (k in st) mine[k] = st[k];
+    const merged = mergeStates(shareable(st), remote);
+    if (canon(merged) !== canon(shareable(st))) {
+      for (const k of Object.keys(st)) delete st[k];
+      Object.assign(st, merged, mine);
+      for (const k of ['prate', 'lseen', 'coordsBest', 'lines', 'endgames', 'cards', 'days', 'gamelog']) st[k] = st[k] || {};
+      try { localStorage.setItem('gym-v1', JSON.stringify(st)); } catch (e) {}
+      try { stats(); } catch (e) {}
+    }
+    if (canon(merged) !== json) { clearTimeout(cloudTimer); cloudTimer = setTimeout(pushCloud, 300); }
+  }
+  async function pushCloud() {
+    if (!cloudRef || !pulled) return;
+    if (cloudBusy) { cloudAgain = true; return; }
+    if (!st._t) st._t = Object.keys(st.cards || {}).length || st.xp ? Date.now() : 1;
+    const json = canon(shareable(st));
+    if (json === lastCloudJson) return;
+    if (json.length > 240000) { setSync('Progress too large to sync'); return; }
+    cloudBusy = true;
+    try { await cloudRef.set({ json, t: st._t || Date.now() }); lastCloudJson = json; setSync('Synced'); }
+    catch (e) { setSync(e && e.code === 'quota_exceeded' ? 'Cloud storage full' : 'Sync problem (' + ((e && (e.code || e.message)) || 'unknown') + '): saved on this device'); if (e && (e.code === 'invalid_argument' || e.code === 'revoked')) cloudRef = null; }
+    cloudBusy = false;
+    if (cloudAgain) { cloudAgain = false; pushCloud(); }
+  }
+  function setSync(t) { const el = document.getElementById('sync'); if (el) { el.textContent = t; el.title = t; el.dataset.s = /^Synced/.test(t) ? 'ok' : /^Syncing/.test(t) ? 'busy' : 'off'; el.hidden = false; } }
+  // ---- standalone sync (the home-screen app and the offline PC copy): one private GitHub gist holds the same JSON ----
+  // Only used when the page is NOT running on claude.ai. Your token stays in this device's storage and is only sent to api.github.com.
+  const GIST_DESC = 'Chess Gym progress (private)', GIST_FILE = 'chess-gym.json';
+  const gistCfg = () => { try { return JSON.parse(localStorage.getItem('gym-gist') || 'null'); } catch (e) { return null; } };
+  async function gh(path, opts, token) {
+    const r = await fetch('https://api.github.com' + path, { ...(opts || {}), cache: 'no-store', headers: { Accept: 'application/vnd.github+json', Authorization: 'Bearer ' + token, ...((opts && opts.body) ? { 'Content-Type': 'application/json' } : {}) } });
+    if (!r.ok) { const e = new Error('GitHub ' + r.status); e.code = r.status === 401 ? 'bad token' : r.status === 404 ? 'gist not found' : 'GitHub ' + r.status; e.status = r.status; throw e; }
+    return r.json();
+  }
+  async function gistFind(token) {
+    for (let page = 1; page <= 5; page++) {
+      const list = await gh(`/gists?per_page=100&page=${page}`, null, token);
+      const g = list.find((x) => x.description === GIST_DESC && x.files && x.files[GIST_FILE]); if (g) return g.id;
+      if (list.length < 100) break;
+    }
+    const made = await gh('/gists', { method: 'POST', body: JSON.stringify({ description: GIST_DESC, public: false, files: { [GIST_FILE]: { content: '{}' } } }) }, token);
+    return made.id;
+  }
+  function gistRef(cfg) {
+    let subs = [], timer = null;
+    const ref = {
+      async get() { const g = await gh('/gists/' + cfg.id, null, cfg.token); let c = g.files && g.files[GIST_FILE] && g.files[GIST_FILE].content; if (g.files && g.files[GIST_FILE] && g.files[GIST_FILE].truncated) c = await (await fetch(g.files[GIST_FILE].raw_url, { cache: 'no-store' })).text(); let o = null; try { o = JSON.parse(c || 'null'); } catch (e) {} const ok = !!(o && o.json); return { exists: ok, metadata: { fromCache: false }, data: () => o }; },
+      async set(v) { await gh('/gists/' + cfg.id, { method: 'PATCH', body: JSON.stringify({ files: { [GIST_FILE]: { content: JSON.stringify(v) } } }) }, cfg.token); },
+      onSnapshot(fn) { subs.push(fn); clearInterval(timer); timer = setInterval(async () => { if (document.visibilityState !== 'visible') return; try { const s = await ref.get(); subs.forEach((f) => f(s)); } catch (e) {} }, 45000); },
+    };
+    return ref;
+  }
+  async function startGist(cfg) {
+    setSync('Syncing…');
+    cloudRef = gistRef(cfg);
+    const pull = async () => { const snap = await cloudRef.get(); pulled = true; syncReady = true; if (snap.exists) takeCloud(snap.data().json); };
+    try { await pull(); } catch (e) { syncReady = true; cloudRef = null; setSync('Sync problem (' + (e.code || e.message) + '): saved on this device'); return false; }
+    setSync('Synced');
+    clearTimeout(cloudTimer); cloudTimer = setTimeout(pushCloud, 300);
+    cloudRef.onSnapshot((snap) => { if (snap.exists) takeCloud(snap.data().json); });
+    document.addEventListener('visibilitychange', async () => { if (document.visibilityState !== 'visible' || !cloudRef) return; try { const snap = await cloudRef.get(); if (snap.exists) takeCloud(snap.data().json); } catch (e) {} });
+    return true;
+  }
+  let onClaude = false;
+  (async () => {
+    // window.claude can appear after this script's first run: wait for it (up to 10 s, or 1.5 s when standalone sync is set up) before giving up.
+    const waitN = gistCfg() ? 15 : 100;
+    for (let i = 0; i < waitN && !(window.claude && window.claude.use); i++) await new Promise((r) => setTimeout(r, 100));
+    if (!(window.claude && window.claude.use)) {
+      try { $('gistbox').hidden = false; renderGist(); } catch (e) {}
+      const cfg = gistCfg(); if (cfg && cfg.token && cfg.id) { await startGist(cfg); return; }
+      syncReady = true; setSync(/^(localhost|127\.)/.test(location.hostname) ? 'Offline copy: saved on this PC only' : 'Saved on this device. Set up sync under Home > Sync'); return;
+    }
+    onClaude = true;
+    setSync('Syncing…');
+    const errText = (e) => 'Sync problem (' + ((e && (e.code || e.message)) || 'unknown') + '): saved on this device';
+    try {
+      const [db, user] = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
+      if (!db || !user) { syncReady = true; setSync('Sync unavailable: saved on this device'); return; }
+      const id = await user.id();
+      if (!id) { syncReady = true; setSync('Sign in to claude.ai to sync'); return; }
+      cloudRef = db.collection('data/users/' + id).doc('gym');
+      const pull = async () => { const snap = await cloudRef.get(); pulled = true; syncReady = true; if (snap.exists) takeCloud(snap.data().json); };
+      try { await pull(); } catch (e) { await new Promise((r) => setTimeout(r, 1500 + Math.random() * 1000)); await pull(); }
+      setSync('Synced');
+      clearTimeout(cloudTimer); cloudTimer = setTimeout(pushCloud, 300);
+      cloudRef.onSnapshot((snap) => { if (!snap.metadata.fromCache && snap.exists) takeCloud(snap.data().json); }, () => {});
+      document.addEventListener('visibilitychange', async () => {
+        if (document.visibilityState !== 'visible' || !cloudRef) return;
+        try { const snap = await cloudRef.get(); if (snap.exists) takeCloud(snap.data().json); } catch (e) {}
+      });
+    } catch (e) { syncReady = true; setSync(errText(e)); }
+  })();
+
+  // ---------- sound ----------
+  let ac = null;
+  function tone(seq) {
+    if (!st.sound) return;
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      if (ac.state === 'suspended') ac.resume();
+      let t = ac.currentTime;
+      for (const [f, d, type] of seq) {
+        const o = ac.createOscillator(), g = ac.createGain();
+        o.type = type || 'sine'; o.frequency.value = f;
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.16, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+        o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t + d + 0.02); t += d * 0.8;
+      }
+    } catch (e) {}
+  }
+  // Pebble-style piece sounds: original synthesized stone clicks (filtered noise + a short wooden body tone).
+  let noiseBuf = null;
+  function clack(at, f, vol, dur) {
+    const n = ac.createBufferSource(); n.buffer = noiseBuf;
+    const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = f; bp.Q.value = 7;
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(vol, at + 0.002); g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+    n.connect(bp); bp.connect(g); g.connect(ac.destination); n.start(at); n.stop(at + dur + 0.02);
+    const o = ac.createOscillator(), og = ac.createGain(); o.type = 'sine';
+    o.frequency.setValueAtTime(f * 0.42, at); o.frequency.exponentialRampToValueAtTime(f * 0.3, at + dur);
+    og.gain.setValueAtTime(0.0001, at); og.gain.exponentialRampToValueAtTime(vol * 0.35, at + 0.003); og.gain.exponentialRampToValueAtTime(0.0001, at + dur * 0.8);
+    o.connect(og); og.connect(ac.destination); o.start(at); o.stop(at + dur + 0.02);
+  }
+  function ping(at, f, vol, dur) {
+    for (const [mul, v] of [[1, vol], [2.76, vol * 0.25]]) {
+      const o = ac.createOscillator(), g = ac.createGain(); o.type = 'sine'; o.frequency.value = f * mul;
+      g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(v, at + 0.004); g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+      o.connect(g); g.connect(ac.destination); o.start(at); o.stop(at + dur + 0.02);
+    }
+  }
+  function pebble(kind) {
+    if (!st.sound) return;
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      if (ac.state === 'suspended') ac.resume();
+      if (!noiseBuf) { noiseBuf = ac.createBuffer(1, Math.floor(ac.sampleRate * 0.25), ac.sampleRate); const d = noiseBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; }
+      const t = ac.currentTime + 0.005, j = 1 + (Math.random() - 0.5) * 0.08;
+      if (kind === 'capture') { clack(t, 1900 * j, 0.9, 0.06); clack(t + 0.038, 2700 * j, 0.55, 0.05); }
+      else if (kind === 'castle') { clack(t, 2300 * j, 0.6, 0.05); clack(t + 0.11, 2100 * j, 0.6, 0.05); }
+      else if (kind === 'check') { clack(t, 2300 * j, 0.7, 0.05); ping(t + 0.03, 1480, 0.09, 0.32); }
+      else if (kind === 'promote') { clack(t, 2300 * j, 0.7, 0.05); ping(t + 0.04, 1180, 0.07, 0.2); ping(t + 0.14, 1570, 0.08, 0.3); }
+      else clack(t, 2350 * j, 0.6, 0.05);
+    } catch (e) {}
+  }
+  const sMove = () => pebble('move');
+  const sPiece = (m) => pebble(/[+#]/.test(m.san) ? 'check' : m.promotion ? 'promote' : m.captured ? 'capture' : /[kq]/.test(m.flags) ? 'castle' : 'move');
+  const sGood = () => tone([[660, 0.12], [880, 0.12], [1320, 0.22]]);
+  const sBad = () => tone([[180, 0.25, 'sawtooth']]);
+  const sTick = () => pebble('move');
+
+  // ---------- board ----------
+  const files = 'abcdefgh';
+  let game = null, flip = false, pcs = {}, sel = null, locked = true, onUserMove = null, onSquareClick = null;
+  const xy = (sq) => { const f = files.indexOf(sq[0]), r = +sq[1] - 1; return flip ? [7 - f, r] : [f, 7 - r]; };
+  const sqAt = (x, y) => flip ? files[7 - x] + (y + 1) : files[x] + (8 - y);
+  function drawBoard(showPieces = true) {
+    let h = '';
+    for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) {
+      const s = sqAt(x, y);
+      h += `<div class="sq ${(x + y) % 2 === 0 ? 'l' : 'd'}" data-sq="${s}">${y === 7 ? `<span class="coord f">${s[0]}</span>` : ''}${x === 0 ? `<span class="coord r">${s[1]}</span>` : ''}</div>`;
+    }
+    $('board').innerHTML = h; clearMarks();
+    $('pieces').innerHTML = ''; pcs = {};
+    if (showPieces && game) drawPieces();
+  }
+  const place = (el, sq) => { const [x, y] = xy(sq); el.style.transform = `translate(${x * 100}%,${y * 100}%)`; };
+  function drawPieces() {
+    const box = $('pieces'); box.innerHTML = ''; pcs = {};
+    for (const row of game.board()) for (const p of row) if (p) {
+      const el = document.createElement('div'); el.className = `pc ${p.color}${p.type}`; place(el, p.square); box.appendChild(el); pcs[p.square] = el;
+    }
+  }
+  function mark(cls, sqs) {
+    document.querySelectorAll('.sq.' + cls).forEach((e) => e.classList.remove(cls));
+    for (const s of sqs) document.querySelector(`.sq[data-sq="${s}"]`)?.classList.add(cls);
+  }
+  function dots(from) {
+    document.querySelectorAll('.sq .dot,.sq .cap').forEach((e) => e.remove());
+    if (!from || !game) return;
+    for (const m of game.moves({ square: from, verbose: true })) document.querySelector(`.sq[data-sq="${m.to}"]`)?.insertAdjacentHTML('beforeend', m.captured ? '<i class="cap"></i>' : '<i class="dot"></i>');
+  }
+  function animMove(m) {
+    const el = pcs[m.from];
+    const capSq = m.flags.includes('e') ? m.to[0] + m.from[1] : m.to;
+    if (m.captured && pcs[capSq]) { const c = pcs[capSq]; c.classList.add('gone'); setTimeout(() => c.remove(), 160); delete pcs[capSq]; }
+    if (el) { place(el, m.to); pcs[m.to] = el; delete pcs[m.from]; if (m.promotion) el.className = `pc ${m.color}${m.promotion}`; }
+    if (m.flags.includes('k') || m.flags.includes('q')) {
+      const r = m.to[1], [rf, rt] = m.flags.includes('k') ? ['h' + r, 'f' + r] : ['a' + r, 'd' + r];
+      const re = pcs[rf]; if (re) { place(re, rt); pcs[rt] = re; delete pcs[rf]; }
+    }
+    mark('last', [m.from, m.to]); sPiece(m);
+  }
+  function playUci(u) { const m = game.move({ from: u.slice(0, 2), to: u.slice(2, 4), promotion: u[4] }); animMove(m); return m; }
+  function shake() { $('bw').classList.remove('shake'); void $('bw').offsetWidth; $('bw').classList.add('shake'); sBad(); }
+  function burst(sq) {
+    if (!sq || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const [x, y] = xy(sq), cols = ['#3fcf7d', '#ffd34d', '#ff8a2b', '#eae9d2', '#ffffff'];
+    for (let i = 0; i < 26; i++) {
+      const b = document.createElement('i'); b.className = 'burst';
+      const a = Math.random() * Math.PI * 2, r = 50 + Math.random() * 90;
+      b.style.cssText = `left:${(x + 0.5) * 12.5}%;top:${(y + 0.5) * 12.5}%;background:${cols[i % 5]};--x:${Math.cos(a) * r}px;--y:${Math.sin(a) * r}px`;
+      $('bw').appendChild(b); setTimeout(() => b.remove(), 950);
+    }
+  }
+
+  // right-click: red squares and arrows
+  let arrows = [], rstart = null;
+  function clearMarks() { arrows = []; $('arrowg').innerHTML = ''; document.querySelectorAll('.sq.red').forEach((e) => e.classList.remove('red')); }
+  // Arrows are one filled shape (shaft + head) so the see-through orange looks even. Knight moves bend in an L:
+  // the long leg first, like Chess.com.
+  function arrowPath([a, b]) {
+    const [x1, y1] = xy(a), [x2, y2] = xy(b), dx = x2 - x1, dy = y2 - y1;
+    const W = 0.24 / 2, HW = 0.6 / 2, HL = 0.46, R = (v) => +v.toFixed(3);
+    const knight = (Math.abs(dx) === 1 && Math.abs(dy) === 2) || (Math.abs(dx) === 2 && Math.abs(dy) === 1);
+    const s = [x1 + 0.5, y1 + 0.5], t = [x2 + 0.5, y2 + 0.5];
+    const pts = knight ? [s, Math.abs(dx) > Math.abs(dy) ? [t[0], s[1]] : [s[0], t[1]], t] : [s, t];
+    const segs = []; for (let i = 0; i < pts.length - 1; i++) { const [ax, ay] = pts[i], [bx, by] = pts[i + 1], L = Math.hypot(bx - ax, by - ay); segs.push({ u: [(bx - ax) / L, (by - ay) / L] }); }
+    segs.forEach((g) => { g.n = [-g.u[1], g.u[0]]; });
+    const last = segs[segs.length - 1], tip = [t[0] + last.u[0] * 0.08, t[1] + last.u[1] * 0.08];
+    const base = [tip[0] - last.u[0] * HL, tip[1] - last.u[1] * HL];
+    const off = (p, n, k) => [p[0] + n[0] * k, p[1] + n[1] * k];
+    const side = (k) => { const out = [off(s, segs[0].n, k)]; if (knight) out.push([pts[1][0] + (segs[0].n[0] + segs[1].n[0]) * k, pts[1][1] + (segs[0].n[1] + segs[1].n[1]) * k]); out.push(off(base, last.n, k)); return out; };
+    const left = side(W), right = side(-W).reverse();
+    const poly = [...left, off(base, last.n, HW), tip, off(base, last.n, -HW), ...right];
+    return `<path d="M${poly.map(([x, y]) => `${R(x)} ${R(y)}`).join('L')}Z" fill="rgba(255,170,0,.62)"/>`;
+  }
+  function drawArrows() {
+    $('arrowg').innerHTML = arrows.map(arrowPath).join('');
+  }
+  const sqFromPoint = (cx, cy) => {
+    const r = $('bw').getBoundingClientRect();
+    const x = Math.floor((cx - r.left) / r.width * 8), y = Math.floor((cy - r.top) / r.height * 8);
+    return x < 0 || y < 0 || x > 7 || y > 7 ? null : sqAt(x, y);
+  };
+  function cancelDrag() {
+    if (!drag) return false;
+    const d = drag; drag = null; d.el.classList.remove('drag'); place(d.el, d.s);
+    sel = null; mark('sel', []); dots(null); rstart = null; ignoreRight = true;
+    return true;
+  }
+  let ignoreRight = false;
+  $('bw').addEventListener('contextmenu', (e) => { e.preventDefault(); cancelDrag(); });
+  let drag = null;
+  $('bw').addEventListener('pointerdown', (ev) => {
+    const s = sqFromPoint(ev.clientX, ev.clientY); if (!s) return;
+    if (ev.button === 2) { if (cancelDrag()) return; ignoreRight = false; rstart = s; ev.preventDefault(); return; }
+    if (ev.button !== 0) return;
+    clearMarks();
+    if (onSquareClick) { onSquareClick(s); return; }
+    if (locked || !game) return;
+    const p = game.get(s);
+    if (sel && sel !== s && game.moves({ square: sel, verbose: true }).some((m) => m.to === s)) { tryMove(sel, s); return; }
+    if (p && p.color === game.turn() && pcs[s]) {
+      sel = s; mark('sel', [s]); dots(s);
+      drag = { el: pcs[s], s, r: $('bw').getBoundingClientRect(), moved: false }; drag.el.classList.add('drag');
+      $('bw').setPointerCapture(ev.pointerId);
+    } else { sel = null; mark('sel', []); dots(null); }
+  });
+  $('bw').addEventListener('pointermove', (ev) => {
+    if (drag && (ev.buttons & 2)) { cancelDrag(); return; }
+    if (!drag) return;
+    drag.moved = true;
+    const w = drag.r.width / 8;
+    drag.el.style.transform = `translate(${ev.clientX - drag.r.left - w / 2}px,${ev.clientY - drag.r.top - w / 2}px)`;
+  });
+  $('bw').addEventListener('pointerup', (ev) => {
+    if (ev.button === 2) {
+      const s = sqFromPoint(ev.clientX, ev.clientY), a = rstart; rstart = null;
+      if (ignoreRight) { ignoreRight = false; return; }
+      if (!s || !a) return;
+      if (s === a) document.querySelector(`.sq[data-sq="${s}"]`)?.classList.toggle('red');
+      else { const i = arrows.findIndex(([x, y]) => x === a && y === s); if (i >= 0) arrows.splice(i, 1); else arrows.push([a, s]); drawArrows(); }
+      return;
+    }
+    if (!drag) return;
+    const d = drag; drag = null; d.el.classList.remove('drag');
+    const s = sqFromPoint(ev.clientX, ev.clientY);
+    if (d.moved && s && s !== d.s) tryMove(d.s, s); else place(d.el, d.s);
+  });
+  // resizable board
+  // biggest board that still fits beside the fixed-width side panel (stacked layout below 900px: full width)
+  const maxBoard = () => { const vw = document.documentElement.clientWidth, pad = 2 * Math.max(vw * 0.04, 16); return Math.min(1600, vw <= 900 ? vw - pad : vw - pad - 360 - 28); };
+  const applySize = () => { if (st.boardSize) document.documentElement.style.setProperty('--bsize', st.boardSize + 'px'); else document.documentElement.style.removeProperty('--bsize'); };
+  applySize();
+  let rs = null;
+  $('grip').addEventListener('pointerdown', (e) => { e.stopPropagation(); e.preventDefault(); rs = { x: e.clientX, y: e.clientY, w: $('bw').getBoundingClientRect().width + 16 }; $('grip').setPointerCapture(e.pointerId); });
+  $('grip').addEventListener('pointermove', (e) => { if (!rs) return; const d = Math.max(e.clientX - rs.x, e.clientY - rs.y); st.boardSize = Math.round(Math.max(280, Math.min(maxBoard(), rs.w + d))); applySize(); });
+  $('grip').addEventListener('pointerup', (e) => { e.stopPropagation(); if (rs) { rs = null; save(); } });
+  $('grip').addEventListener('dblclick', (e) => { e.stopPropagation(); st.boardSize = null; applySize(); save(); });
+
+  function tryMove(from, to) {
+    const legal = game.moves({ square: from, verbose: true }).filter((m) => m.to === to);
+    if (!legal.length) { if (pcs[from]) place(pcs[from], from); return; }
+    const promo = legal[0].promotion ? 'q' : undefined;
+    sel = null; mark('sel', []); dots(null);
+    const m = game.move({ from, to, promotion: promo }); animMove(m);
+    if (onUserMove) onUserMove(from + to + (promo || ''), m);
+  }
+
+  // ---------- progress ----------
+  function level() { let lv = 1, need = 60, xp = st.xp; while (xp >= need) { xp -= need; lv++; need = Math.round(need * 1.18); } return { lv, xp, need }; }
+  function streak() {
+    let n = 0; const d = new Date();
+    if ((st.days[today()] || 0) < GOAL) d.setDate(d.getDate() - 1);
+    while ((st.days[d.toLocaleDateString('en-CA')] || 0) >= GOAL) { n++; d.setDate(d.getDate() - 1); }
+    return n;
+  }
+  function stats() {
+    const L = level(), tier = TIERS[Math.min(TIERS.length - 1, Math.floor((L.lv - 1) / 3))];
+    $('lvl').textContent = L.lv; $('lvlname').textContent = tier[0]; $('lvlpc').className = `lvlpc pc w${tier[1]}`;
+    $('xpbar').style.width = (L.xp / L.need * 100) + '%';
+    const t = st.days[today()] || 0;
+    $('today').textContent = t; $('ringarc').style.strokeDashoffset = 106.8 * (1 - Math.min(1, t / GOAL));
+    $('streak').textContent = streak(); $('flame').classList.toggle('off', t < GOAL);
+    $('sndw').style.display = st.sound ? '' : 'none';
+  }
+  function gain(xp, countsAsPuzzle = true) {
+    st.xp += xp; if (countsAsPuzzle) st.days[today()] = (st.days[today()] || 0) + 1; save(); stats();
+    const fly = document.createElement('div'); fly.className = 'xpfly'; fly.textContent = `+${xp} XP`; $('res').appendChild(fly);
+  }
+  function showRes(kind, title, html) { $('res').className = `res show ${kind}`; $('res').innerHTML = `<h2>${title}</h2>${html}`; }
+  function hideRes() { $('res').className = 'res'; $('res').innerHTML = ''; }
+  let actHandlers = {};
+  function setActs(list) { $('acts').innerHTML = list.map(([id, label, main]) => `<button class="btn ${main ? 'main' : ''}" data-act="${id}">${label}</button>`).join(''); }
+  $('panel').addEventListener('click', (e) => { const b = e.target.closest('[data-act]'); if (b && actHandlers[b.dataset.act]) actHandlers[b.dataset.act](); });
+  function reset(kind) {
+    onUserMove = null; onSquareClick = null; sel = null; locked = true; clearInterval(coordTimer);
+    hideRes(); $('target').hidden = true; $('bw').classList.toggle('nocoords', kind === 'coords'); $('bw').classList.remove('blind'); $('choice').innerHTML = '';
+    $('tags').innerHTML = ''; $('extra').innerHTML = ''; $('extra').onchange = null; $('extra').onclick = null;
+    for (const k of ['hint', 'sol', 'retry', 'restart', 'go', 'white', 'black', 'played', 'rvdone', 'again', 'skip', 'yes', 'no']) delete actHandlers[k];
+  }
+
+  // ---------- Lichess themed puzzle ----------
+  function pickThemed(themes) {
+    const theme = themes[Math.floor(Math.random() * themes.length)];
+    const pool = T[theme] || [];
+    const r = st.prate[theme] || START_RATING[theme];
+    const fresh = pool.filter((p) => !st.lseen[p[0]]);
+    const list = fresh.length ? fresh : pool;
+    const near = list.slice().sort((a, b) => Math.abs(a[3] - r) - Math.abs(b[3] - r)).slice(0, 6);
+    return { theme, p: near[Math.floor(Math.random() * near.length)] };
+  }
+  function runThemed(themes, done, fixed) {
+    reset();
+    const { theme, p } = fixed || pickThemed(themes);
+    const [pid, fen, movesStr, rating] = p, moves = movesStr.split(' ');
+    game = new Chess(fen); flip = game.turn() === 'w';
+    drawBoard();
+    const side = flip ? 'Black' : 'White';
+    $('kind').textContent = `${THEMES[theme]} · puzzle rated ${rating}`;
+    $('prompt').textContent = /^mateIn(\d)$/.test(theme) ? `${side} to move: mate in ${theme.slice(-1)}` : /Mate$/.test(theme) ? `${side} to move: find the mate` : theme === 'defensiveMove' ? `${side} to move: stay safe` : /Endgame$|zugzwang|quietMove/.test(theme) ? `${side} to move: find the best move` : `${side} to move and win`;
+    $('ctx').textContent = 'Watch their move first: what does it attack, and what did it uncover?';
+    let idx = 1, failed = false, over = false;
+    const g0 = game;
+    setTimeout(() => { if (game !== g0) return; playUci(moves[0]); locked = false; }, 550);
+    const finish = (ok) => {
+      if (over) return; over = true; locked = true; st.lseen[pid] = 1;
+      const clean = ok && !failed;
+      const r0 = st.prate[theme] || START_RATING[theme], exp = 1 / (1 + 10 ** ((rating - r0) / 400));
+      st.prate[theme] = Math.round(r0 + 32 * ((clean ? 1 : 0) - exp));
+      if (clean) { st.combo++; st.best = Math.max(st.best, st.combo); burst(game.history({ verbose: true }).slice(-1)[0]?.to); sGood(); } else st.combo = 0;
+      showRes(clean ? 'good' : 'bad', clean ? (st.combo > 2 ? `Solved. ${st.combo} in a row` : 'Solved') : ok ? 'Solved, with help' : 'Here was the solution',
+        `<p>Your ${THEMES[theme].toLowerCase()} rating: <b>${st.prate[theme]}</b> (${st.prate[theme] >= r0 ? '+' : ''}${st.prate[theme] - r0}).</p>`);
+      gain(clean ? 6 + Math.max(0, Math.round((rating - 600) / 150)) + Math.min(6, st.combo) : 1);
+      if (done) done(clean);
+      if (ok) autoNext(g0);
+    };
+    onUserMove = (uci, m) => {
+      const want = moves[idx];
+      if (uci === want || (uci.slice(0, 4) === want.slice(0, 4) && !want[4]) || game.isCheckmate()) {
+        idx++;
+        if (idx >= moves.length || game.isCheckmate()) return finish(true);
+        locked = true; setTimeout(() => { if (game !== g0) return; playUci(moves[idx]); idx++; locked = false; }, 380);
+      } else {
+        failed = true; st.combo = 0; shake(); mark('bad', [m.to]); locked = true;
+        showRes('bad', 'Not this one', '<p>Try again: checks, captures, threats.</p>');
+        setTimeout(() => { if (game !== g0) return; game.undo(); drawPieces(); mark('bad', []); locked = false; }, 600);
+      }
+    };
+    actHandlers.hint = () => { if (over || locked) return; failed = true; mark('hint', [moves[idx].slice(0, 2)]); };
+    actHandlers.sol = () => {
+      if (over || locked) return; failed = true; locked = true;
+      const step = () => { if (game !== g0) return; if (idx >= moves.length) return finish(false); playUci(moves[idx]); idx++; setTimeout(step, 650); };
+      step();
+    };
+    setActs([['hint', 'Hint'], ['sol', 'Show solution'], ['next', 'Next', true]]);
+  }
+
+  // After a correct puzzle: wait 1 second, then go on, unless a session step just finished.
+  let stepDone = false;
+  function autoNext(g0) {
+    if (mode && mode.session && stepDone) return false;
+    setTimeout(() => { if (game === g0 && actHandlers.next && !$('v-train').hidden) actHandlers.next(); }, 1000);
+    return true;
+  }
+
+  // ---------- own-game puzzle ----------
+  const card = (id) => (st.cards[id] = st.cards[id] || { box: 0, due: 0, seen: 0, ok: 0, miss: 0 });
+  const isDue = (p) => { const c = st.cards[p.id]; return !c || c.due <= Date.now(); };
+  function pickOwn(tag) {
+    let list = P.filter((p) => !tag || p.tags.includes(tag));
+    if (!list.length) list = P;
+    const due = list.filter((p) => st.cards[p.id] && st.cards[p.id].seen && st.cards[p.id].due <= Date.now());
+    if (due.length) return due[Math.floor(Math.random() * due.length)];
+    const fresh = list.filter((p) => !st.cards[p.id]).sort((a, b) => (b.game.date > a.game.date ? 1 : -1));
+    if (fresh.length) return fresh[Math.floor(Math.random() * Math.min(fresh.length, 15))];
+    return list[Math.floor(Math.random() * list.length)];
+  }
+  const fmtEval = (v) => v == null ? '' : Math.abs(v) > 2000 ? (v > 0 ? 'forced mate' : 'getting mated') : (v >= 0 ? '+' : '') + (v / 100).toFixed(1);
+  function runOwn(p, done) {
+    reset();
+    game = new Chess(p.fen); flip = game.turn() === 'b'; locked = false;
+    drawBoard();
+    const showLast = () => mark('last', p.last ? [p.last.slice(0, 2), p.last.slice(2, 4)] : []);
+    showLast();
+    const side = game.turn() === 'w' ? 'White' : 'Black';
+    $('kind').textContent = `From your games · ${p.kind === 'mate' ? 'Find the mate' : p.kind === 'punish' ? 'Punish it' : 'Stay safe'}`;
+    $('prompt').textContent = p.kind === 'mate' ? `${side} to move: mate in ${p.mateIn}` : p.kind === 'punish' ? `${side} to move and win` : `${side} to move. Find the safe move`;
+    const g = p.game, d = new Date(g.date.replaceAll('.', '-') + 'T12:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    $('ctx').innerHTML = `${p.lastLabel ? `They just played <span class="mv">${esc(p.lastLabel)}</span>. ` : ''}Your game vs <b>${esc(g.opp)}</b>, ${d}.`;
+    $('tags').innerHTML = p.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join('');
+    let tries = 0, hinted = false, over = false;
+    const g0 = game;
+    const solved = (uci) => {
+      over = true; locked = true; mark('ok', [uci.slice(2, 4)]); sGood(); burst(uci.slice(2, 4));
+      const c = card(p.id); let xp;
+      if (tries === 0) { st.combo++; st.best = Math.max(st.best, st.combo); xp = 10 * p.difficulty + Math.min(10, (st.combo - 1) * 2); if (hinted) xp = Math.round(xp / 2); c.box = Math.min(5, c.box + 1); c.ok++; }
+      else { xp = 2; c.box = Math.max(1, c.box); }
+      c.seen++; c.due = Date.now() + GAPS[c.box] * DAY - 3600e3;
+      showRes('good', tries === 0 ? (st.combo > 2 ? `Solved. ${st.combo} in a row` : 'Solved') : 'Got it on a retry',
+        `<p><b>Best:</b> <span class="mv">${esc(p.line)}</span> (${fmtEval(p.evalBest)})${uci === p.best ? '' : '. Your move works too.'}</p>
+         <p><b>In the game</b> you played <span class="mv">${esc(p.played)}</span>${p.afterLine ? `, which allowed <span class="mv">${esc(p.afterLine)}</span>` : ''}.</p>
+         <p>${c.box >= 4 ? '<b>Mastered.</b> ' : ''}Back in ${GAPS[c.box] ? GAPS[c.box] + ' day' + (GAPS[c.box] > 1 ? 's' : '') : 'a bit'}. <a href="${esc(g.url)}" target="_blank" rel="noopener">Open the game</a></p>`);
+      gain(xp);
+      if (done) done(tries === 0 && !hinted);
+      if (!autoNext(g0) && uci === p.best) playLine(p, 1, g0);
+    };
+    onUserMove = (uci, m) => {
+      if (p.accepted.includes(uci)) return solved(uci);
+      tries++; st.combo = 0; shake(); mark('bad', [m.to]);
+      if (tries === 1) { const c = card(p.id); c.box = 0; c.miss++; c.seen++; c.due = Date.now() + 10 * 60e3; save(); }
+      const wasGame = uci.slice(0, 4) === p.playedUci.slice(0, 4);
+      showRes('bad', wasGame ? "That's the move you played in the game" : 'Not this one. Try again', wasGame ? `<p>It allowed <span class="mv">${esc(p.afterLine || '')}</span>.</p>` : '<p>Their threats first, then your checks, captures and threats.</p>');
+      locked = true; setTimeout(() => { if (game !== g0) return; game.undo(); drawPieces(); mark('bad', []); showLast(); locked = false; }, 650);
+    };
+    actHandlers.hint = () => { if (over) return; hinted = true; mark('hint', [p.best.slice(0, 2)]); };
+    actHandlers.sol = () => {
+      if (over || locked) return; over = true; locked = true;
+      if (tries === 0) { const c = card(p.id); c.box = 0; c.seen++; c.due = Date.now() + 10 * 60e3; st.combo = 0; save(); }
+      playUci(p.best); mark('ok', [p.best.slice(2, 4)]);
+      showRes('bad', `The move was ${esc(p.bestSan)}`, `<p><span class="mv">${esc(p.line)}</span>. In the game you played <span class="mv">${esc(p.played)}</span>${p.afterLine ? `, allowing <span class="mv">${esc(p.afterLine)}</span>` : ''}.</p><p>It comes back in about 10 minutes.</p>`);
+      playLine(p, 1, g0); gain(1); if (done) done(false);
+    };
+    setActs([['hint', 'Hint'], ['sol', 'Show solution'], ['next', 'Next', true]]);
+  }
+  function playLine(p, i, g0) {
+    if (i >= p.pv.length || i > 5) return;
+    setTimeout(() => { if (game !== g0) return; try { playUci(p.pv[i]); playLine(p, i + 1, g0); } catch (e) {} }, 750);
+  }
+
+  // ---------- coordinates sprint ----------
+  let coordTimer = null;
+  function runCoords(done, side) {
+    reset('coords');
+    side = side || (Math.random() < 0.5 ? 'w' : 'b');
+    game = null; flip = side === 'b';
+    drawBoard(false);
+    $('kind').textContent = 'Board vision'; $('prompt').textContent = 'Coordinates sprint';
+    $('ctx').innerHTML = `Click the square that appears. 30 seconds, as ${side === 'w' ? 'White' : 'Black'}. Your best: <b>${st.coordsBest[side] || 0}</b>.`;
+    let score = 0, misses = 0, cur = null, left = 30, running = false;
+    const next = () => { let n; do { n = files[Math.floor(Math.random() * 8)] + (1 + Math.floor(Math.random() * 8)); } while (n === cur); cur = n; $('targetsq').textContent = cur; };
+    const show = () => { $('extra').innerHTML = `<div class="counter" style="margin-top:12px">${score} <small>found · ${left}s left${misses ? ` · ${misses} missed` : ''}</small></div>`; };
+    onSquareClick = (s) => {
+      if (!running) return;
+      if (s === cur) { score++; mark('ok', [s]); sTick(); setTimeout(() => mark('ok', []), 150); next(); }
+      else { misses++; mark('bad', [s]); setTimeout(() => mark('bad', []), 200); }
+      show();
+    };
+    actHandlers.go = () => {
+      if (running) return;
+      running = true; left = 30; score = 0; misses = 0; next(); $('target').hidden = false; show(); hideRes();
+      coordTimer = setInterval(() => {
+        left--; show();
+        if (left <= 0) {
+          clearInterval(coordTimer); running = false; $('target').hidden = true;
+          const prev = st.coordsBest[side] || 0; if (score > prev) st.coordsBest[side] = score;
+          showRes('good', score > prev ? `New best: ${score}` : `${score} squares`, `<p>${misses} missed. Your best as ${side === 'w' ? 'White' : 'Black'}: ${st.coordsBest[side]}.</p>`);
+          gain(Math.max(2, Math.round(score / 2)), false);
+          if (done) done(true);
+        }
+      }, 1000);
+    };
+    actHandlers.white = () => runCoords(done, 'w'); actHandlers.black = () => runCoords(done, 'b');
+    setActs([['go', 'Start', true], ['white', 'As White'], ['black', 'As Black']]);
+  }
+
+  // ---------- endgame mate drill ----------
+  function randomEndgame(kind) {
+    const E = ENDGAMES[kind];
+    for (let t = 0; t < 800; t++) {
+      const used = new Set();
+      const sq = (pred) => { for (let k = 0; k < 200; k++) { const s = files[Math.floor(Math.random() * 8)] + (1 + Math.floor(Math.random() * 8)); if (!used.has(s) && (!pred || pred(s))) { used.add(s); return s; } } return null; };
+      const bk = sq((s) => 'cdef'.includes(s[0]) && '3456'.includes(s[1]));
+      const wk = sq((s) => Math.max(Math.abs(files.indexOf(s[0]) - files.indexOf(bk[0])), Math.abs(+s[1] - +bk[1])) >= 3);
+      if (!wk) continue;
+      const g = new Chess(); g.clear();
+      g.put({ type: 'k', color: 'b' }, bk); g.put({ type: 'k', color: 'w' }, wk);
+      for (const pc of E.pieces) g.put({ type: pc.toLowerCase(), color: 'w' }, sq());
+      if (E.oppB) { const bs = g.board().flat().filter((p) => p && p.type === 'b'); const col = (s) => (files.indexOf(s[0]) + +s[1]) % 2; if (bs.length === 2 && col(bs[0].square) === col(bs[1].square)) continue; }
+      try {
+        const asBlack = new Chess(g.fen().replace(' w ', ' b '));
+        if (asBlack.isCheck() || asBlack.moves({ verbose: true }).some((m) => m.captured)) continue;
+        const asWhite = new Chess(g.fen().replace(' b ', ' w '));
+        if (asWhite.moves().length < 2) continue;
+        return asWhite.fen();
+      } catch (e) {}
+    }
+    return '8/8/3k4/8/8/8/8/Q3K3 w - - 0 1';
+  }
+  function defenderMove() {
+    const ms = game.moves({ verbose: true });
+    const cap = ms.find((m) => m.captured); if (cap) return cap;
+    const wk = game.board().flat().find((p) => p && p.type === 'k' && p.color === 'w');
+    let best = null, bs = -1e9;
+    for (const m of ms) {
+      const f = files.indexOf(m.to[0]), r = +m.to[1] - 1;
+      const edge = Math.min(f, 7 - f, r, 7 - r);
+      const dk = wk ? Math.max(Math.abs(f - files.indexOf(wk.square[0])), Math.abs(r - (+wk.square[1] - 1))) : 0;
+      const s = edge * 10 + dk * 2 + Math.random();
+      if (s > bs) { bs = s; best = m; }
+    }
+    return best;
+  }
+  function runEndgame(kind, done) {
+    reset();
+    const E = ENDGAMES[kind];
+    game = new Chess(randomEndgame(kind)); flip = false; locked = false;
+    drawBoard();
+    let moves = 0, over = false;
+    const g0 = game;
+    $('kind').textContent = 'Endgame drill'; $('prompt').textContent = E.name;
+    const info = () => { $('ctx').innerHTML = `Mate in at most <b>${E.limit}</b> moves. Moves used: <b>${moves}</b>. Don't stalemate: their king must always have a move.<br><span class="small">${esc(E.tip || '')}</span>`; };
+    info();
+    const end = (ok, title, text) => {
+      over = true; locked = true;
+      const rec = st.endgames[kind] = st.endgames[kind] || { wins: 0, tries: 0 }; rec.tries++; if (ok) rec.wins++;
+      showRes(ok ? 'good' : 'bad', title, `<p>${text}</p><p class="small">${E.name}: ${rec.wins} of ${rec.tries} won.</p>`);
+      if (ok) { sGood(); burst(game.history({ verbose: true }).slice(-1)[0]?.to); gain(moves <= E.limit ? 25 : 12, false); } else { sBad(); save(); }
+      if (done) done(ok);
+    };
+    onUserMove = () => {
+      moves++; info();
+      if (game.isCheckmate()) return end(true, `Mate in ${moves}`, moves <= E.limit ? 'Clean technique.' : 'Mated, but slower than the target. Shrink the box one rank at a time.');
+      if (game.isStalemate()) return end(false, 'Stalemate', "Their king had no legal move but wasn't in check. Always leave it a square.");
+      if (moves >= E.limit + 15) return end(false, 'Out of moves', 'Bring your king up to help, and shrink the box one rank at a time.');
+      locked = true;
+      setTimeout(() => {
+        if (game !== g0 || over) return;
+        const mm = game.move(defenderMove().san); animMove(mm);
+        if (game.isInsufficientMaterial()) return end(false, 'Piece lost', 'Their king took your piece. Keep it protected or away from their king.');
+        locked = false;
+      }, 380);
+    };
+    actHandlers.retry = () => runEndgame(kind, done);
+    setActs([['retry', 'New position'], ['next', 'Next', true]]);
+  }
+
+  // ---------- opening line ----------
+  // ---------- punish it: opponent leaves the book with a mistake (deviations.json, engine-checked) ----------
+  function indexDevs() {
+    const byFen = {}; for (const d of D) (byFen[d.before] = byFen[d.before] || []).push(d);
+    devByLine = {};
+    for (const L of O) {
+      const g = new Chess(), list = [];
+      L.moves.forEach((u, i) => { for (const d of byFen[g.fen()] || []) if (d.ply === i && d.side === L.side) list.push(d); g.move({ from: u.slice(0, 2), to: u.slice(2, 4), promotion: u[4] }); });
+      devByLine[L.id] = list;
+    }
+  }
+  function pickDev(list) {
+    list = list && list.length ? list : D;
+    const now = Date.now();
+    const due = list.filter((d) => st.cards[d.id] && st.cards[d.id].seen && st.cards[d.id].due <= now);
+    if (due.length) return due[Math.floor(Math.random() * due.length)];
+    const fresh = list.filter((d) => !st.cards[d.id]);
+    if (fresh.length) return fresh[Math.floor(Math.random() * fresh.length)];
+    return list[Math.floor(Math.random() * list.length)];
+  }
+  const devDue = () => D.filter((d) => !st.cards[d.id] || (st.cards[d.id].due <= Date.now())).length;
+  function punishMode(p, done, inLine) {
+    const g0 = game; let tries = 0, hinted = false, over = false;
+    const showLast = () => mark('last', [p.last.slice(0, 2), p.last.slice(2, 4)]);
+    showLast();
+    const L = O.find((x) => x.id === p.lineId);
+    $('kind').textContent = inLine ? 'Opening trainer · they left the book' : `Punish it · ${L ? L.name : 'your openings'}`;
+    $('prompt').textContent = `They played ${p.lastLabel}. Punish it!`;
+    $('ctx').innerHTML = `The book move was <span class="mv">${esc(p.bookLabel)}</span>. Ask what their move stopped doing, skipped, or left loose.`;
+    $('tags').innerHTML = '';
+    const result = (good) => {
+      const c = card(p.id), next = GAPS[c.box];
+      return `<p>${esc(p.why)}</p><p><b>Line:</b> <span class="mv">${esc(p.line)}</span> (${fmtEval(p.evalBest)})</p><p class="small">${good && c.box >= 4 ? 'Mastered. ' : ''}Back in ${next ? next + ' day' + (next > 1 ? 's' : '') : 'a bit'}.</p>`;
+    };
+    onUserMove = (uci, m) => {
+      if (over) return;
+      if (p.accepted.some((a) => a.slice(0, 4) === uci.slice(0, 4))) {
+        over = true; locked = true; mark('ok', [uci.slice(2, 4)]); sGood(); burst(uci.slice(2, 4));
+        const c = card(p.id);
+        if (tries === 0 && !hinted) { c.box = Math.min(5, c.box + 1); c.ok++; } else c.box = Math.max(1, c.box);
+        c.seen++; c.due = Date.now() + GAPS[c.box] * DAY - 3600e3;
+        showRes('good', tries === 0 ? 'Punished' : 'Got it on a retry', result(true));
+        gain(tries === 0 ? (hinted ? 5 : 12) : 2);
+        if (done) done(tries === 0 && !hinted);
+        if (uci.slice(0, 4) === p.best.slice(0, 4)) playLine(p, 1, g0);
+        return;
+      }
+      tries++; st.combo = 0; shake(); mark('bad', [m.to]);
+      if (tries === 1) { const c = card(p.id); c.box = 0; c.miss++; c.seen++; c.due = Date.now() + 10 * 60e3; save(); }
+      showRes('bad', 'Not this one. Try again', '<p>What did their move stop guarding, or walk into? Look for a capture first.</p>');
+      locked = true; setTimeout(() => { if (game !== g0) return; game.undo(); drawPieces(); mark('bad', []); showLast(); locked = false; }, 650);
+    };
+    actHandlers.hint = () => { if (over) return; hinted = true; mark('hint', [p.best.slice(0, 2)]); };
+    actHandlers.sol = () => {
+      if (over || locked) return; over = true; locked = true;
+      const c = card(p.id); c.box = 0; c.seen++; c.due = Date.now() + 10 * 60e3; st.combo = 0; save();
+      playUci(p.best); mark('ok', [p.best.slice(2, 4)]);
+      showRes('bad', `The move was ${esc(p.bestSan)}`, result(false));
+      playLine(p, 1, g0); gain(1); if (done) done(false);
+    };
+    setActs(inLine ? [['hint', 'Hint'], ['sol', 'Show answer'], ['restart', 'Restart line'], ['next', 'Next line', true]] : [['hint', 'Hint'], ['sol', 'Show answer'], ['next', 'Next', true]]);
+  }
+  function runDev(p, done) {
+    if (!p) { renderOpenings(); return; }
+    reset();
+    game = new Chess(p.fen); flip = p.side === 'b'; locked = false;
+    drawBoard();
+    punishMode(p, done, false);
+  }
+  let lastOpen = null;
+  // next opening: never the same line twice in a row; same side as the last one; fewest clean runs first, then list order
+  function pickNextOpening(side, fam) {
+    const cur = lastOpen, idx = cur ? O.indexOf(cur) : -1, want = side || (cur && cur.side);
+    let pool = fam ? O.filter((l) => l !== cur && l.fam === fam) : O.filter((l) => l !== cur && (!want || l.side === want));
+    if (fam && !pool.length) pool = O.filter((l) => l.fam === fam);
+    if (!pool.length) pool = O.filter((l) => l !== cur);
+    const rank = (l) => ((st.lines[l.id] && st.lines[l.id].clean) || 0) * 100 + ((O.indexOf(l) - idx + O.length) % O.length);
+    return pool.sort((a, b) => rank(a) - rank(b))[0] || O[0];
+  }
+  function runOpening(line, done) {
+    lastOpen = line;
+    reset();
+    game = new Chess(); flip = line.side === 'b';
+    drawBoard();
+    $('kind').textContent = `Opening trainer · you play ${line.side === 'w' ? 'White' : 'Black'}`;
+    $('prompt').textContent = line.name; $('ctx').textContent = line.idea;
+    let i = 0, errs = 0;
+    const devs = devByLine[line.id] || [], surprise = devs.length && Math.random() < 0.35 ? pickDev(devs) : null;
+    const g0 = game;
+    const mine = (k) => (k % 2 === 0) === (line.side === 'w');
+    const advance = () => {
+      if (game !== g0) return;
+      if (i >= line.moves.length) {
+        locked = true; const rec = st.lines[line.id] = st.lines[line.id] || { done: 0, clean: 0 }; rec.done++; if (!errs) rec.clean = (rec.clean || 0) + 1;
+        sGood();
+        showRes('good', errs ? 'Line complete' : 'Perfect line', `<p class="mv">${esc(line.pgn)}</p><p class="small">Clean runs: ${rec.clean || 0}. Three clean runs and it sticks.</p>`);
+        gain(errs ? 5 : 15, false);
+        if (done) done(true); return;
+      }
+      if (!mine(i)) { locked = true; setTimeout(() => { if (game !== g0) return; if (surprise && i === surprise.ply) { playUci(surprise.last); hideRes(); punishMode(surprise, done, true); locked = false; return; } playUci(line.moves[i]); i++; advance(); }, 450); }
+      else locked = false;
+    };
+    onUserMove = (uci) => {
+      const want = line.moves[i];
+      if (uci.slice(0, 4) === want.slice(0, 4)) { hideRes(); i++; advance(); }
+      else {
+        errs++; shake(); locked = true;
+        showRes('bad', 'Not the book move', errs >= 2 ? '<p>The arrow shows it.</p>' : '<p>Try again.</p>');
+        setTimeout(() => { if (game !== g0) return; game.undo(); drawPieces(); locked = false; if (errs >= 2) { arrows = [[want.slice(0, 2), want.slice(2, 4)]]; drawArrows(); } }, 600);
+      }
+    };
+    actHandlers.restart = () => runOpening(line, done);
+    setActs([['restart', 'Restart line'], ['next', 'Next line', true]]);
+    advance();
+  }
+
+  // ======================= study additions (Nov 26) =======================
+  // Spaced-repetition grade for any card id (same boxes and gaps as your positions).
+  function grade(id, clean, retried) {
+    const c = card(id);
+    if (clean) { c.box = Math.min(5, c.box + 1); c.ok++; }
+    else if (retried) c.box = Math.max(1, c.box);
+    else { c.box = 0; c.miss++; }
+    c.seen++; c.due = Date.now() + (clean || retried ? GAPS[c.box] * DAY - 3600e3 : 10 * 60e3);
+    return c;
+  }
+  const backIn = (c) => { const g = GAPS[c.box]; return c.due - Date.now() < 3600e3 ? 'It comes back in a few minutes.' : `${c.box >= 4 ? 'Mastered. ' : ''}Back in ${g} day${g > 1 ? 's' : ''}.`; };
+  function pickSR(list) {
+    if (!list.length) return null;
+    const now = Date.now();
+    const due = list.filter((d) => st.cards[d.id] && st.cards[d.id].seen && st.cards[d.id].due <= now);
+    if (due.length) return due[Math.floor(Math.random() * due.length)];
+    const fresh = list.filter((d) => !st.cards[d.id]);
+    if (fresh.length) return fresh[Math.floor(Math.random() * fresh.length)];
+    const soonest = list.slice().sort((a, b) => st.cards[a.id].due - st.cards[b.id].due).slice(0, Math.max(3, Math.ceil(list.length / 5)));
+    return soonest[Math.floor(Math.random() * soonest.length)];
+  }
+  const dueCount = (list) => list.filter((d) => !st.cards[d.id] || st.cards[d.id].due <= Date.now()).length;
+  const pawns = (cp) => Math.abs(cp) >= 1400 ? 'mate' : `about ${(Math.abs(cp) / 100).toFixed(1)} pawns`;
+
+  // ---------- "Is it safe?": a move you actually played, safe or a blunder ----------
+  function runSafe(x, done) {
+    window.__gymCur = x;
+    if (!x) return renderPractice();
+    reset(); game = new Chess(x.fen); flip = game.turn() === 'b'; drawBoard();
+    if (x.last) mark('last', [x.last.slice(0, 2), x.last.slice(2, 4)]);
+    arrows = [[x.move.slice(0, 2), x.move.slice(2, 4)]]; drawArrows();
+    const g0 = game, side = game.turn() === 'w' ? 'White' : 'Black';
+    $('kind').textContent = 'Blunder check · a move from your games';
+    $('prompt').textContent = `${side}: you want to play ${x.moveSan}. Is it safe?`;
+    $('ctx').innerHTML = 'Before you answer, look at it from their side: their checks, their captures, and what this move stops guarding.';
+    $('choice').innerHTML = '<div class="choice"><button class="btn big" type="button" data-act="yes">Safe</button><button class="btn big" type="button" data-act="no">Not safe</button></div>';
+    let over = false;
+    const answer = (saysSafe) => {
+      if (over) return; over = true;
+      const right = saysSafe === x.safe, c = grade(x.id, right);
+      $('choice').innerHTML = ''; clearMarks();
+      if (right) { st.combo++; st.best = Math.max(st.best, st.combo); sGood(); } else { st.combo = 0; sBad(); }
+      playUci(x.move);
+      const body = x.safe
+        ? `<p><b>${esc(x.moveSan)} was safe.</b> You played it in the game and the engine agrees: nothing loses.</p>`
+        : `<p><b>${esc(x.moveSan)} was a blunder</b>: ${x.loss >= 1400 ? 'it allows mate' : `it costs ${pawns(x.loss)}`}. Their reply: <span class="mv">${esc(x.line)}</span></p>`;
+      showRes(right ? 'good' : 'bad', right ? (st.combo > 2 ? `Right. ${st.combo} in a row` : 'Right') : x.safe ? 'It was actually fine' : 'It was a blunder', body + `<p class="small">${backIn(c)}</p>`);
+      if (!x.safe) setTimeout(() => { if (game !== g0) return; try { playUci(x.reply); arrows = [[x.reply.slice(0, 2), x.reply.slice(2, 4)]]; drawArrows(); } catch (e) {} }, 700);
+      gain(right ? 6 : 1);
+      setActs([['next', 'Next', true]]);
+      if (done) done(right);
+    };
+    actHandlers.yes = () => answer(true); actHandlers.no = () => answer(false);
+    setActs([['next', 'Skip']]);
+  }
+
+  // ---------- "What do they threaten?": if you passed, what would they play? ----------
+  function runThreat(x, done) {
+    window.__gymCur = x;
+    if (!x) return renderPractice();
+    reset();
+    const real = new Chess(x.fen), me = real.turn();
+    const f = x.fen.split(' '); f[1] = me === 'w' ? 'b' : 'w'; f[3] = '-';
+    try { game = new Chess(f.join(' ')); } catch (e) { return runThreat(pickSR(DR.threat.filter((y) => y !== x)), done); }
+    flip = me === 'b'; locked = false; drawBoard();
+    const showLast = () => { if (x.last) mark('last', [x.last.slice(0, 2), x.last.slice(2, 4)]); };
+    showLast();
+    const g0 = game;
+    $('kind').textContent = 'Their threat · a position from your games';
+    $('prompt').textContent = `It's your move, but first: what are they threatening?`;
+    $('ctx').innerHTML = `Play <b>their</b> move: the one they'd make if you passed. ${x.last ? 'Start with their last move (highlighted): what does it attack, and what did it uncover?' : ''}`;
+    let tries = 0, hinted = false, over = false;
+    const reveal = (good) => {
+      over = true; locked = true;
+      const c = grade(x.id, good && tries === 0 && !hinted, good);
+      arrows = [[x.threat.slice(0, 2), x.threat.slice(2, 4)]]; drawArrows();
+      showRes(good ? 'good' : 'bad', good ? (tries === 0 ? 'Spotted it' : 'Got it on a retry') : `They threaten ${esc(x.threatSan)}`,
+        `<p>${x.mate ? 'It would be <b>mate</b>' : `It would cost you ${pawns(x.drop)}`} if you ignored it: <span class="mv">${esc(x.line)}</span></p>${x.acc.length > 1 ? '<p class="small">There was more than one threat here; any of them counts.</p>' : ''}<p class="small">${backIn(c)}</p>`);
+      if (good) { sGood(); if (tries === 0 && !hinted) { st.combo++; st.best = Math.max(st.best, st.combo); } } else st.combo = 0;
+      gain(good ? (tries === 0 && !hinted ? 8 : 2) : 1);
+      setActs([['next', 'Next', true]]);
+      if (done) done(good && tries === 0 && !hinted);
+    };
+    onUserMove = (uci, m) => {
+      if (over) return;
+      if (x.acc.some((a) => a.slice(0, 4) === uci.slice(0, 4))) { mark('ok', [m.to]); burst(m.to); return reveal(true); }
+      tries++; shake(); mark('bad', [m.to]); locked = true;
+      if (tries === 1) { const c = card(x.id); c.box = 0; c.miss++; save(); }
+      showRes('bad', 'Not that one', tries >= 2 ? '<p>Look for the piece their last move attacks, or a line it opened.</p>' : '<p>Which of your pieces is loose, or which of their pieces just got a new target?</p>');
+      setTimeout(() => { if (game !== g0) return; game.undo(); drawPieces(); mark('bad', []); showLast(); locked = false; hideRes(); }, 900);
+    };
+    actHandlers.hint = () => { if (over) return; hinted = true; mark('hint', [x.threat.slice(0, 2)]); };
+    actHandlers.sol = () => { if (over || locked) return; playUci(x.threat); reveal(false); };
+    setActs([['hint', 'Hint'], ['sol', 'Show it'], ['next', 'Next', true]]);
+  }
+
+  // ---------- guided study: mate patterns and endgame lines (engine-checked steps) ----------
+  function runStudy(x, done) {
+    window.__gymCur = x;
+    if (!x) return renderPractice();
+    reset(); game = new Chess(x.fen); flip = game.turn() === 'b'; locked = false; drawBoard();
+    const g0 = game, side = game.turn() === 'w' ? 'White' : 'Black', isMate = x.id.startsWith('pat-');
+    $('kind').textContent = isMate ? 'Mate patterns' : `Endgame essentials · ${x.group}`;
+    $('prompt').textContent = isMate ? (x.mate ? `${x.name}: ${side} mates in ${x.mate}` : `${x.name}: ${side} to move`) : `${x.name}: ${side} to move`;
+    $('ctx').innerHTML = isMate ? 'Find the pattern. The idea is explained once you solve it.' : esc(x.why);
+    let k = 0, tries = 0, hinted = false, over = false;
+    const finish = (good, extra) => {
+      over = true; locked = true;
+      const clean = good && tries === 0 && !hinted, c = grade(x.id, clean, good);
+      if (good) { sGood(); burst(game.history({ verbose: true }).slice(-1)[0]?.to); }
+      showRes(good ? 'good' : 'bad', good ? (clean ? 'Solved' : 'Solved, with help') : 'Here is how it goes', `${extra || ''}${isMate ? `<p>${esc(x.why)}</p>` : `<p class="small">${good ? 'That is the technique.' : 'Watch the line, then try it again later.'}</p>`}${x.line ? `<p><span class="mv">${esc(x.line)}</span></p>` : ''}<p class="small">${backIn(c)}</p>`);
+      gain(clean ? 10 : good ? 3 : 1);
+      setActs([['restart', 'Try again'], ['next', 'Next', true]]);
+      if (done) done(clean);
+    };
+    const afterMine = (uci) => {
+      const step = x.steps[k];
+      if (game.isCheckmate() || k === x.steps.length - 1) return finish(true);
+      if (uci.slice(0, 4) !== step.play.slice(0, 4) || !step.reply) return finish(true, '<p>Your move works too.</p>');
+      k++; locked = true;
+      setTimeout(() => { if (game !== g0) return; try { playUci(step.reply); } catch (e) { return finish(true); } locked = false; }, 450);
+    };
+    onUserMove = (uci, m) => {
+      if (over) return;
+      const step = x.steps[k];
+      if (step.acc.some((a) => a.slice(0, 4) === uci.slice(0, 4)) || game.isCheckmate()) { hideRes(); return afterMine(uci); }
+      tries++; shake(); mark('bad', [m.to]); locked = true;
+      showRes('bad', 'Not this one', isMate ? '<p>Checks first. Which squares can their king still reach?</p>' : `<p>${x.goal === 'draw' ? "That one loses. Stick to the defence's rule." : 'That lets the win slip. Think about the plan above.'}</p>`);
+      setTimeout(() => { if (game !== g0) return; game.undo(); drawPieces(); mark('bad', []); locked = false; }, 750);
+    };
+    actHandlers.hint = () => { if (over) return; hinted = true; mark('hint', [x.steps[k].play.slice(0, 2)]); };
+    actHandlers.sol = () => {
+      if (over || locked) return; hinted = true; locked = true;
+      const run = () => {
+        if (game !== g0) return;
+        const step = x.steps[k]; if (!step) return finish(false);
+        playUci(step.play);
+        if (!step.reply || k === x.steps.length - 1) return finish(false);
+        setTimeout(() => { if (game !== g0) return; playUci(step.reply); k++; setTimeout(run, 650); }, 550);
+      };
+      run();
+    };
+    actHandlers.restart = () => runStudy(x, done);
+    setActs([['hint', 'Hint'], ['sol', 'Show me'], ['next', 'Next', true]]);
+  }
+
+  // ---------- king and pawn endings, played out against perfect defence (exact solver, built in the browser) ----------
+  const KPK = (() => {
+    let R = null, DP = null; // DP: the pass in which a win was found, a rough distance to promotion
+    const F = (s) => s & 7, Rk = (s) => s >> 3;
+    const adj = (a, b) => Math.max(Math.abs(F(a) - F(b)), Math.abs(Rk(a) - Rk(b))) <= 1;
+    const KN = []; for (let s = 0; s < 64; s++) { KN[s] = []; for (let df = -1; df <= 1; df++) for (let dr = -1; dr <= 1; dr++) { if (!df && !dr) continue; const f = F(s) + df, r = Rk(s) + dr; if (f >= 0 && f < 8 && r >= 0 && r < 8) KN[s].push(r * 8 + f); } }
+    const pAtt = (p, s) => Rk(s) === Rk(p) + 1 && Math.abs(F(s) - F(p)) === 1;
+    const idx = (stm, wk, bk, p) => ((stm * 64 + wk) * 64 + bk) * 64 + p;
+    const qAtt = (q, s, wk) => { if (q === s) return false; const df = Math.sign(F(s) - F(q)), dr = Math.sign(Rk(s) - Rk(q)); if (!(F(s) === F(q) || Rk(s) === Rk(q) || Math.abs(F(s) - F(q)) === Math.abs(Rk(s) - Rk(q)))) return false; let c = q; for (;;) { c = (Rk(c) + dr) * 8 + F(c) + df; if (c === s) return true; if (c === wk) return false; } };
+    function promoWins(wk, bk, q) {
+      if (adj(q, bk) && !adj(q, wk)) return false;
+      if (qAtt(q, bk, wk)) return true;
+      for (const s of KN[bk]) if (!adj(s, wk) && !qAtt(q, s, wk) && s !== q) return true;
+      return false;
+    }
+    function legal(stm, wk, bk, p) { if (wk === bk || wk === p || bk === p || adj(wk, bk) || Rk(p) < 1 || Rk(p) > 6) return false; if (stm === 0 && pAtt(p, bk)) return false; return true; }
+    function build() {
+      R = new Int8Array(2 * 64 * 64 * 64).fill(-1); DP = new Uint8Array(2 * 64 * 64 * 64); let pass = 0;
+      for (let stm = 0; stm < 2; stm++) for (let wk = 0; wk < 64; wk++) for (let bk = 0; bk < 64; bk++) for (let p = 0; p < 64; p++) if (p < 8 || p >= 56 || !legal(stm, wk, bk, p)) R[idx(stm, wk, bk, p)] = -2;
+      let changed = true;
+      while (changed) {
+        changed = false; pass++;
+        for (let wk = 0; wk < 64; wk++) for (let bk = 0; bk < 64; bk++) for (let p = 8; p < 56; p++) {
+          let i = idx(0, wk, bk, p);
+          if (R[i] === -1) {
+            let anyWin = false, allDraw = true;
+            for (const s of KN[wk]) { if (s === p || adj(s, bk)) continue; const r = R[idx(1, s, bk, p)]; if (r === 1) anyWin = true; if (r !== 0) allDraw = false; }
+            const fw = p + 8;
+            if (fw !== wk && fw !== bk) {
+              if (fw >= 56) { if (promoWins(wk, bk, fw)) anyWin = true; }
+              else { const r = R[idx(1, wk, bk, fw)]; if (r === 1) anyWin = true; if (r !== 0) allDraw = false;
+                if (Rk(p) === 1 && fw + 8 !== wk && fw + 8 !== bk) { const r2 = R[idx(1, wk, bk, fw + 8)]; if (r2 === 1) anyWin = true; if (r2 !== 0) allDraw = false; } }
+            }
+            if (anyWin) { R[i] = 1; DP[i] = pass; changed = true; } else if (allDraw) { R[i] = 0; changed = true; }
+          }
+          i = idx(1, wk, bk, p);
+          if (R[i] === -1) {
+            let anyDraw = false, allWin = true, n = 0;
+            for (const s of KN[bk]) { if (adj(s, wk) || pAtt(p, s)) continue; n++; if (s === p) { anyDraw = true; continue; } const r = R[idx(0, wk, s, p)]; if (r === 0) anyDraw = true; if (r !== 1) allWin = false; }
+            if (n === 0) { R[i] = 0; changed = true; }
+            else if (anyDraw) { R[i] = 0; changed = true; } else if (allWin) { R[i] = 1; DP[i] = pass; changed = true; }
+          }
+        }
+      }
+      for (let k = 0; k < R.length; k++) if (R[k] === -1) R[k] = 0;
+    }
+    function probe(fen, depthToo) {
+      const [rows, turn] = fen.split(' '); let wk = -1, bk = -1, p = -1, n = 0, r = 7;
+      for (const row of rows.split('/')) { let f = 0; for (const c of row) { if (/\d/.test(c)) f += +c; else { const s = r * 8 + f; n++; if (c === 'K') wk = s; else if (c === 'k') bk = s; else if (c === 'P') p = s; else return null; f++; } } r--; }
+      if (n !== 3 || wk < 0 || bk < 0 || p < 0) return null;
+      if (!R) build();
+      const i = idx(turn === 'w' ? 0 : 1, wk, bk, p), v = R[i]; return v < 0 ? null : depthToo ? [v, DP[i]] : v;
+    }
+    return { probe, depth: (fen) => { const r = probe(fen, true); return r && r[0] === 1 ? r[1] : 0; } };
+  })();
+  // result of the position for White after a move: 1 win, 0 draw, plus the special endings
+  function kpkAfter(g) {
+    if (g.isStalemate() || g.isInsufficientMaterial()) return 0;
+    const pcs = g.board().flat().filter(Boolean);
+    if (pcs.some((p) => p.type === 'q')) return g.moves({ verbose: true }).some((m) => m.captured === 'q') ? 0 : 1;
+    const v = KPK.probe(g.fen()); return v == null ? 0 : v;
+  }
+  function kpkScore(g, mv) { const g2 = new Chess(g.fen()); g2.move(mv); return kpkAfter(g2); }
+  // The computer side plays the most testing move: of the moves that keep its result, the one that leaves you the fewest good replies.
+  function kpkReply(want) {
+    const ms = game.moves({ verbose: true });
+    if (want === 1) { // defending a lost ending: resist as long as possible
+      let best = null, bd = -2;
+      for (const m of ms) { const g2 = new Chess(game.fen()); g2.move(m); if (kpkAfter(g2) !== 1) return m; const d = KPK.depth(g2.fen()) + Math.random() * 0.5; if (d > bd) { bd = d; best = m; } }
+      return best;
+    }
+    let best = null, bs = 2e6;
+    for (const m of ms) {
+      const g2 = new Chess(game.fen()); g2.move(m);
+      if (kpkAfter(g2) !== want) return m; // only possible after a slip: take it
+      if (g2.isGameOver()) { if (bs > 1e6) { best = m; bs = 1e6; } continue; }
+      const good = g2.moves({ verbose: true }).filter((mm) => kpkScore(g2, mm) === want).length;
+      const s = good * 10 + Math.random() * 3;
+      if (s < bs) { bs = s; best = m; }
+    }
+    return best;
+  }
+  function runKpk(x, done) {
+    window.__gymCur = x;
+    if (!x) return renderPractice();
+    reset(); game = new Chess(x.fen); flip = x.side === 'b'; drawBoard();
+    const g0 = game, win = x.side === 'w', want = win ? 1 : 0;
+    $('kind').textContent = 'Endgame essentials · King and pawn';
+    $('prompt').textContent = `${x.name}: ${win ? 'White' : 'Black'} to move`;
+    $('ctx').innerHTML = `${win ? 'Win it: promote and keep the queen.' : 'Hold it: win the pawn, or reach a position they can’t make progress in.'} The computer defends perfectly and every move you make is checked.<br><span class="small">${esc(x.why)}</span>`;
+    let mistakes = 0, moves = 0, over = false, hinted = false;
+    const dAfter = (m) => { const g2 = new Chess(game.fen()); g2.move(m); return g2.board().flat().some((p) => p && p.type === 'q') ? -1 : KPK.depth(g2.fen()); };
+    const goodMoves = () => { const g = game.moves({ verbose: true }).filter((m) => kpkScore(game, m) === want); return win ? g.map((m) => [dAfter(m), m]).sort((a, b) => a[0] - b[0]).map((x) => x[1]) : g; };
+    const finish = (good, title, text) => {
+      over = true; locked = true;
+      const clean = good && !mistakes && !hinted, c = grade(x.id, clean, good);
+      if (good) { sGood(); burst(game.history({ verbose: true }).slice(-1)[0]?.to); } else sBad();
+      showRes(good ? 'good' : 'bad', title, `<p>${text}</p><p class="small">${mistakes ? `${mistakes} slip${mistakes > 1 ? 's' : ''} on the way. ` : ''}${backIn(c)}</p>`);
+      gain(clean ? 14 : good ? 4 : 1);
+      setActs([['restart', 'Try again'], ['next', 'Next', true]]);
+      if (done) done(clean);
+    };
+    const check = () => {
+      if (win) {
+        if (game.board().flat().some((p) => p && p.type === 'q')) return finish(true, 'Promoted', 'Your queen is safe, and king and queen against king is a win. Pawn endings are won exactly like this: king in front, opposition, then push.');
+      } else {
+        if (!game.board().flat().some((p) => p && p.type === 'p')) return finish(true, 'Drawn', 'The pawn is gone. A lone king can’t lose.');
+        if (game.isStalemate()) return finish(true, 'Stalemate: drawn', 'They had to give stalemate or give up the pawn.');
+        if (moves >= 12) return finish(true, 'Held', 'Twelve moves and they still can’t get through: this position is a draw, and you defended it right.');
+      }
+      if (moves >= 40) return finish(false, 'Out of moves', 'Try again with a plan: king in front of the pawn first, then push.');
+      return null;
+    };
+    onUserMove = (uci, m) => {
+      if (over) return;
+      const after = kpkAfter(game);
+      if (after !== want) {
+        mistakes++; shake(); mark('bad', [m.to]); locked = true;
+        game.undo(); const alts = goodMoves().map((mm) => mm.san); game.move({ from: m.from, to: m.to, promotion: m.promotion });
+        showRes('bad', win ? 'That lets it slip to a draw' : 'That loses', `<p>${alts.length === 1 ? `Only <span class="mv">${esc(alts[0])}</span> ${win ? 'wins' : 'holds'} here.` : `${alts.length} moves ${win ? 'win' : 'hold'} here. Try another.`}</p>`);
+        setTimeout(() => { if (game !== g0) return; game.undo(); drawPieces(); mark('bad', []); locked = false; if (mistakes >= 2) mark('hint', goodMoves().slice(0, 1).map((mm) => mm.from)); }, 950);
+        return;
+      }
+      moves++; hideRes();
+      if (check()) return;
+      locked = true;
+      setTimeout(() => {
+        if (game !== g0 || over) return;
+        const r = kpkReply(win ? 1 : 0);
+        if (!r) return finish(true, win ? 'Won' : 'Held', 'They ran out of moves.');
+        animMove(game.move(r));
+        if (!win && !game.board().flat().some((p) => p && p.type === 'p')) return finish(true, 'Drawn', 'The pawn is gone.');
+        if (!check()) locked = false;
+      }, 420);
+    };
+    actHandlers.hint = () => { if (over) return; hinted = true; const g = goodMoves(); if (g.length) mark('hint', [g[0].from]); };
+    actHandlers.restart = () => runKpk(x, done);
+    locked = false;
+    setActs([['hint', 'Hint'], ['restart', 'Restart'], ['next', 'Next', true]]);
+  }
+  const ENDS = () => SD.endings;
+  function runEnding(x, done) { if (!x) return renderPractice(); return x.steps ? runStudy(x, done) : runKpk(x, done); }
+
+  // ---------- Woodpecker: the same set of puzzles, solved in cycles, faster each time ----------
+  const WOOD_N = 50, WOOD_THEMES = ['fork', 'pin', 'hangingPiece', 'discoveredAttack', 'skewer', 'mateIn2', 'backRankMate'];
+  function woodSet() {
+    if (st.wood && st.wood.set && st.wood.set.length) return st.wood;
+    const avg = Math.round(WOOD_THEMES.reduce((a, t) => a + (st.prate[t] || START_RATING[t]), 0) / WOOD_THEMES.length);
+    const set = [];
+    for (let i = 0; set.length < WOOD_N && i < 400; i++) {
+      const t = WOOD_THEMES[i % WOOD_THEMES.length], pool = (T[t] || []).filter((p) => !set.some((s) => s[1] === p[0]) && Math.abs(p[3] - avg) < 250);
+      if (pool.length) set.push([t, pool[Math.floor(Math.random() * pool.length)][0]]);
+    }
+    st.wood = { set, cycles: [], made: today(), rating: avg }; save();
+    return st.wood;
+  }
+  function woodCycle(w) { let c = w.cycles[w.cycles.length - 1]; if (!c || c.pos >= w.set.length) { c = { n: w.cycles.length + 1, start: today(), pos: 0, ok: 0, ms: 0 }; w.cycles.push(c); save(); } return c; }
+  const fmtMs = (ms) => { const m = Math.floor(ms / 60000), s = Math.floor(ms / 1000) % 60; return m >= 60 ? `${Math.floor(m / 60)}h ${m % 60}m` : `${m}:${String(s).padStart(2, '0')}`; };
+  function runWood() {
+    const w = woodSet(), c = woodCycle(w), [theme, pid] = w.set[c.pos];
+    const p = (T[theme] || []).find((q) => q[0] === pid);
+    if (!p) { c.pos++; save(); return runWood(); }
+    const t0 = Date.now();
+    runThemed([theme], (clean) => {
+      c.ms += Math.min(Date.now() - t0, 5 * 60e3); c.pos++; if (clean) c.ok++; save();
+      const prev = w.cycles[w.cycles.length - 2];
+      if (c.pos >= w.set.length) showRes(clean ? 'good' : 'info', `Cycle ${c.n} complete`, `<p>${c.ok} of ${w.set.length} right first try, in ${fmtMs(c.ms)} of solving.${prev ? ` Last cycle: ${prev.ok} right in ${fmtMs(prev.ms)}.` : ''}</p><p class="small">Take a day or two off, then start cycle ${c.n + 1}: same puzzles, aim for about half the time.</p>`);
+    }, { theme, p });
+    $('kind').textContent = `Woodpecker · cycle ${c.n} · ${c.pos + 1} of ${w.set.length}`;
+    $('extra').innerHTML = `<div class="kv"><span><b>${c.ok}</b> right</span><span><b>${fmtMs(c.ms)}</b> so far</span>${w.cycles.length > 1 ? `<span><b>${fmtMs(w.cycles[w.cycles.length - 2].ms)}</b> last cycle</span>` : ''}</div>`;
+  }
+
+  // ---------- board vision: square colours (blind) and knight routes ----------
+  function runColors(done) {
+    reset('coords'); game = null; flip = false; drawBoard(false);
+    $('bw').classList.add('blind');
+    $('kind').textContent = 'Board vision'; $('prompt').textContent = 'Light or dark?';
+    $('ctx').innerHTML = `Without looking at the board: is the square light or dark? 30 seconds. Your best: <b>${st.coordsBest.col || 0}</b>.`;
+    let score = 0, miss = 0, cur = null, left = 30, running = false;
+    const isLight = (s) => (files.indexOf(s[0]) + +s[1]) % 2 === 1;
+    const next = () => { let n; do { n = files[Math.floor(Math.random() * 8)] + (1 + Math.floor(Math.random() * 8)); } while (n === cur); cur = n; $('prompt').textContent = cur; };
+    const ui = () => { $('choice').innerHTML = running ? '<div class="choice"><button class="btn big" type="button" data-act="yes">Light</button><button class="btn big" type="button" data-act="no">Dark</button></div>' : ''; $('extra').innerHTML = `<div class="counter" style="margin-top:12px">${score} <small>right · ${left}s left${miss ? ` · ${miss} wrong` : ''}</small></div>`; };
+    const ans = (light) => { if (!running) return; if (light === isLight(cur)) { score++; sTick(); } else { miss++; sBad(); } next(); ui(); };
+    actHandlers.yes = () => ans(true); actHandlers.no = () => ans(false);
+    actHandlers.go = () => {
+      if (running) return; running = true; score = 0; miss = 0; left = 30; next(); ui(); setActs([]);
+      coordTimer = setInterval(() => {
+        left--; ui();
+        if (left <= 0) {
+          clearInterval(coordTimer); running = false; $('bw').classList.remove('blind'); $('choice').innerHTML = '';
+          const best = st.coordsBest.col || 0; if (score > best) st.coordsBest.col = score;
+          showRes(score > best ? 'good' : 'info', score > best ? `New best: ${score}` : `${score} right`, `<p>${miss} wrong. Trick: a1 is dark, and the colour flips every step. If file letter and rank number are both odd or both even (a=1), it's dark.</p>`);
+          gain(Math.min(10, Math.round(score / 3)), false); if (done) done(true);
+          setActs([['go', 'Again'], ['next', 'Next', true]]);
+        }
+      }, 1000);
+    };
+    setActs([['go', 'Start', true]]);
+  }
+  function runKnight(done) {
+    reset('coords'); game = null; flip = false; drawBoard(false);
+    const sqi = (s) => [files.indexOf(s[0]), +s[1] - 1], name = (f, r) => files[f] + (r + 1);
+    const kmoves = (s) => { const [f, r] = sqi(s); return [[1, 2], [2, 1], [-1, 2], [-2, 1], [1, -2], [2, -1], [-1, -2], [-2, -1]].map(([a, b]) => [f + a, r + b]).filter(([a, b]) => a >= 0 && a < 8 && b >= 0 && b < 8).map(([a, b]) => name(a, b)); };
+    const dist = (a, b) => { const q = [[a, 0]], seen = { [a]: 1 }; while (q.length) { const [s, d] = q.shift(); if (s === b) return d; for (const n of kmoves(s)) if (!seen[n]) { seen[n] = 1; q.push([n, d + 1]); } } return 9; };
+    let from, to, cur, used = 0, rounds = 0, perfect = 0, el;
+    const newRound = () => {
+      do { from = name(Math.floor(Math.random() * 8), Math.floor(Math.random() * 8)); to = name(Math.floor(Math.random() * 8), Math.floor(Math.random() * 8)); } while (dist(from, to) < 2 || dist(from, to) > 4);
+      cur = from; used = 0;
+      $('pieces').innerHTML = ''; el = document.createElement('div'); el.className = 'pc wn'; place(el, cur); $('pieces').appendChild(el);
+      mark('hint', [to]); mark('last', [from]);
+      $('prompt').textContent = `Knight from ${from} to ${to}`;
+      info();
+    };
+    const info = () => { $('ctx').innerHTML = `Tap squares to hop the knight to the marked square in as few moves as you can. Moves: <b>${used}</b>.`; $('extra').innerHTML = `<div class="kv"><span><b>${rounds}</b> routes</span><span><b>${perfect}</b> shortest</span></div>`; };
+    $('kind').textContent = 'Board vision · knight routes';
+    onSquareClick = (s) => {
+      if (!kmoves(cur).includes(s)) { shake(); return; }
+      used++; cur = s; place(el, cur); sTick(); info();
+      if (cur === to) {
+        rounds++; const d = dist(from, to); if (used === d) perfect++;
+        showRes(used === d ? 'good' : 'info', used === d ? `Shortest route: ${d} moves` : `${used} moves. Shortest is ${d}`, '<p>Knights change square colour every move: an even number of moves always lands on the same colour.</p>');
+        if (used === d) sGood();
+        gain(used === d ? 3 : 1, false); if (done) done(used === d);
+        const mine = onSquareClick; setTimeout(() => { if (!$('v-train').hidden && onSquareClick === mine) { hideRes(); newRound(); } }, 1400);
+      }
+    };
+    newRound();
+    setActs([['next', 'New route', true]]);
+  }
+
+  const kpkList = (side) => SD.endings.filter((e) => e.id.startsWith('kpk') && (!side || e.side === side));
+  const rookList = () => SD.endings.filter((e) => e.group === 'Rook endings');
+  // ---------- views ----------
+  let mode = null;
+  function show(view) {
+    for (const v of ['home', 'train', 'practice', 'openings', 'positions']) $('v-' + v).hidden = v !== view;
+    if ($('scroller').scrollHeight > $('scroller').clientHeight) $('scroller').scrollTop = 0;
+    const navOn = view === 'train' ? (mode && mode.session ? 'session' : mode && /^(open|punish)/.test(mode.kind) ? 'openings' : 'practice') : view;
+    document.querySelectorAll('nav a').forEach((a) => a.classList.toggle('on', a.dataset.nav === navOn));
+  }
+  function sess() {
+    if (!st.session || st.session.date !== today()) st.session = { date: today(), step: 0, count: 0, started: Date.now(), solved: 0, xp0: st.xp, games: 0, routine: st.routine || 'full' };
+    return st.session;
+  }
+  function stepbar(s) { $('stepbar').innerHTML = routineOf(s).steps.map((x, i) => `<span class="${i < s.step ? 'done' : i === s.step ? 'now' : ''}" title="${x.title}"></span>`).join(''); }
+
+  function runSession() {
+    mode = { session: true }; show('train');
+    const s = sess(); stepbar(s);
+    const STEPS = routineOf(s).steps;
+    if (s.step >= STEPS.length) return sessionDone();
+    const step = STEPS[s.step];
+    const label = `Step ${s.step + 1} of ${STEPS.length} · `;
+    const nextStep = () => { s.step++; s.count = 0; save(); runSession(); };
+    stepDone = false;
+    const counted = (ok) => {
+      s.count++; if (ok) s.solved++; save(); stepDone = s.count >= step.target;
+      $('extra').innerHTML = step.target > 1 ? `<div class="counter" style="margin-top:12px">${s.count}<small> / ${step.target} · ${step.title}</small></div>` : '';
+      if (s.count >= step.target) { actHandlers.next = nextStep; setActs([['next', s.step + 1 < STEPS.length ? `Next: ${STEPS[s.step + 1].title}` : 'Finish', true]]); }
+      else actHandlers.next = () => runSession();
+    };
+    actHandlers.next = () => { counted(false); if (s.count < step.target) runSession(); else nextStep(); };
+    const head = () => { if (step.target > 1) $('extra').innerHTML = `<div class="counter" style="margin-top:12px">${s.count + 1}<small> / ${step.target} · ${step.title}</small></div>`; };
+    if (step.id === 'coords') runCoords(() => counted(false));
+    else if (step.themes) { runThemed(step.themes, counted); head(); }
+    else if (step.id === 'own') { runOwn(pickOwn(), counted); head(); }
+    else if (step.id === 'safe') { runSafe(pickSR(DR.safe), counted); head(); }
+    else if (step.id === 'threat') { runThreat(pickSR(DR.threat), counted); head(); }
+    else if (step.id === 'punish') { runDev(pickDev(D), counted); head(); }
+    else if (step.id === 'pat') { runStudy(pickSR(SD.mates), counted); head(); }
+    else if (step.id === 'kpk') { runKpk(pickSR(kpkList()), counted); head(); }
+    else if (step.id === 'rook') { runStudy(pickSR(rookList()), counted); head(); }
+    else if (step.id === 'end') runEndgame(['kq', 'kr', 'krr', 'kqr', 'kbb'][new Date().getDate() % 5], (ok) => { if (ok) counted(false); });
+    else if (step.id === 'play') return playStep(s, label);
+    else if (step.id === 'review') return reviewStep(s, label);
+    $('kind').textContent = label + $('kind').textContent;
+    actHandlers.skip = nextStep;
+    $('acts').insertAdjacentHTML('beforeend', '<button class="btn" data-act="skip">Skip step</button>');
+  }
+  function playStep(s, label) {
+    reset(); game = new Chess(); flip = false; drawBoard();
+    $('kind').textContent = label + 'Warmup done';
+    $('prompt').textContent = 'Go play a 15|10 game';
+    $('ctx').textContent = 'Keep these four in your head on every move:';
+    $('extra').innerHTML = '<ol class="qs"><li><b>Their move:</b> what does it attack, and what did it uncover?</li><li><b>My forcing moves:</b> checks first, then captures, then threats.</li><li><b>Blunder-check:</b> is my square safe, what did I leave undefended, what are their checks?</li><li><b>King zone:</b> before a pawn move near my king, count attackers and defenders.</li></ol><p class="small">Take 10+ seconds after a capture, a check, or a piece arriving near your king.</p>';
+    $('acts').innerHTML = '<a class="btn main big" href="https://www.chess.com/play/online" target="_blank" rel="noopener">Open Chess.com</a><button class="btn big" data-act="played">I\'ve finished my game</button>';
+    actHandlers.played = () => { s.step++; s.count = 0; s.games = (s.games || 0) + 1; save(); runSession(); };
+  }
+  // your three process goals (from the plan), graded after each game, before looking at the result
+  const GOALS = [['last', 'Their last move: did I ask what it changed, attacked or left loose?', ['Every move', 'Mostly', 'Often skipped']],
+                 ['check', 'Before letting go: checks, captures, loose pieces, what the piece guards?', ['Every move', 'Mostly', 'Often skipped']],
+                 ['clock', 'Clock at move 20', ['8+ minutes', '4 to 8', 'Under 4']]];
+  function renderGamelog() {
+    const L = Object.entries(st.gamelog || {}).sort((a, b) => (a[0] < b[0] ? 1 : -1)).slice(0, 10).reverse();
+    $('gl-sect').hidden = !L.length; if (!L.length) return;
+    const dot = (v) => `<i class="gd g${v == null ? 'x' : v}" title="${['Often skipped', 'Mostly', 'Every move'][v] || '—'}"></i>`;
+    const short = ['Their last move', 'Blunder check', 'Clock at move 20'];
+    $('gamelog').innerHTML = GOALS.map(([k], i) => `<div class="glrow"><span>${short[i]}</span><span class="gds">${L.map(([, e]) => dot(e[k])).join('')}</span></div>`).join('')
+      + `<p class="small" style="margin:10px 0 0">Your last ${L.length} graded game${L.length > 1 ? 's' : ''}, oldest on the left. Green: every move. Amber: mostly. Red: often skipped.</p>`;
+  }
+  function reviewStep(s, label) {
+    reset(); game = new Chess(); flip = false; drawBoard();
+    $('kind').textContent = label + 'Review';
+    $('prompt').textContent = 'Review the game you just played';
+    $('ctx').innerHTML = 'Open it from <a href="https://www.chess.com/games/archive/ElliottPurdue" target="_blank" rel="noopener">your archive</a>, or paste the PGN into the <a href="https://lichess.org/analysis" target="_blank" rel="noopener">Lichess analysis board</a>. Use this board to try ideas.';
+    const items = ['Wrote down the 2–3 moments where the game turned', 'Looked for better moves myself, no engine', 'Checked the engine on the biggest swings only', 'Logged each big mistake (overlay Log tab)'];
+    s.rv = s.rv || {}; s.pg = s.pg || {};
+    const graded = () => GOALS.every((g) => s.pg[g[0]] != null);
+    const draw = () => {
+      $('extra').innerHTML = `<p class="small" style="margin:14px 0 6px"><b>First, grade your process</b>, before you look at the result or the engine:</p>`
+        + GOALS.map(([k, q, opts]) => `<div class="gq"><span class="small">${q}</span><div class="chips">${opts.map((o, v) => `<button type="button" class="chip${s.pg[k] === 2 - v ? ' on' : ''}" data-gr="${k}:${2 - v}">${o}</button>`).join('')}</div></div>`).join('')
+        + `<p class="small" style="margin:16px 0 6px"><b>Then review it:</b></p><ul class="checks">${items.map((t, i) => `<li><input type="checkbox" id="rv${i}" data-rv="${i}" ${s.rv[i] ? 'checked' : ''}><label for="rv${i}">${t}</label></li>`).join('')}</ul>`;
+      $('acts').innerHTML = `<button class="btn main" data-act="rvdone" ${graded() && items.every((_, i) => s.rv[i]) ? '' : 'disabled'}>Reviewed</button>`;
+    };
+    $('extra').onchange = (e) => { const c = e.target.closest('[data-rv]'); if (c) { s.rv[c.dataset.rv] = c.checked; save(); draw(); } };
+    $('extra').onclick = (e) => { const c = e.target.closest('[data-gr]'); if (c) { const [k, v] = c.dataset.gr.split(':'); s.pg[k] = +v; save(); draw(); } };
+    actHandlers.rvdone = () => { st.gamelog[`${today()}-${Date.now()}`] = { d: today(), ...s.pg }; s.step++; s.count = 0; s.rv = {}; s.pg = {}; st.xp += 20; save(); runSession(); };
+    locked = false; onUserMove = () => {};
+    draw();
+  }
+  function sessionDone() {
+    const s = sess();
+    reset(); game = new Chess(); flip = false; drawBoard(); stepbar(s);
+    const mins = Math.max(1, Math.round((Date.now() - s.started) / 60000));
+    if (!s.bonus) { s.bonus = true; st.days[today()] = Math.max(st.days[today()] || 0, GOAL); st.xp += 50; save(); stats(); }
+    $('kind').textContent = 'Session complete'; $('prompt').textContent = 'Nice work today';
+    $('ctx').innerHTML = `${routineOf(s).name}: ${s.solved} solved first try${s.games ? `, ${s.games} game${s.games === 1 ? '' : 's'} played and reviewed` : ''}, ${mins} minutes, <b>+${st.xp - s.xp0} XP</b>.`;
+    const steps = routineOf(s).steps, pi = steps.findIndex((x) => x.id === 'play');
+    showRes('info', 'Want more?', pi >= 0 ? '<p>Play another game (back to the checklist), or head to Practice for something lighter.</p>' : '<p>That counts as a full day. Practice is always open if you want more.</p>');
+    $('acts').innerHTML = (pi >= 0 ? '<button class="btn main" data-act="again">Play another game</button>' : '') + '<a class="btn" href="#practice">Practice</a><a class="btn" href="#home">Home</a>';
+    actHandlers.again = () => { s.step = pi; save(); runSession(); };
+    ['d4', 'e5', 'c6', 'f3'].forEach((q, i) => setTimeout(() => burst(q), i * 180));
+  }
+
+  function weakness() {
+    const c = {};
+    for (const p of P) if (p.game.date >= '2026.11.12') for (const t of p.tags) if (WEAK_TO_THEME[t]) c[t] = (c[t] || 0) + 1;
+    const top = Object.entries(c).sort((a, b) => b[1] - a[1])[0];
+    return top ? top[0] : 'Missed their threat';
+  }
+  function practice(kind, arg) {
+    mode = { session: false, kind, arg }; show('train'); $('stepbar').innerHTML = '';
+    actHandlers.next = () => practice(kind, kind === 'open' || kind === 'own' || kind === 'pat' ? null : kind === 'ending' && arg && !['kpk', 'kpkw', 'kpkb', 'rook'].includes(arg) ? ((x) => x ? (x.steps ? 'rook' : 'kpk' + x.side) : null)(SD.endings.find((e) => e.id === arg)) : arg);
+    if (kind === 'coords') runCoords(null, arg || undefined);
+    else if (kind === 'theme') runThemed([arg], null);
+    else if (kind === 'weak') {
+      const w = weakness();
+      if (Math.random() < 0.5) runOwn(pickOwn(w), null); else runThemed([WEAK_TO_THEME[w]], null);
+      $('kind').textContent = `Your weakness: ${w} · ` + $('kind').textContent;
+    }
+    else if (kind === 'own') runOwn(arg && byId[arg] ? byId[arg] : pickOwn(), null);
+    else if (kind === 'end') runEndgame(ENDGAMES[arg] ? arg : Object.keys(ENDGAMES)[Math.floor(Math.random() * Object.keys(ENDGAMES).length)], null);
+    else if (kind === 'open') runOpening(O.find((x) => x.id === arg) || pickNextOpening(), null);
+    else if (kind === 'openside') runOpening(pickNextOpening(arg === 'w' ? 'w' : 'b'), null);
+    else if (kind === 'punish') runDev(pickDev(arg ? D.filter((d) => d.side === arg) : D), null);
+    else if (kind === 'openfam') runOpening(pickNextOpening(null, arg), null);
+    else if (kind === 'safe') runSafe(pickSR(DR.safe), null);
+    else if (kind === 'threat') runThreat(pickSR(DR.threat), null);
+    else if (kind === 'pat') runStudy(SD.mates.find((x) => x.id === arg) || pickSR(SD.mates), null);
+    else if (kind === 'ending') { const x = SD.endings.find((e) => e.id === arg); runEnding(x || pickSR(arg === 'rook' ? rookList() : kpkList(arg === 'kpkw' ? 'w' : arg === 'kpkb' ? 'b' : null)), null); }
+    else if (kind === 'wood') runWood();
+    else if (kind === 'colors') runColors(null);
+    else if (kind === 'knight') runKnight(null);
+    else if (kind === 'punishfam') { const f = famsOf().find((x) => x.id === arg); runDev(pickDev(f ? famDevs(f) : D), null); }
+  }
+  function optCards(limit) {
+    const w = weakness();
+    const items = [
+      ['weak', '', `Your weakness: ${w}`, 'Your own positions plus matching puzzles.'],
+      ['coords', '', 'Coordinates sprint', `30 seconds. Best: ${st.coordsBest.w || 0} as White, ${st.coordsBest.b || 0} as Black.`],
+      ['end', '', 'Endgame mates', 'Six basic mates, from the two-rook ladder to bishop and knight.'],
+      ['open', '', 'Opening trainer', 'Your repertoire, including the sidelines you meet most.'],
+      ['punish', '', 'Punish opening mistakes', 'Your opponent leaves the book with a blunder. Find the refutation.'],
+      ['own', '', 'Your positions', `${P.filter(isDue).length} due now.`],
+      ['theme', 'mateIn2', 'Mate in 2', `Your rating: ${st.prate.mateIn2 || START_RATING.mateIn2}`],
+    ];
+    return items.slice(0, limit || items.length).map(([k, a, t, d]) => `<button class="opt" data-p="${k}" data-a="${a}"><b>${esc(t)}</b><span>${esc(d)}</span></button>`).join('');
+  }
+  function renderHome() {
+    mode = null; show('home');
+    $('localnote').hidden = !/^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+    const s = st.session && st.session.date === today() ? st.session : null, stp = s ? s.step : 0;
+    const R = routineOf(s), STEPS = R.steps;
+    $('rtpick').innerHTML = ROUTINE_ORDER.map((k) => `<button class="chip${(s ? (s.routine || 'full') : (st.routine || 'full')) === k ? ' on' : ''}" type="button" data-rt="${k}">${esc(ROUTINES[k].name)}</button>`).join('');
+    $('route').innerHTML = STEPS.map((x, i) => `<li class="${i < stp ? 'done' : i === stp ? 'now' : ''}"><span class="dot">${i < stp ? '✓' : i + 1}</span><span><span class="t">${x.title}</span><br><span class="d">${x.desc}</span></span><span class="c">${i === stp && s && x.target > 1 ? `${s.count}/${x.target}` : x.target > 1 ? `×${x.target}` : ''}</span></li>`).join('');
+    $('h-go').textContent = !s || (stp === 0 && !s.count) ? 'Start session' : stp >= STEPS.length ? 'Session done. See summary' : 'Continue session';
+    $('h-sub').innerHTML = stp >= STEPS.length ? 'Done for today. Practice is always open.' : `<b>${esc(R.name)}</b> · ${esc(R.mins)}. ${esc(R.desc)}`;
+    $('opts-home').innerHTML = ''; renderGamelog();
+    const due = P.filter(isDue).length, w = weakness();
+    $('h-puz-sub').textContent = `${due} of your own positions to review · weakest area: ${w}`;
+    const sd = dueCount(DR.safe), td = dueCount(DR.threat);
+    $('h-puz-chips').innerHTML = `<button class="chip" data-p="own">Your positions${due ? ` <b>${due}</b>` : ''}</button><button class="chip" data-p="threat">Their threat${td ? ` <b>${td}</b>` : ''}</button><button class="chip" data-p="safe">Is it safe?${sd ? ` <b>${sd}</b>` : ''}</button><button class="chip" data-p="wood">Woodpecker</button>` + ['mateIn1', 'mateIn2', 'fork', 'pin', 'hangingPiece', 'discoveredAttack'].map((k) => `<button class="chip" data-p="theme" data-a="${k}">${esc(THEMES[k])}</button>`).join('') + '<a class="chip" href="#practice">All themes →</a>';
+    const lrn = O.filter((l) => st.lines[l.id] && (st.lines[l.id].clean || 0) >= 3).length, pd = devDue();
+    $('h-op-sub').textContent = `${lrn} of ${O.length} lines learned · ${famsOf().length} openings · ${pd} traps to punish`;
+    const top = famsOf().filter((f) => f.faced).sort((a, b) => b.faced - a.faced).slice(0, 3);
+    $('h-op-chips').innerHTML = `<button class="chip" data-p="openside" data-a="b">As Black</button><button class="chip" data-p="openside" data-a="w">As White</button><button class="chip punish" data-p="punish">Punish mistakes${pd ? ` <b>${pd}</b>` : ''}</button>` + top.map((f) => `<button class="chip" data-p="openfam" data-a="${esc(f.id)}">${esc(f.name.replace(/:.*/, ''))} <b>${f.side === 'w' ? 'W' : 'B'}</b></button>`).join('');
+    $('h-pra-chips').innerHTML = `<button class="chip" data-p="pat">Mate patterns</button><button class="chip" data-p="ending" data-a="kpkw">Pawn endings</button><button class="chip" data-p="ending" data-a="rook">Lucena &amp; Philidor</button>` + Object.entries(ENDGAMES).map(([k, E]) => `<button class="chip" data-p="end" data-a="${k}">${esc(E.short)}${st.endgames[k] && st.endgames[k].wins ? ` <b>${st.endgames[k].wins}✓</b>` : ''}</button>`).join('') + `<button class="chip" data-p="coords">Coordinates${st.coordsBest.w ? ` <b>${st.coordsBest.w}</b>` : ''}</button>`;
+  }
+  function renderPractice() {
+    mode = null; show('practice');
+    $('opts-all').innerHTML = optCards();
+    const opt = (p, a, t, d) => `<button class="opt" data-p="${p}" data-a="${a}"><b>${esc(t)}</b><span>${esc(d)}</span></button>`;
+    const mast = (list) => list.filter((x) => (st.cards[x.id]?.box || 0) >= 4).length;
+    $('blunderlist').innerHTML = opt('threat', '', 'Their threat', `${DR.threat.length} positions from your games. If you passed, what would they play? ${dueCount(DR.threat)} due, ${mast(DR.threat)} mastered.`)
+      + opt('safe', '', 'Is it safe?', `${DR.safe.length} moves you played: some fine, some blunders. Decide before you see. ${dueCount(DR.safe)} due, ${mast(DR.safe)} mastered.`);
+    const w = st.wood, c = w && w.cycles && w.cycles[w.cycles.length - 1];
+    $('woodsub').textContent = 'One fixed set of 50 tactics at your level, solved again and again. Each cycle, aim to be faster and more accurate, so the patterns become automatic. Do a cycle over a few days, rest a day or two, repeat.';
+    $('woodbox').innerHTML = opt('wood', '', c ? (c.pos >= w.set.length ? `Start cycle ${c.n + 1}` : `Continue cycle ${c.n}`) : 'Start cycle 1', c ? `${c.pos >= w.set.length ? 'Done' : `${c.pos} of ${w.set.length}`} · ${c.ok} right · ${fmtMs(c.ms)} of solving${w.cycles.length > 1 ? ` · ${w.cycles.length - 1} cycle${w.cycles.length > 2 ? 's' : ''} finished` : ''}` : 'Builds your set of 50 the first time you start.');
+    $('patchips').innerHTML = SD.mates.map((x) => `<button class="chip" data-p="pat" data-a="${esc(x.id)}">${esc(x.name)}${(st.cards[x.id]?.box || 0) >= 1 ? ' <b>✓</b>' : ''}</button>`).join('') + ['backRankMate', 'smotheredMate', 'anastasiaMate', 'arabianMate', 'bodenMate', 'hookMate'].filter((k) => T[k]).map((k) => `<button class="chip" data-p="theme" data-a="${k}">${esc(THEMES[k])} puzzles</button>`).join('');
+    const kw = kpkList('w'), kb = kpkList('b');
+    $('essentials').innerHTML = opt('ending', 'kpkw', 'Pawn endings: win it', `${kw.length} positions where only one move wins. Play it out against perfect defence. ${mast(kw)} mastered.`)
+      + opt('ending', 'kpkb', 'Pawn endings: hold it', `${kb.length} positions where only one move draws, including pawn races. ${mast(kb)} mastered.`)
+      + rookList().map((x) => opt('ending', x.id, x.name, x.goal === 'draw' ? 'The defence every rook ending player needs.' : 'The most important winning rook ending.')).join('');
+    $('visionlist').innerHTML = opt('coords', '', 'Coordinates sprint', `30 seconds. Best: ${st.coordsBest.w || 0} as White, ${st.coordsBest.b || 0} as Black.`)
+      + opt('colors', '', 'Light or dark?', `Name the square colour without looking. Best: ${st.coordsBest.col || 0}.`)
+      + opt('knight', '', 'Knight routes', 'Hop a knight to a square in the fewest moves. Great for spotting forks.');
+    $('endlist').innerHTML = Object.entries(ENDGAMES).map(([k, E]) => { const r = st.endgames[k]; return `<button class="opt" data-p="end" data-a="${k}"><b>${esc(E.name)}</b><span>Mate in ${E.limit} or fewer · ${r ? `${r.wins} of ${r.tries} won` : 'not tried yet'}</span></button>`; }).join('');
+    $('themechips').innerHTML = THEME_GROUPS.map(([g, ks]) => `<p class="small" style="margin:14px 0 6px;width:100%"><b>${g}</b></p>` + ks.filter((k) => T[k] && T[k].length).map((k) => `<button class="chip" data-p="theme" data-a="${k}">${esc(THEMES[k])} <b style="opacity:.6">${st.prate[k] || START_RATING[k]}</b></button>`).join('')).join('');
+    $('openlist').innerHTML = O.map((l) => `<button class="opt" data-p="open" data-a="${l.id}"><b>${esc(l.name)}</b><span>${l.side === 'w' ? 'As White' : 'As Black'} · ${st.lines[l.id] ? `${st.lines[l.id].clean || 0} clean run${(st.lines[l.id].clean || 0) === 1 ? '' : 's'}` : 'new'}</span></button>`).join('');
+  }
+  function miniBoard(line) {
+    const g = new Chess(); for (const u of line.moves) g.move({ from: u.slice(0, 2), to: u.slice(2, 4), promotion: u[4] });
+    const asB = line.side === 'b', rows = g.board();
+    let pcs = '';
+    rows.forEach((row, r) => row.forEach((p, c) => { if (p) { const x = asB ? 7 - c : c, y = asB ? 7 - r : r; pcs += `<i class="pc ${p.color}${p.type}" style="transform:translate(${x * 100}%,${y * 100}%)"></i>`; } }));
+    return `<div class="mini" aria-hidden="true">${pcs}</div>`;
+  }
+  function famsOf() {
+    const fams = [], by = {};
+    for (const l of O) { const k = l.fam || l.id; if (!by[k]) { by[k] = { id: k, name: l.famName || l.name, group: l.group || (l.side === 'w' ? 'w' : l.moves[0] === 'e2e4' ? 'be4' : 'bd4'), tier: l.tier || 'common', faced: l.famFaced || l.faced || 0, side: l.side, lines: [] }; fams.push(by[k]); } by[k].lines.push(l); }
+    return fams;
+  }
+  const famDevs = (f) => { const seen = new Set(), out = []; for (const l of f.lines) for (const d of devByLine[l.id] || []) if (!seen.has(d.id)) { seen.add(d.id); out.push(d); } return out; };
+  function renderOpenings() {
+    mode = null; show('openings');
+    const clean = (l) => Math.min(3, (st.lines[l.id] && st.lines[l.id].clean) || 0);
+    const learned = O.filter((l) => clean(l) >= 3).length;
+    const pd = devDue(); $('punishbtn').innerHTML = `Punish their mistakes${pd ? ` <span class="cnt">${pd}</span>` : ''}`;
+    $('opsum').innerHTML = `<b>${learned}</b><span>of ${O.length} lines learned</span><div class="opbar"><i style="width:${Math.round(100 * learned / Math.max(1, O.length))}%"></i></div>`;
+    const fams = famsOf();
+    const TIERS = [['common', 'The openings you will meet most', 'Your repertoire against the openings that come up most at your level, plus the ones worth knowing. Most-faced first.'],
+                   ['rare', 'Rare openings', "Ones you've met, or might, but shouldn't see often. Mostly traps and gambits: learn the refutation once."]];
+    const GROUPS = [['w', 'As White'], ['be4', 'As Black against 1.e4'], ['bd4', 'As Black against 1.d4 and others']];
+    const pips = (n) => `<i class="pips">${[0, 1, 2].map((k) => `<em class="${k < n ? 'on' : ''}"></em>`).join('')}</i>`;
+    $('opgroups').innerHTML = TIERS.map(([tier, title, sub]) => {
+      const inner = GROUPS.map(([g, gname]) => {
+        const fs = fams.filter((f) => f.tier === tier && f.group === g).map((f, k) => [f, k]).sort((a, b) => (b[0].faced - a[0].faced) || a[1] - b[1]).map((x) => x[0]);
+        if (!fs.length) return '';
+        return `<div class="fgroup"><h4>${esc(gname)}</h4><div class="fgrid">${fs.map((f) => {
+          const done = f.lines.filter((l) => clean(l) >= 3).length, traps = famDevs(f).length;
+          const rows = f.lines.map((l) => { const n = clean(l); return `<button class="lrow${n >= 3 ? ' done' : ''}" type="button" data-p="open" data-a="${esc(l.id)}"><span class="lname">${l.main ? '<em class="tagmain">Main</em>' : ''}${esc(((t) => t.charAt(0).toUpperCase() + t.slice(1))(l.name.replace(/^[^:]*:\s*/, '') || l.name))}</span>${pips(n)}</button>`; }).join('');
+          return `<div class="fcard">${miniBoard(f.lines[0])}<div class="fbody"><b class="fname">${esc(f.name)}</b><span class="fmeta">${f.faced ? `<span class="lfaced">Faced ${f.faced}×</span>` : ''}<span>${done}/${f.lines.length} learned</span>${traps ? `<span class="ltrap">${traps} trap${traps > 1 ? 's' : ''}</span>` : ''}</span>
+            <div class="facts"><button class="btn sm" type="button" data-p="openfam" data-a="${esc(f.id)}">Practice ${f.lines.length > 1 ? 'all' : ''}</button>${traps ? `<button class="btn sm punish" type="button" data-p="punishfam" data-a="${esc(f.id)}">Punish</button>` : ''}</div></div>
+            <div class="lrows">${rows}</div></div>`;
+        }).join('')}</div></div>`;
+      }).join('');
+      return `<div class="sect tier"><h3>${esc(title)}</h3><p class="small">${esc(sub)}</p>${inner}</div>`;
+    }).join('');
+  }
+  function renderWall() {
+    mode = null; show('positions');
+    const mastered = P.filter((p) => (st.cards[p.id]?.box || 0) >= 4).length;
+    $('wallt').textContent = `Your ${P.length} positions · ${mastered} mastered`;
+    $('cells').innerHTML = P.map((p) => { const c = st.cards[p.id]; const cls = !c ? '' : c.box === 0 && c.miss ? 'f' : 'b' + c.box; return `<button class="cell ${cls}" data-p="own" data-a="${p.id}" title="${esc(p.game.opp)} · ${esc(p.game.move)}" aria-label="Your game vs ${esc(p.game.opp)}"></button>`; }).join('');
+  }
+  document.addEventListener('click', (e) => {
+    const r = e.target.closest('[data-rt]');
+    if (r) {
+      const k = r.dataset.rt, s = st.session && st.session.date === today() ? st.session : null;
+      st.routine = k;
+      if (s && (s.routine || 'full') !== k) { if (s.step || s.count) { st.session = null; sess(); } else s.routine = k; }
+      save(); renderHome(); return;
+    }
+    const b = e.target.closest('[data-p]'); if (!b) return;
+    if (location.hash !== '#drill') history.pushState(null, '', '#drill');
+    practice(b.dataset.p, b.dataset.a || null);
+  });
+  function renderGist() {
+    const cfg = gistCfg(), box = $('gistcard'); if (!box) return;
+    box.innerHTML = cfg && cfg.id
+      ? `<p class="small">Synced through a private GitHub gist${cfg.user ? ` on <b>${esc(cfg.user)}</b>` : ''}. Every copy connected with the same token shares one progress.</p><div class="acts"><button class="btn" type="button" id="gist-off">Disconnect this device</button></div><p class="small" id="gist-msg" aria-live="polite"></p>`
+      : `<p class="small">Paste a GitHub token that can only create gists (github.com > Settings > Developer settings > Personal access tokens > Fine-grained, permission "Gists: read and write"). Use the same token on your phone and PC. It is stored only on this device and sent only to GitHub.</p>
+         <input id="gist-token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…" style="width:100%;font:14px ui-monospace,monospace;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);margin-top:8px">
+         <div class="acts"><button class="btn main" type="button" id="gist-on">Connect</button></div><p class="small" id="gist-msg" aria-live="polite"></p>`;
+  }
+  document.addEventListener('click', async (e) => {
+    if (e.target.id === 'gist-on') {
+      const token = ($('gist-token').value || '').trim(); if (!token) return;
+      $('gist-msg').textContent = 'Connecting…';
+      try {
+        const me = await gh('/user', null, token).catch(() => null);
+        const id = await gistFind(token);
+        localStorage.setItem('gym-gist', JSON.stringify({ token, id, user: me && me.login }));
+        renderGist(); const ok = await startGist(gistCfg());
+        $('gist-msg').textContent = ok ? 'Connected. Progress from every connected copy now merges here.' : 'Could not reach the gist. Check the token and try again.';
+      } catch (err) { $('gist-msg').textContent = 'That did not work (' + (err.code || err.message) + '). Check that the token has the Gists permission.'; }
+    }
+    if (e.target.id === 'gist-off') { localStorage.removeItem('gym-gist'); cloudRef = null; renderGist(); setSync('Saved on this device'); }
+  });
+  // move progress between the offline (localhost) and online copies
+  $('mv-copy').addEventListener('click', async () => {
+    const json = canon(shareable(st)), box = $('mv-text');
+    try { await navigator.clipboard.writeText(json); $('mv-msg').textContent = 'Copied. Now open the other copy of the Gym and paste it into this box there.'; }
+    catch (e) { box.value = json; box.focus(); box.select(); $('mv-msg').textContent = 'Your progress is selected in the box: press Ctrl+C to copy it, then paste it into the other copy.'; }
+  });
+  $('mv-import').addEventListener('click', () => {
+    let inc; try { inc = JSON.parse($('mv-text').value.trim()); } catch (e) { inc = null; }
+    if (!inc || typeof inc !== 'object' || Array.isArray(inc) || !('cards' in inc || 'days' in inc || 'xp' in inc)) { $('mv-msg').textContent = 'That doesn\'t look like Chess Gym progress. Use "Copy my progress" in the other copy first.'; return; }
+    const before = { xp: st.xp || 0, cards: Object.keys(st.cards || {}).length };
+    const mine = {}; for (const k of PER_DEVICE) if (k in st) mine[k] = st[k];
+    const merged = mergeStates(shareable(st), { ...shareable(inc), _t: Date.now() + 1 });
+    for (const k of Object.keys(st)) delete st[k];
+    Object.assign(st, merged, mine);
+    for (const k of ['prate', 'lseen', 'coordsBest', 'lines', 'endgames', 'cards', 'days', 'gamelog']) st[k] = st[k] || {};
+    save(); stats();
+    $('mv-text').value = '';
+    $('mv-msg').textContent = `Added. XP ${before.xp} → ${st.xp}, positions in your review deck ${before.cards} → ${Object.keys(st.cards).length}, day streak ${streak()}.` + (cloudRef ? ' Syncing to your other devices.' : '');
+    try { route(); } catch (e) {}
+  });
+  $('snd').addEventListener('click', () => { st.sound = !st.sound; save(); stats(); if (st.sound) sMove(); });
+  document.addEventListener('keydown', (e) => {
+    if ($('v-train').hidden || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+    if (e.key === 'n' || (e.key === 'Enter' && $('res').classList.contains('show'))) actHandlers.next && actHandlers.next();
+    if (e.key === 'h') actHandlers.hint && actHandlers.hint();
+  });
+
+  function route() {
+    const h = location.hash.slice(1) || 'home';
+    clearInterval(coordTimer);
+    if (h === 'session') runSession();
+    else if (h === 'practice') renderPractice();
+    else if (h === 'positions') renderWall();
+    else if (h === 'openings') renderOpenings();
+    else if (h === 'drill') { if (!mode) renderPractice(); }
+    else renderHome();
+    stats();
+  }
+  window.addEventListener('hashchange', route);
+
+  Promise.all([...['puzzles.json', 'themes.json', 'openings.json'].map((f) => fetch(f).then((r) => r.json())), fetch('deviations.json').then((r) => r.json()).catch(() => []), fetch('drills.json').then((r) => r.json()).catch(() => null), fetch('study.json').then((r) => r.json()).catch(() => null), fetch('themes2.json').then((r) => r.json()).catch(() => ({}))])
+    .then(([p, t, o, d, dr, sd, t2]) => { P = p; byId = Object.fromEntries(P.map((x) => [x.id, x])); T = { ...(t2 || {}), ...t }; { const kn = Object.values(st.prate || {}).filter((v) => v > 0); if (kn.length >= 3) { const avg = Math.round(kn.reduce((x, y) => x + y, 0) / kn.length); for (const k of Object.keys(t2 || {})) START_RATING[k] = Math.max(START_RATING[k], avg); } } O = o; D = Array.isArray(d) ? d : []; DR = dr && dr.safe ? dr : DR; SD = sd && sd.mates ? sd : SD; indexDevs(); route(); })
+    .catch(() => { document.querySelector('#v-home .card').insertAdjacentHTML('afterbegin', '<p class="small">Could not load the puzzles. Reload the page.</p>'); route(); });
+}
+</script>
+<script>if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));</script>
+</body>
+</html>

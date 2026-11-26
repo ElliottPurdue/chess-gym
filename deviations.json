@@ -1,0 +1,2761 @@
+[
+{
+"id": "dev-fried-defense-8-e1g1",
+"lineId": "fried-defense",
+"side": "b",
+"ply": 8,
+"before": "r1bqkb1r/ppp2ppp/2n2n2/3pp1N1/2B1P3/8/PPPP1PPP/RNBQK2R w KQkq - 0 5",
+"fen": "r1bqkb1r/ppp2ppp/2n2n2/3pp1N1/2B1P3/8/PPPP1PPP/RNBQ1RK1 b kq - 1 5",
+"last": "e1g1",
+"lastLabel": "5.O-O",
+"bookLabel": "5.exd5",
+"accepted": [
+"d5c4"
+],
+"best": "d5c4",
+"bestSan": "dxc4",
+"pv": [
+"d5c4",
+"b2b3",
+"c8g4",
+"g5f3",
+"c6d4",
+"b3c4",
+"d4f3"
+],
+"line": "5...dxc4 6. b3 Bg4 7. Nf3 Nd4 8. bxc4 Nxf3+",
+"evalBest": 592,
+"why": "Castling ignores your pawn on d5, which hits the bishop on c4. Take it: you win a piece."
+},
+{
+"id": "dev-fried-defense-10-e1g1",
+"lineId": "fried-defense",
+"side": "b",
+"ply": 10,
+"before": "r1bqkb1r/ppp2ppp/5n2/n2Pp1N1/2B5/8/PPPP1PPP/RNBQK2R w KQkq - 1 6",
+"fen": "r1bqkb1r/ppp2ppp/5n2/n2Pp1N1/2B5/8/PPPP1PPP/RNBQ1RK1 b kq - 2 6",
+"last": "e1g1",
+"lastLabel": "6.O-O",
+"bookLabel": "6.Bb5+",
+"accepted": [
+"a5c4"
+],
+"best": "a5c4",
+"bestSan": "Nxc4",
+"pv": [
+"a5c4",
+"d2d4",
+"e5e4",
+"d1e2",
+"c4d6",
+"f2f3",
+"e4e3"
+],
+"line": "6...Nxc4 7. d4 e4 8. Qe2 Nd6 9. f3 e3",
+"evalBest": 353,
+"why": "Your knight on a5 attacks the bishop on c4. Castling leaves it there, so take it."
+},
+{
+"id": "dev-fried-defense-14-e1g1",
+"lineId": "fried-defense",
+"side": "b",
+"ply": 14,
+"before": "r1bqkb1r/p4ppp/2p2n2/nB2p1N1/8/8/PPPP1PPP/RNBQK2R w KQkq - 0 8",
+"fen": "r1bqkb1r/p4ppp/2p2n2/nB2p1N1/8/8/PPPP1PPP/RNBQ1RK1 b kq - 1 8",
+"last": "e1g1",
+"lastLabel": "8.O-O",
+"bookLabel": "8.Be2",
+"accepted": [
+"c6b5"
+],
+"best": "c6b5",
+"bestSan": "cxb5",
+"pv": [
+"c6b5",
+"d1e2",
+"a5c6",
+"e2b5",
+"d8d7",
+"b5c4",
+"d7d5"
+],
+"line": "8...cxb5 9. Qe2 Nc6 10. Qxb5 Qd7 11. Qc4 Qd5",
+"evalBest": 410,
+"why": "Your c6 pawn attacks the bishop on b5. Castling doesn't save it."
+},
+{
+"id": "dev-fried-defense-16-e1g1",
+"lineId": "fried-defense",
+"side": "b",
+"ply": 16,
+"before": "r1bqkb1r/p4pp1/2p2n1p/n3p1N1/8/8/PPPPBPPP/RNBQK2R w KQkq - 0 9",
+"fen": "r1bqkb1r/p4pp1/2p2n1p/n3p1N1/8/8/PPPPBPPP/RNBQ1RK1 b kq - 1 9",
+"last": "e1g1",
+"lastLabel": "9.O-O",
+"bookLabel": "9.Nf3",
+"accepted": [
+"h6g5"
+],
+"best": "h6g5",
+"bestSan": "hxg5",
+"pv": [
+"h6g5",
+"d2d3",
+"g5g4",
+"c1g5",
+"c8e6",
+"b1d2",
+"d8d7"
+],
+"line": "9...hxg5 10. d3 g4 11. Bg5 Be6 12. Nd2 Qd7",
+"evalBest": 360,
+"why": "...h6 attacked the knight on g5. Castling ignores it, so take the knight."
+},
+{
+"id": "dev-fork-trick-10-e1g1",
+"lineId": "fork-trick",
+"side": "b",
+"ply": 10,
+"before": "r1bqkb1r/ppp2ppp/2n5/3pp3/2B1N3/5N2/PPPP1PPP/R1BQK2R w KQkq - 0 6",
+"fen": "r1bqkb1r/ppp2ppp/2n5/3pp3/2B1N3/5N2/PPPP1PPP/R1BQ1RK1 b kq - 1 6",
+"last": "e1g1",
+"lastLabel": "6.O-O",
+"bookLabel": "6.Bd3",
+"accepted": [
+"d5c4",
+"d5e4"
+],
+"best": "d5c4",
+"bestSan": "dxc4",
+"pv": [
+"d5c4",
+"f1e1",
+"f8e7",
+"e4g3",
+"d8d5",
+"b2b3",
+"f7f6"
+],
+"line": "6...dxc4 7. Re1 Be7 8. Ng3 Qd5 9. b3 f6",
+"evalBest": 184,
+"why": "Your ...d5 forks the bishop on c4 and the knight on e4. Castling saves neither: take the bishop."
+},
+{
+"id": "dev-fork-trick-12-c2c4",
+"lineId": "fork-trick",
+"side": "b",
+"ply": 12,
+"before": "r1bqkb1r/ppp2ppp/2n5/4p3/4p3/3B1N2/PPPP1PPP/R1BQK2R w KQkq - 0 7",
+"fen": "r1bqkb1r/ppp2ppp/2n5/4p3/2P1p3/3B1N2/PP1P1PPP/R1BQK2R b KQkq - 0 7",
+"last": "c2c4",
+"lastLabel": "7.c4",
+"bookLabel": "7.Bxe4",
+"accepted": [
+"d8d3"
+],
+"best": "d8d3",
+"bestSan": "Qxd3",
+"pv": [
+"d8d3",
+"d1b3",
+"d3b3",
+"a2b3",
+"e4f3",
+"g2g4",
+"f8b4"
+],
+"line": "7...Qxd3 8. Qb3 Qxb3 9. axb3 exf3 10. g4 Bb4",
+"evalBest": 814,
+"why": "Your e4 pawn hits the bishop on d3. 7.c4 doesn't protect it, and it took away the bishop's c2 pawn guard: your queen takes it."
+},
+{
+"id": "dev-fork-trick-4-f3e5",
+"lineId": "fork-trick",
+"side": "b",
+"ply": 4,
+"before": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+"fen": "r1bqkbnr/pppp1ppp/2n5/4N3/4P3/8/PPPP1PPP/RNBQKB1R b KQkq - 0 3",
+"last": "f3e5",
+"lastLabel": "3.Nxe5",
+"bookLabel": "3.Bc4",
+"accepted": [
+"c6e5"
+],
+"best": "c6e5",
+"bestSan": "Nxe5",
+"pv": [
+"c6e5",
+"d2d4",
+"e5g6",
+"b1c3",
+"f8b4",
+"h2h4",
+"d7d5"
+],
+"line": "3...Nxe5 4. d4 Ng6 5. Nc3 Bb4 6. h4 d5",
+"evalBest": 258,
+"why": "e5 was guarded by your knight on c6. 3.Nxe5 just gives you a knight for a pawn: take back."
+},
+{
+"id": "dev-fork-trick-6-c4f7",
+"lineId": "fork-trick",
+"side": "b",
+"ply": 6,
+"before": "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+"fen": "r1bqkb1r/pppp1Bpp/2n2n2/4p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 0 4",
+"last": "c4f7",
+"lastLabel": "4.Bxf7+",
+"bookLabel": "4.Nc3",
+"accepted": [
+"e8f7"
+],
+"best": "e8f7",
+"bestSan": "Kxf7",
+"pv": [
+"e8f7",
+"d2d4",
+"e5d4",
+"e4e5",
+"d8e7",
+"e1g1",
+"c6e5"
+],
+"line": "4...Kxf7 5. d4 exd4 6. e5 Qe7 7. O-O Nxe5",
+"evalBest": 341,
+"why": "The bishop sac on f7 wins one pawn for a piece. Take it; then watch for Ng5+ and tuck your king away."
+},
+{
+"id": "dev-italian-2n-3-b8a6",
+"lineId": "italian-2n",
+"side": "w",
+"ply": 3,
+"before": "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
+"fen": "r1bqkbnr/pppp1ppp/n7/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+"last": "b8a6",
+"lastLabel": "2...Na6",
+"bookLabel": "2...Nc6",
+"accepted": [
+"f3e5",
+"b1c3",
+"f1a6"
+],
+"best": "f3e5",
+"bestSan": "Nxe5",
+"pv": [
+"f3e5",
+"d7d6",
+"e5f3",
+"a6c5",
+"d2d3",
+"g7g6",
+"b1c3"
+],
+"line": "3. Nxe5 d6 4. Nf3 Nc5 5. d3 g6 6. Nc3",
+"evalBest": 204,
+"why": "...Na6 doesn't defend e5. The pawn is free: take it."
+},
+{
+"id": "dev-italian-2n-7-f6e4",
+"lineId": "italian-2n",
+"side": "w",
+"ply": 7,
+"before": "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R b KQkq - 0 4",
+"fen": "r1bqkb1r/pppp1ppp/2n5/4p3/2B1n3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 0 5",
+"last": "f6e4",
+"lastLabel": "4...Nxe4",
+"bookLabel": "4...Be7",
+"accepted": [
+"d3e4"
+],
+"best": "d3e4",
+"bestSan": "dxe4",
+"pv": [
+"d3e4",
+"f8b4",
+"c2c3",
+"b4e7",
+"e1g1",
+"e8g8",
+"f1e1"
+],
+"line": "5. dxe4 Bb4+ 6. c3 Be7 7. O-O O-O 8. Re1",
+"evalBest": 451,
+"why": "Your d3 pawn guards e4. ...Nxe4 drops a knight for a pawn: take back."
+},
+{
+"id": "dev-advance-french-3-f8c5",
+"lineId": "advance-french",
+"side": "w",
+"ply": 3,
+"before": "rnbqkbnr/pppp1ppp/4p3/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 2",
+"fen": "rnbqk1nr/pppp1ppp/4p3/2b5/3PP3/8/PPP2PPP/RNBQKBNR w KQkq - 1 3",
+"last": "f8c5",
+"lastLabel": "2...Bc5",
+"bookLabel": "2...d5",
+"accepted": [
+"d4c5"
+],
+"best": "d4c5",
+"bestSan": "dxc5",
+"pv": [
+"d4c5",
+"b7b6",
+"c1e3",
+"b6c5",
+"e3c5",
+"c8b7",
+"b1c3"
+],
+"line": "3. dxc5 b6 4. Be3 bxc5 5. Bxc5 Bb7 6. Nc3",
+"evalBest": 542,
+"why": "Your d4 pawn attacks c5. The bishop walked into it: take it."
+},
+{
+"id": "dev-advance-french-5-g8f6",
+"lineId": "advance-french",
+"side": "w",
+"ply": 5,
+"before": "rnbqkbnr/ppp2ppp/4p3/3pP3/3P4/8/PPP2PPP/RNBQKBNR b KQkq - 0 3",
+"fen": "rnbqkb1r/ppp2ppp/4pn2/3pP3/3P4/8/PPP2PPP/RNBQKBNR w KQkq - 1 4",
+"last": "g8f6",
+"lastLabel": "3...Nf6",
+"bookLabel": "3...c5",
+"accepted": [
+"e5f6"
+],
+"best": "e5f6",
+"bestSan": "exf6",
+"pv": [
+"e5f6",
+"g7f6",
+"g1f3",
+"c7c5",
+"c2c3",
+"h7h5",
+"c1e3"
+],
+"line": "4. exf6 gxf6 5. Nf3 c5 6. c3 h5 7. Be3",
+"evalBest": 361,
+"why": "Your e5 pawn attacks f6. A knight on f6 is simply lost there."
+},
+{
+"id": "dev-qgd-12-f1d3",
+"lineId": "qgd",
+"side": "b",
+"ply": 12,
+"before": "rnbq1rk1/ppp1bpp1/4pn1p/3p2B1/2PP4/2N1PN2/PP3PPP/R2QKB1R w KQ - 0 7",
+"fen": "rnbq1rk1/ppp1bpp1/4pn1p/3p2B1/2PP4/2NBPN2/PP3PPP/R2QK2R b KQ - 1 7",
+"last": "f1d3",
+"lastLabel": "7.Bd3",
+"bookLabel": "7.Bh4",
+"accepted": [
+"h6g5"
+],
+"best": "h6g5",
+"bestSan": "hxg5",
+"pv": [
+"h6g5",
+"g2g4",
+"d5c4",
+"d3c2",
+"f6g4",
+"h2h4",
+"f7f5"
+],
+"line": "7...hxg5 8. g4 dxc4 9. Bc2 Nxg4 10. h4 f5",
+"evalBest": 259,
+"why": "...h6 attacked the bishop on g5. 7.Bd3 ignores the threat: take the bishop."
+},
+{
+"id": "dev-qgd-10-e3e4",
+"lineId": "qgd",
+"side": "b",
+"ply": 10,
+"before": "rnbq1rk1/ppp1bppp/4pn2/3p2B1/2PP4/2N1P3/PP3PPP/R2QKBNR w KQ - 1 6",
+"fen": "rnbq1rk1/ppp1bppp/4pn2/3p2B1/2PPP3/2N5/PP3PPP/R2QKBNR b KQ - 0 6",
+"last": "e3e4",
+"lastLabel": "6.e4",
+"bookLabel": "6.Nf3",
+"accepted": [
+"f6e4",
+"d5e4"
+],
+"best": "f6e4",
+"bestSan": "Nxe4",
+"pv": [
+"f6e4",
+"g5e7",
+"d8e7",
+"g1f3",
+"c7c5",
+"c4d5",
+"e4c3"
+],
+"line": "6...Nxe4 7. Bxe7 Qxe7 8. Nf3 c5 9. cxd5 Nxc3",
+"evalBest": 168,
+"why": "e4 looks active but nothing defends it well enough: your f6 knight takes it and you stay a pawn up."
+},
+{
+"id": "dev-london-bg3-10-f1c4",
+"lineId": "london-bg3",
+"side": "b",
+"ply": 10,
+"before": "r1bqkb1r/pp3ppp/2n1pn2/2pp4/3P1B2/2P1PN2/PP3PPP/RN1QKB1R w KQkq - 1 6",
+"fen": "r1bqkb1r/pp3ppp/2n1pn2/2pp4/2BP1B2/2P1PN2/PP3PPP/RN1QK2R b KQkq - 2 6",
+"last": "f1c4",
+"lastLabel": "6.Bc4",
+"bookLabel": "6.Nbd2",
+"accepted": [
+"d5c4"
+],
+"best": "d5c4",
+"bestSan": "dxc4",
+"pv": [
+"d5c4",
+"b1d2",
+"c5d4",
+"e3d4",
+"f8e7",
+"d2c4",
+"e8g8"
+],
+"line": "6...dxc4 7. Nbd2 cxd4 8. exd4 Be7 9. Nxc4 O-O",
+"evalBest": 463,
+"why": "A bishop on c4 walks into your d5 pawn. Take it."
+},
+{
+"id": "dev-london-qb6-12-e1c1",
+"lineId": "london-qb6",
+"side": "b",
+"ply": 12,
+"before": "r1b1kb1r/pp2pppp/1qn2n2/3p4/2pP1B2/1QP1P3/PP1N1PPP/R3KBNR w KQkq - 0 7",
+"fen": "r1b1kb1r/pp2pppp/1qn2n2/3p4/2pP1B2/1QP1P3/PP1N1PPP/2KR1BNR b kq - 1 7",
+"last": "e1c1",
+"lastLabel": "7.O-O-O",
+"bookLabel": "7.Qc2",
+"accepted": [
+"c4b3"
+],
+"best": "c4b3",
+"bestSan": "cxb3",
+"pv": [
+"c4b3",
+"d2b3",
+"f6e4",
+"f4g3",
+"c8f5",
+"f1d3",
+"a8c8"
+],
+"line": "7...cxb3 8. Nxb3 Ne4 9. Bg3 Bf5 10. Bd3 Rc8",
+"evalBest": 683,
+"why": "Your ...c4 attacked the queen on b3. Castling doesn't move the queen: take it."
+},
+{
+"id": "dev-fried-survive-10-f2f3",
+"lineId": "fried-survive",
+"side": "b",
+"ply": 10,
+"before": "r1bqkb1r/ppp2ppp/2n5/3np1N1/2B5/8/PPPP1PPP/RNBQK2R w KQkq - 0 6",
+"fen": "r1bqkb1r/ppp2ppp/2n5/3np1N1/2B5/5P2/PPPP2PP/RNBQK2R b KQkq - 0 6",
+"last": "f2f3",
+"lastLabel": "6.f3",
+"bookLabel": "6.Nxf7",
+"accepted": [
+"d8g5"
+],
+"best": "d8g5",
+"bestSan": "Qxg5",
+"pv": [
+"d8g5",
+"c4d5",
+"g5g2",
+"d5c6",
+"b7c6",
+"h1f1",
+"f8e7"
+],
+"line": "6...Qxg5 7. Bxd5 Qxg2 8. Bxc6+ bxc6 9. Rf1 Be7",
+"evalBest": 457,
+"why": "Your knight left f6, so your queen on d8 now hits g5. 6.f3 doesn't defend the knight: take it."
+},
+{
+"id": "dev-fried-survive-10-f2f4",
+"lineId": "fried-survive",
+"side": "b",
+"ply": 10,
+"before": "r1bqkb1r/ppp2ppp/2n5/3np1N1/2B5/8/PPPP1PPP/RNBQK2R w KQkq - 0 6",
+"fen": "r1bqkb1r/ppp2ppp/2n5/3np1N1/2B2P2/8/PPPP2PP/RNBQK2R b KQkq - 0 6",
+"last": "f2f4",
+"lastLabel": "6.f4",
+"bookLabel": "6.Nxf7",
+"accepted": [
+"h7h6",
+"d5f4",
+"f7f6"
+],
+"best": "h7h6",
+"bestSan": "h6",
+"pv": [
+"h7h6",
+"g5f3",
+"d5f4",
+"e1g1",
+"c8e6",
+"c4b5",
+"e5e4"
+],
+"line": "6...h6 7. Nf3 Nxf4 8. O-O Be6 9. Bb5 e4",
+"evalBest": 214,
+"why": "6.f4 defends the knight but loosens White's position: chase it with ...h6, then pick up the f4 pawn."
+},
+{
+"id": "dev-italian-piano-7-d7d5",
+"lineId": "italian-piano",
+"side": "w",
+"ply": 7,
+"before": "r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/2P2N2/PP1P1PPP/RNBQK2R b KQkq - 0 4",
+"fen": "r1bqk1nr/ppp2ppp/2n5/2bpp3/2B1P3/2P2N2/PP1P1PPP/RNBQK2R w KQkq - 0 5",
+"last": "d7d5",
+"lastLabel": "4...d5",
+"bookLabel": "4...Nf6",
+"accepted": [
+"e4d5"
+],
+"best": "e4d5",
+"bestSan": "exd5",
+"pv": [
+"e4d5",
+"c6a5",
+"d1a4",
+"c7c6",
+"d5c6",
+"a5c6",
+"f3e5"
+],
+"line": "5. exd5 Na5 6. Qa4+ c6 7. dxc6 Nxc6 8. Nxe5",
+"evalBest": 237,
+"why": "...d5 gives up a pawn in the center. Take it: 5.exd5, and Qa4+ answers ...Na5."
+},
+{
+"id": "dev-italian-piano-11-d6d5",
+"lineId": "italian-piano",
+"side": "w",
+"ply": 11,
+"before": "r1bqk2r/ppp2ppp/2np1n2/2b1p3/2B1P3/2PP1N2/PP3PPP/RNBQ1RK1 b kq - 1 6",
+"fen": "r1bqk2r/ppp2ppp/2n2n2/2bpp3/2B1P3/2PP1N2/PP3PPP/RNBQ1RK1 w kq - 0 7",
+"last": "d6d5",
+"lastLabel": "6...d5",
+"bookLabel": "6...O-O",
+"accepted": [
+"e4d5"
+],
+"best": "e4d5",
+"bestSan": "exd5",
+"pv": [
+"e4d5",
+"c6e7",
+"f3e5",
+"f6d5",
+"d1f3",
+"c8e6",
+"b1d2"
+],
+"line": "7. exd5 Ne7 8. Nxe5 Nfxd5 9. Qf3 Be6 10. Nd2",
+"evalBest": 199,
+"why": "...d5 drops a pawn: take it with 7.exd5, and the e5 pawn becomes a target too."
+},
+{
+"id": "dev-italian-piano-7-c5f2",
+"lineId": "italian-piano",
+"side": "w",
+"ply": 7,
+"before": "r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/2P2N2/PP1P1PPP/RNBQK2R b KQkq - 0 4",
+"fen": "r1bqk1nr/pppp1ppp/2n5/4p3/2B1P3/2P2N2/PP1P1bPP/RNBQK2R w KQkq - 0 5",
+"last": "c5f2",
+"lastLabel": "4...Bxf2+",
+"bookLabel": "4...Nf6",
+"accepted": [
+"e1f2"
+],
+"best": "e1f2",
+"bestSan": "Kxf2",
+"pv": [
+"e1f2",
+"f7f5",
+"d2d3",
+"g8f6",
+"f2e1",
+"c6a5",
+"b1a3"
+],
+"line": "5. Kxf2 f5 6. d3 Nf6 7. Ke1 Na5 8. Na3",
+"evalBest": 311,
+"why": "The bishop sac on f2 wins one pawn for a piece. Take it with the king."
+},
+{
+"id": "dev-italian-piano-9-f6e4",
+"lineId": "italian-piano",
+"side": "w",
+"ply": 9,
+"before": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/2PP1N2/PP3PPP/RNBQK2R b KQkq - 0 5",
+"fen": "r1bqk2r/pppp1ppp/2n5/2b1p3/2B1n3/2PP1N2/PP3PPP/RNBQK2R w KQkq - 0 6",
+"last": "f6e4",
+"lastLabel": "5...Nxe4",
+"bookLabel": "5...d6",
+"accepted": [
+"d3e4"
+],
+"best": "d3e4",
+"bestSan": "dxe4",
+"pv": [
+"d3e4",
+"d7d6",
+"e1g1",
+"d8f6",
+"b2b4",
+"c5b6",
+"c1e3"
+],
+"line": "6. dxe4 d6 7. O-O Qf6 8. b4 Bb6 9. Be3",
+"evalBest": 407,
+"why": "Your d3 pawn guards e4. ...Nxe4 drops a knight for a pawn: take back."
+},
+{
+"id": "dev-alapin-5-b8c6",
+"lineId": "alapin",
+"side": "w",
+"ply": 5,
+"before": "rnbqkb1r/pp1ppppp/5n2/2p1P3/8/2P5/PP1P1PPP/RNBQKBNR b KQkq - 0 3",
+"fen": "r1bqkb1r/pp1ppppp/2n2n2/2p1P3/8/2P5/PP1P1PPP/RNBQKBNR w KQkq - 1 4",
+"last": "b8c6",
+"lastLabel": "3...Nc6",
+"bookLabel": "3...Nd5",
+"accepted": [
+"e5f6"
+],
+"best": "e5f6",
+"bestSan": "exf6",
+"pv": [
+"e5f6",
+"g7f6",
+"d2d4",
+"d7d5",
+"d4c5",
+"e7e5",
+"b2b4"
+],
+"line": "4. exf6 gxf6 5. d4 d5 6. dxc5 e5 7. b4",
+"evalBest": 288,
+"why": "Your e5 pawn attacks the knight on f6. Developing another piece leaves it hanging: take it."
+},
+{
+"id": "dev-alapin-9-d4c3",
+"lineId": "alapin",
+"side": "w",
+"ply": 9,
+"before": "rnbqkb1r/pp1ppppp/8/3nP3/3p4/2P2N2/PP3PPP/RNBQKB1R b KQkq - 1 5",
+"fen": "rnbqkb1r/pp1ppppp/8/3nP3/8/2p2N2/PP3PPP/RNBQKB1R w KQkq - 0 6",
+"last": "d4c3",
+"lastLabel": "5...dxc3",
+"bookLabel": "5...Nc6",
+"accepted": [
+"d1d5"
+],
+"best": "d1d5",
+"bestSan": "Qxd5",
+"pv": [
+"d1d5",
+"e7e6",
+"d5e4",
+"c3b2",
+"c1b2",
+"d8b6",
+"e4c2"
+],
+"line": "6. Qxd5 e6 7. Qe4 cxb2 8. Bxb2 Qb6 9. Qc2",
+"evalBest": 371,
+"why": "Their d4 pawn was blocking the d-file. After ...dxc3 your queen on d1 hits the knight on d5, and nothing defends it."
+},
+{
+"id": "dev-alapin-7-d5c3",
+"lineId": "alapin",
+"side": "w",
+"ply": 7,
+"before": "rnbqkb1r/pp1ppppp/8/2pnP3/3P4/2P5/PP3PPP/RNBQKBNR b KQkq - 0 4",
+"fen": "rnbqkb1r/pp1ppppp/8/2p1P3/3P4/2n5/PP3PPP/RNBQKBNR w KQkq - 0 5",
+"last": "d5c3",
+"lastLabel": "4...Nxc3",
+"bookLabel": "4...cxd4",
+"accepted": [
+"b1c3",
+"b2c3"
+],
+"best": "b1c3",
+"bestSan": "Nxc3",
+"pv": [
+"b1c3",
+"c5d4",
+"d1d4",
+"b8c6",
+"d4e4",
+"g7g6",
+"g1f3"
+],
+"line": "5. Nxc3 cxd4 6. Qxd4 Nc6 7. Qe4 g6 8. Nf3",
+"evalBest": 419,
+"why": "...Nxc3 gives up the knight for one pawn. Take back and you're a piece up."
+},
+{
+"id": "dev-advance-caro-5-g8f6",
+"lineId": "advance-caro",
+"side": "w",
+"ply": 5,
+"before": "rnbqkbnr/pp2pppp/2p5/3pP3/3P4/8/PPP2PPP/RNBQKBNR b KQkq - 0 3",
+"fen": "rnbqkb1r/pp2pppp/2p2n2/3pP3/3P4/8/PPP2PPP/RNBQKBNR w KQkq - 1 4",
+"last": "g8f6",
+"lastLabel": "3...Nf6",
+"bookLabel": "3...Bf5",
+"accepted": [
+"e5f6"
+],
+"best": "e5f6",
+"bestSan": "exf6",
+"pv": [
+"e5f6",
+"g7f6",
+"g1f3",
+"h8g8",
+"g2g3",
+"c8g4",
+"h2h3"
+],
+"line": "4. exf6 gxf6 5. Nf3 Rg8 6. g3 Bg4 7. h3",
+"evalBest": 395,
+"why": "Your e5 pawn attacks f6. A knight there is simply lost."
+},
+{
+"id": "dev-advance-caro-5-c8g4",
+"lineId": "advance-caro",
+"side": "w",
+"ply": 5,
+"before": "rnbqkbnr/pp2pppp/2p5/3pP3/3P4/8/PPP2PPP/RNBQKBNR b KQkq - 0 3",
+"fen": "rn1qkbnr/pp2pppp/2p5/3pP3/3P2b1/8/PPP2PPP/RNBQKBNR w KQkq - 1 4",
+"last": "c8g4",
+"lastLabel": "3...Bg4",
+"bookLabel": "3...Bf5",
+"accepted": [
+"d1g4"
+],
+"best": "d1g4",
+"bestSan": "Qxg4",
+"pv": [
+"d1g4",
+"e7e6",
+"g4d1",
+"c6c5",
+"c2c3",
+"b8c6",
+"g1f3"
+],
+"line": "4. Qxg4 e6 5. Qd1 c5 6. c3 Nc6 7. Nf3",
+"evalBest": 561,
+"why": "Nothing defends the bishop on g4, and your queen on d1 sees it. Take it."
+},
+{
+"id": "dev-advance-caro-9-f8d6",
+"lineId": "advance-caro",
+"side": "w",
+"ply": 9,
+"before": "rn1qkbnr/pp3ppp/2p1p3/3pPb2/3P4/5N2/PPP1BPPP/RNBQK2R b KQkq - 1 5",
+"fen": "rn1qk1nr/pp3ppp/2pbp3/3pPb2/3P4/5N2/PPP1BPPP/RNBQK2R w KQkq - 2 6",
+"last": "f8d6",
+"lastLabel": "5...Bd6",
+"bookLabel": "5...c5",
+"accepted": [
+"e5d6"
+],
+"best": "e5d6",
+"bestSan": "exd6",
+"pv": [
+"e5d6",
+"d8d6",
+"e1g1",
+"g8e7",
+"f1e1",
+"e7g6",
+"c2c4"
+],
+"line": "6. exd6 Qxd6 7. O-O Ne7 8. Re1 Ng6 9. c4",
+"evalBest": 478,
+"why": "Your e5 pawn attacks d6. The bishop walked into it: take it."
+},
+{
+"id": "dev-qgd-london-4-f4c7",
+"lineId": "qgd-london",
+"side": "b",
+"ply": 4,
+"before": "rnbqkb1r/ppp1pppp/5n2/3p4/3P1B2/8/PPP1PPPP/RN1QKBNR w KQkq - 2 3",
+"fen": "rnbqkb1r/ppB1pppp/5n2/3p4/3P4/8/PPP1PPPP/RN1QKBNR b KQkq - 0 3",
+"last": "f4c7",
+"lastLabel": "3.Bxc7",
+"bookLabel": "3.e3",
+"accepted": [
+"d8c7"
+],
+"best": "d8c7",
+"bestSan": "Qxc7",
+"pv": [
+"d8c7",
+"g1f3",
+"b8c6",
+"e2e3",
+"c8f5",
+"b1d2",
+"e7e6"
+],
+"line": "3...Qxc7 4. Nf3 Nc6 5. e3 Bf5 6. Nbd2 e6",
+"evalBest": 471,
+"why": "c7 was guarded by your queen. 3.Bxc7 gives you a bishop for a pawn: take back."
+},
+{
+"id": "dev-london-bxd6-14-f1c4",
+"lineId": "london-bxd6",
+"side": "b",
+"ply": 14,
+"before": "r1b1k2r/pp3ppp/2nqpn2/2pp4/3P4/2P1PN2/PP1N1PPP/R2QKB1R w KQkq - 0 8",
+"fen": "r1b1k2r/pp3ppp/2nqpn2/2pp4/2BP4/2P1PN2/PP1N1PPP/R2QK2R b KQkq - 1 8",
+"last": "f1c4",
+"lastLabel": "8.Bc4",
+"bookLabel": "8.Bd3",
+"accepted": [
+"d5c4"
+],
+"best": "d5c4",
+"bestSan": "dxc4",
+"pv": [
+"d5c4",
+"d2c4",
+"d6d5",
+"d1e2",
+"e8g8",
+"e1c1",
+"c5d4"
+],
+"line": "8...dxc4 9. Nxc4 Qd5 10. Qe2 O-O 11. O-O-O cxd4",
+"evalBest": 421,
+"why": "A bishop on c4 walks into your d5 pawn. Take it."
+},
+{
+"id": "dev-danish-16-e1g1",
+"lineId": "danish",
+"side": "b",
+"ply": 16,
+"before": "r3k1nr/ppp2ppp/2n5/3q4/1b1P4/2N2b2/PP2BPPP/R1BQK2R w KQkq - 0 9",
+"fen": "r3k1nr/ppp2ppp/2n5/3q4/1b1P4/2N2b2/PP2BPPP/R1BQ1RK1 b kq - 1 9",
+"last": "e1g1",
+"lastLabel": "9.O-O",
+"bookLabel": "9.Bxf3",
+"accepted": [
+"f3e2"
+],
+"best": "f3e2",
+"bestSan": "Bxe2",
+"pv": [
+"f3e2",
+"d1e2",
+"d5e6",
+"e2d1",
+"e6d7",
+"d4d5",
+"c6e7"
+],
+"line": "9...Bxe2 10. Qxe2+ Qe6 11. Qd1 Qd7 12. d5 Nce7",
+"evalBest": 359,
+"why": "White never took back on f3. Your bishop takes on e2 as well, and you're a piece up."
+},
+{
+"id": "dev-danish-6-f1c4",
+"lineId": "danish",
+"side": "b",
+"ply": 6,
+"before": "rnbqkbnr/ppp2ppp/8/3p4/3pP3/2P5/PP3PPP/RNBQKBNR w KQkq - 0 4",
+"fen": "rnbqkbnr/ppp2ppp/8/3p4/2BpP3/2P5/PP3PPP/RNBQK1NR b KQkq - 1 4",
+"last": "f1c4",
+"lastLabel": "4.Bc4",
+"bookLabel": "4.exd5",
+"accepted": [
+"d5c4"
+],
+"best": "d5c4",
+"bestSan": "dxc4",
+"pv": [
+"d5c4",
+"c3d4",
+"b8a6",
+"a2a3",
+"c7c6",
+"g1f3",
+"g8f6"
+],
+"line": "4...dxc4 5. cxd4 Na6 6. a3 c6 7. Nf3 Nf6",
+"evalBest": 417,
+"why": "Your d5 pawn attacks c4. The bishop walked right into it."
+},
+{
+"id": "dev-vienna-8-f1c4",
+"lineId": "vienna",
+"side": "b",
+"ply": 8,
+"before": "rnbqkb1r/ppp2ppp/8/3pP3/4n3/2N5/PPPP2PP/R1BQKBNR w KQkq - 0 5",
+"fen": "rnbqkb1r/ppp2ppp/8/3pP3/2B1n3/2N5/PPPP2PP/R1BQK1NR b KQkq - 1 5",
+"last": "f1c4",
+"lastLabel": "5.Bc4",
+"bookLabel": "5.Nf3",
+"accepted": [
+"e4c3"
+],
+"best": "e4c3",
+"bestSan": "Nxc3",
+"pv": [
+"e4c3",
+"d1h5",
+"g7g6",
+"h5f3",
+"d8h4",
+"f3g3",
+"h4e4"
+],
+"line": "5...Nxc3 6. Qh5 g6 7. Qf3 Qh4+ 8. Qg3 Qe4+",
+"evalBest": 546,
+"why": "Take on c3 first: after ...Nxc3 the bishop on c4 is still attacked by your d5 pawn, so White can't save everything."
+},
+{
+"id": "dev-vienna-12-c1g5",
+"lineId": "vienna",
+"side": "b",
+"ply": 12,
+"before": "rnbq1rk1/ppp1bppp/8/3pP3/3Pn3/2N2N2/PPP3PP/R1BQKB1R w KQ - 1 7",
+"fen": "rnbq1rk1/ppp1bppp/8/3pP1B1/3Pn3/2N2N2/PPP3PP/R2QKB1R b KQ - 2 7",
+"last": "c1g5",
+"lastLabel": "7.Bg5",
+"bookLabel": "7.Bd3",
+"accepted": [
+"e7g5",
+"e4g5"
+],
+"best": "e7g5",
+"bestSan": "Bxg5",
+"pv": [
+"e7g5",
+"f1d3",
+"e4c3",
+"b2c3",
+"g5h6",
+"h2h4",
+"f7f6"
+],
+"line": "7...Bxg5 8. Bd3 Nxc3 9. bxc3 Bh6 10. h4 f6",
+"evalBest": 465,
+"why": "The bishop on g5 is attacked by your bishop on e7 and your knight on e4, and only the knight on f3 defends it. Take it."
+},
+{
+"id": "dev-ruy-lopez-6-e1g1",
+"lineId": "ruy-lopez",
+"side": "b",
+"ply": 6,
+"before": "r1bqkbnr/1ppp1ppp/p1n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 4",
+"fen": "r1bqkbnr/1ppp1ppp/p1n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQ1RK1 b kq - 1 4",
+"last": "e1g1",
+"lastLabel": "4.O-O",
+"bookLabel": "4.Ba4",
+"accepted": [
+"a6b5"
+],
+"best": "a6b5",
+"bestSan": "axb5",
+"pv": [
+"a6b5",
+"d2d4",
+"d7d6",
+"b1c3",
+"b5b4",
+"c3d5",
+"f8e7"
+],
+"line": "4...axb5 5. d4 d6 6. Nc3 b4 7. Nd5 Be7",
+"evalBest": 420,
+"why": "...a6 attacked the bishop on b5. Castling ignores it: take it."
+},
+{
+"id": "dev-ruy-lopez-12-b1c3",
+"lineId": "ruy-lopez",
+"side": "b",
+"ply": 12,
+"before": "r1bqk2r/2ppbppp/p1n2n2/1p2p3/B3P3/5N2/PPPP1PPP/RNBQR1K1 w kq - 0 7",
+"fen": "r1bqk2r/2ppbppp/p1n2n2/1p2p3/B3P3/2N2N2/PPPP1PPP/R1BQR1K1 b kq - 1 7",
+"last": "b1c3",
+"lastLabel": "7.Nc3",
+"bookLabel": "7.Bb3",
+"accepted": [
+"b5a4"
+],
+"best": "b5a4",
+"bestSan": "bxa4",
+"pv": [
+"b5a4",
+"d2d4",
+"d7d6",
+"d4d5",
+"c6a5",
+"c3a4",
+"e8g8"
+],
+"line": "7...bxa4 8. d4 d6 9. d5 Na5 10. Nxa4 O-O",
+"evalBest": 377,
+"why": "...b5 attacked the bishop on a4. 7.Nc3 leaves it there: take it."
+},
+{
+"id": "dev-ruy-lopez-8-f3e5",
+"lineId": "ruy-lopez",
+"side": "b",
+"ply": 8,
+"before": "r1bqkb1r/1ppp1ppp/p1n2n2/4p3/B3P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 2 5",
+"fen": "r1bqkb1r/1ppp1ppp/p1n2n2/4N3/B3P3/8/PPPP1PPP/RNBQK2R b KQkq - 0 5",
+"last": "f3e5",
+"lastLabel": "5.Nxe5",
+"bookLabel": "5.O-O",
+"accepted": [
+"c6e5"
+],
+"best": "c6e5",
+"bestSan": "Nxe5",
+"pv": [
+"c6e5",
+"d2d4",
+"e5c4",
+"e4e5",
+"f6d5",
+"e1g1",
+"b7b5"
+],
+"line": "5...Nxe5 6. d4 Nc4 7. e5 Nd5 8. O-O b5",
+"evalBest": 210,
+"why": "e5 was guarded by your knight on c6 (your d7 pawn blocks any pin). Take back."
+},
+{
+"id": "dev-bishops-opening-8-e1g1",
+"lineId": "bishops-opening",
+"side": "b",
+"ply": 8,
+"before": "rnbqkb1r/pp3ppp/2p2n2/3pp3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 0 5",
+"fen": "rnbqkb1r/pp3ppp/2p2n2/3pp3/2B1P3/3P1N2/PPP2PPP/RNBQ1RK1 b kq - 1 5",
+"last": "e1g1",
+"lastLabel": "5.O-O",
+"bookLabel": "5.Bb3",
+"accepted": [
+"d5c4"
+],
+"best": "d5c4",
+"bestSan": "dxc4",
+"pv": [
+"d5c4",
+"f3e5",
+"c4d3",
+"e5d3",
+"f8e7",
+"b1c3",
+"b8a6"
+],
+"line": "5...dxc4 6. Nxe5 cxd3 7. Nxd3 Be7 8. Nc3 Na6",
+"evalBest": 345,
+"why": "Your d5 pawn attacks the bishop on c4. Castling doesn't move it: take it."
+},
+{
+"id": "dev-bishops-opening-4-c4f7",
+"lineId": "bishops-opening",
+"side": "b",
+"ply": 4,
+"before": "rnbqkb1r/pppp1ppp/5n2/4p3/2B1P3/8/PPPP1PPP/RNBQK1NR w KQkq - 2 3",
+"fen": "rnbqkb1r/pppp1Bpp/5n2/4p3/4P3/8/PPPP1PPP/RNBQK1NR b KQkq - 0 3",
+"last": "c4f7",
+"lastLabel": "3.Bxf7+",
+"bookLabel": "3.d3",
+"accepted": [
+"e8f7"
+],
+"best": "e8f7",
+"bestSan": "Kxf7",
+"pv": [
+"e8f7",
+"f2f4",
+"d7d6",
+"g1f3",
+"e5f4",
+"d2d4",
+"f8e7"
+],
+"line": "3...Kxf7 4. f4 d6 5. Nf3 exf4 6. d4 Be7",
+"evalBest": 323,
+"why": "The bishop sac on f7 wins one pawn for a piece. Take it with the king."
+},
+{
+"id": "dev-italian-h6-7-f8e7",
+"lineId": "italian-h6",
+"side": "w",
+"ply": 7,
+"before": "r1bqkbnr/pppp1pp1/2n4p/4p3/2BPP3/5N2/PPP2PPP/RNBQK2R b KQkq - 0 4",
+"fen": "r1bqk1nr/ppppbpp1/2n4p/4p3/2BPP3/5N2/PPP2PPP/RNBQK2R w KQkq - 1 5",
+"last": "f8e7",
+"lastLabel": "4...Be7",
+"bookLabel": "4...exd4",
+"accepted": [
+"f3e5"
+],
+"best": "f3e5",
+"bestSan": "Nxe5",
+"pv": [
+"f3e5",
+"e7b4",
+"c2c3",
+"c6e5",
+"d4e5",
+"b4c5",
+"c4f7"
+],
+"line": "5. Nxe5 Bb4+ 6. c3 Nxe5 7. dxe5 Bc5 8. Bxf7+",
+"evalBest": 285,
+"why": "After 4.d4 the e5 pawn is attacked twice and defended once. ...Be7 doesn't help it: take the pawn."
+},
+{
+"id": "dev-italian-h6-7-f8c5",
+"lineId": "italian-h6",
+"side": "w",
+"ply": 7,
+"before": "r1bqkbnr/pppp1pp1/2n4p/4p3/2BPP3/5N2/PPP2PPP/RNBQK2R b KQkq - 0 4",
+"fen": "r1bqk1nr/pppp1pp1/2n4p/2b1p3/2BPP3/5N2/PPP2PPP/RNBQK2R w KQkq - 1 5",
+"last": "f8c5",
+"lastLabel": "4...Bc5",
+"bookLabel": "4...exd4",
+"accepted": [
+"d4c5"
+],
+"best": "d4c5",
+"bestSan": "dxc5",
+"pv": [
+"d4c5",
+"g8f6",
+"b1c3",
+"e8g8",
+"e1g1",
+"d7d6",
+"c5d6"
+],
+"line": "5. dxc5 Nf6 6. Nc3 O-O 7. O-O d6 8. cxd6",
+"evalBest": 533,
+"why": "Your d4 pawn attacks c5. The bishop walked into it."
+},
+{
+"id": "dev-italian-h6-11-c8e6",
+"lineId": "italian-h6",
+"side": "w",
+"ply": 11,
+"before": "r1bqkbnr/ppp2pp1/2np3p/8/2BNP3/8/PPP2PPP/RNBQ1RK1 b kq - 0 6",
+"fen": "r2qkbnr/ppp2pp1/2npb2p/8/2BNP3/8/PPP2PPP/RNBQ1RK1 w kq - 1 7",
+"last": "c8e6",
+"lastLabel": "6...Be6",
+"bookLabel": "6...Nf6",
+"accepted": [
+"d4e6"
+],
+"best": "d4e6",
+"bestSan": "Nxe6",
+"pv": [
+"d4e6",
+"f7e6",
+"c4e6",
+"d8e7",
+"e6h3",
+"g7g5",
+"b1c3"
+],
+"line": "7. Nxe6 fxe6 8. Bxe6 Qe7 9. Bh3 g5 10. Nc3",
+"evalBest": 393,
+"why": "...Be6 lets your knight take it. After ...fxe6, Bxe6 wins a pawn and leaves Black's king exposed."
+},
+{
+"id": "dev-alekhine-3-b8c6",
+"lineId": "alekhine",
+"side": "w",
+"ply": 3,
+"before": "rnbqkb1r/pppppppp/5n2/4P3/8/8/PPPP1PPP/RNBQKBNR b KQkq - 0 2",
+"fen": "r1bqkb1r/pppppppp/2n2n2/4P3/8/8/PPPP1PPP/RNBQKBNR w KQkq - 1 3",
+"last": "b8c6",
+"lastLabel": "2...Nc6",
+"bookLabel": "2...Nd5",
+"accepted": [
+"e5f6"
+],
+"best": "e5f6",
+"bestSan": "exf6",
+"pv": [
+"e5f6",
+"e7e5",
+"d2d4",
+"c6d4",
+"f6g7",
+"f8g7",
+"g1e2"
+],
+"line": "3. exf6 e5 4. d4 Nxd4 5. fxg7 Bxg7 6. Ne2",
+"evalBest": 335,
+"why": "Your e5 pawn attacks the knight on f6. Developing another piece leaves it hanging."
+},
+{
+"id": "dev-colle-8-e3e4",
+"lineId": "colle",
+"side": "b",
+"ply": 8,
+"before": "rnbqkb1r/pp3ppp/4pn2/2pp4/3P4/3BPN2/PPP2PPP/RNBQK2R w KQkq - 0 5",
+"fen": "rnbqkb1r/pp3ppp/4pn2/2pp4/3PP3/3B1N2/PPP2PPP/RNBQK2R b KQkq - 0 5",
+"last": "e3e4",
+"lastLabel": "5.e4",
+"bookLabel": "5.c3",
+"accepted": [
+"d5e4"
+],
+"best": "d5e4",
+"bestSan": "dxe4",
+"pv": [
+"d5e4",
+"d3b5",
+"c8d7",
+"b5d7",
+"b8d7",
+"f3d2",
+"c5d4"
+],
+"line": "5...dxe4 6. Bb5+ Bd7 7. Bxd7+ Nbxd7 8. Nfd2 cxd4",
+"evalBest": 314,
+"why": "5.e4 drops a pawn: after ...dxe4 your pawn hits both the bishop on d3 and the knight on f3."
+},
+{
+"id": "dev-colle-8-d3h7",
+"lineId": "colle",
+"side": "b",
+"ply": 8,
+"before": "rnbqkb1r/pp3ppp/4pn2/2pp4/3P4/3BPN2/PPP2PPP/RNBQK2R w KQkq - 0 5",
+"fen": "rnbqkb1r/pp3ppB/4pn2/2pp4/3P4/4PN2/PPP2PPP/RNBQK2R b KQkq - 0 5",
+"last": "d3h7",
+"lastLabel": "5.Bxh7",
+"bookLabel": "5.c3",
+"accepted": [
+"h8h7",
+"f6h7"
+],
+"best": "h8h7",
+"bestSan": "Rxh7",
+"pv": [
+"h8h7",
+"b1d2",
+"b8c6",
+"e1g1",
+"h7h8",
+"f1e1",
+"f6e4"
+],
+"line": "5...Rxh7 6. Nbd2 Nc6 7. O-O Rh8 8. Re1 Ne4",
+"evalBest": 457,
+"why": "Bxh7 isn't a real sacrifice when you haven't castled: your rook on h8 simply takes it."
+},
+{
+"id": "dev-jobava-8-f1b5",
+"lineId": "jobava",
+"side": "b",
+"ply": 8,
+"before": "rnbqkb1r/1pp2ppp/p3pn2/3p4/3P1B2/2N1P3/PPP2PPP/R2QKBNR w KQkq - 0 5",
+"fen": "rnbqkb1r/1pp2ppp/p3pn2/1B1p4/3P1B2/2N1P3/PPP2PPP/R2QK1NR b KQkq - 1 5",
+"last": "f1b5",
+"lastLabel": "5.Bb5+",
+"bookLabel": "5.Nf3",
+"accepted": [
+"a6b5"
+],
+"best": "a6b5",
+"bestSan": "axb5",
+"pv": [
+"a6b5",
+"c3b5",
+"b8a6",
+"a2a3",
+"f6e4",
+"g1e2",
+"c7c6"
+],
+"line": "5...axb5 6. Nxb5 Na6 7. a3 Ne4 8. Ne2 c6",
+"evalBest": 442,
+"why": "Your ...a6 guards b5. The check just gives you a bishop."
+},
+{
+"id": "dev-center-game-6-g1f3",
+"lineId": "center-game",
+"side": "b",
+"ply": 6,
+"before": "r1bqkbnr/pppp1ppp/2n5/8/3QP3/8/PPP2PPP/RNB1KBNR w KQkq - 1 4",
+"fen": "r1bqkbnr/pppp1ppp/2n5/8/3QP3/5N2/PPP2PPP/RNB1KB1R b KQkq - 2 4",
+"last": "g1f3",
+"lastLabel": "4.Nf3",
+"bookLabel": "4.Qe3",
+"accepted": [
+"c6d4",
+"f8b4"
+],
+"best": "c6d4",
+"bestSan": "Nxd4",
+"pv": [
+"c6d4",
+"f3d4",
+"c7c6",
+"b1c3",
+"f8b4",
+"c1e3",
+"d7d6"
+],
+"line": "4...Nxd4 5. Nxd4 c6 6. Nc3 Bb4 7. Be3 d6",
+"evalBest": 574,
+"why": "Your knight on c6 was already attacking the queen on d4. 4.Nf3 ignores it: take the queen."
+},
+{
+"id": "dev-four-knights-12-c1f4",
+"lineId": "four-knights",
+"side": "b",
+"ply": 12,
+"before": "r1bq1rk1/ppp2ppp/2np1n2/1B2p3/1b2P3/2NP1N2/PPP2PPP/R1BQ1RK1 w - - 0 7",
+"fen": "r1bq1rk1/ppp2ppp/2np1n2/1B2p3/1b2PB2/2NP1N2/PPP2PPP/R2Q1RK1 b - - 1 7",
+"last": "c1f4",
+"lastLabel": "7.Bf4",
+"bookLabel": "7.Bg5",
+"accepted": [
+"e5f4",
+"b4c3"
+],
+"best": "e5f4",
+"bestSan": "exf4",
+"pv": [
+"e5f4",
+"c3e2",
+"f6h5",
+"c2c3",
+"b4a5",
+"b5c6",
+"b7c6"
+],
+"line": "7...exf4 8. Ne2 Nh5 9. c3 Ba5 10. Bxc6 bxc6",
+"evalBest": 458,
+"why": "Your e5 pawn attacks f4. The bishop walked into it."
+},
+{
+"id": "dev-wayward-queen-6-b1c3",
+"lineId": "wayward-queen",
+"side": "b",
+"ply": 6,
+"before": "r1bqkbnr/pppp1p1p/2n3p1/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq - 0 4",
+"fen": "r1bqkbnr/pppp1p1p/2n3p1/4p2Q/2B1P3/2N5/PPPP1PPP/R1B1K1NR b KQkq - 1 4",
+"last": "b1c3",
+"lastLabel": "4.Nc3",
+"bookLabel": "4.Qf3",
+"accepted": [
+"g6h5"
+],
+"best": "g6h5",
+"bestSan": "gxh5",
+"pv": [
+"g6h5",
+"g1f3",
+"g8f6",
+"d2d3",
+"h8g8",
+"c1g5",
+"c6d4"
+],
+"line": "4...gxh5 5. Nf3 Nf6 6. d3 Rg8 7. Bg5 Nd4",
+"evalBest": 674,
+"why": "Your g6 pawn attacks the queen on h5. 4.Nc3 ignores it: take the queen."
+},
+{
+"id": "dev-philidor-5-c8f5",
+"lineId": "philidor",
+"side": "w",
+"ply": 5,
+"before": "rnbqkbnr/ppp2ppp/3p4/4p3/3PP3/5N2/PPP2PPP/RNBQKB1R b KQkq - 0 3",
+"fen": "rn1qkbnr/ppp2ppp/3p4/4pb2/3PP3/5N2/PPP2PPP/RNBQKB1R w KQkq - 1 4",
+"last": "c8f5",
+"lastLabel": "3...Bf5",
+"bookLabel": "3...exd4",
+"accepted": [
+"e4f5"
+],
+"best": "e4f5",
+"bestSan": "exf5",
+"pv": [
+"e4f5",
+"e5e4",
+"f3d2",
+"d6d5",
+"c2c4",
+"g8f6",
+"b1c3"
+],
+"line": "4. exf5 e4 5. Nfd2 d5 6. c4 Nf6 7. Nc3",
+"evalBest": 482,
+"why": "Your e4 pawn attacks f5. The bishop walked into it."
+},
+{
+"id": "dev-philidor-7-c8g4",
+"lineId": "philidor",
+"side": "w",
+"ply": 7,
+"before": "rnbqkbnr/ppp2ppp/3p4/8/3NP3/8/PPP2PPP/RNBQKB1R b KQkq - 0 4",
+"fen": "rn1qkbnr/ppp2ppp/3p4/8/3NP1b1/8/PPP2PPP/RNBQKB1R w KQkq - 1 5",
+"last": "c8g4",
+"lastLabel": "4...Bg4",
+"bookLabel": "4...Nf6",
+"accepted": [
+"d1g4"
+],
+"best": "d1g4",
+"bestSan": "Qxg4",
+"pv": [
+"d1g4",
+"g8f6",
+"g4h3",
+"f6e4",
+"b1d2",
+"e4c5",
+"d2b3"
+],
+"line": "5. Qxg4 Nf6 6. Qh3 Nxe4 7. Nd2 Nc5 8. N2b3",
+"evalBest": 524,
+"why": "Nothing defends the bishop on g4, and your queen on d1 sees it. Take it."
+},
+{
+"id": "dev-scandi-3-c8e6",
+"lineId": "scandi",
+"side": "w",
+"ply": 3,
+"before": "rnbqkbnr/ppp1pppp/8/3P4/8/8/PPPP1PPP/RNBQKBNR b KQkq - 0 2",
+"fen": "rn1qkbnr/ppp1pppp/4b3/3P4/8/8/PPPP1PPP/RNBQKBNR w KQkq - 1 3",
+"last": "c8e6",
+"lastLabel": "2...Be6",
+"bookLabel": "2...Qxd5",
+"accepted": [
+"d5e6"
+],
+"best": "d5e6",
+"bestSan": "dxe6",
+"pv": [
+"d5e6",
+"d8d5",
+"e6f7",
+"d5f7",
+"d1f3",
+"f7e6",
+"f1e2"
+],
+"line": "3. dxe6 Qd5 4. exf7+ Qxf7 5. Qf3 Qe6+ 6. Be2",
+"evalBest": 656,
+"why": "Your d5 pawn attacks e6. The bishop walked into it."
+},
+{
+"id": "dev-scandi-5-g8f6",
+"lineId": "scandi",
+"side": "w",
+"ply": 5,
+"before": "rnb1kbnr/ppp1pppp/8/3q4/8/2N5/PPPP1PPP/R1BQKBNR b KQkq - 1 3",
+"fen": "rnb1kb1r/ppp1pppp/5n2/3q4/8/2N5/PPPP1PPP/R1BQKBNR w KQkq - 2 4",
+"last": "g8f6",
+"lastLabel": "3...Nf6",
+"bookLabel": "3...Qa5",
+"accepted": [
+"c3d5",
+"f1b5"
+],
+"best": "c3d5",
+"bestSan": "Nxd5",
+"pv": [
+"c3d5",
+"f6d5",
+"f1c4",
+"d5b6",
+"c4b3",
+"b8c6",
+"g1f3"
+],
+"line": "4. Nxd5 Nxd5 5. Bc4 Nb6 6. Bb3 Nc6 7. Nf3",
+"evalBest": 610,
+"why": "Your knight on c3 was already attacking the queen on d5. 3...Nf6 ignores it: take the queen."
+},
+{
+"id": "dev-pirc-3-c8f5",
+"lineId": "pirc",
+"side": "w",
+"ply": 3,
+"before": "rnbqkbnr/ppp1pppp/3p4/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 2",
+"fen": "rn1qkbnr/ppp1pppp/3p4/5b2/3PP3/8/PPP2PPP/RNBQKBNR w KQkq - 1 3",
+"last": "c8f5",
+"lastLabel": "2...Bf5",
+"bookLabel": "2...Nf6",
+"accepted": [
+"e4f5"
+],
+"best": "e4f5",
+"bestSan": "exf5",
+"pv": [
+"e4f5",
+"g7g6",
+"f5g6",
+"h7g6",
+"g2g3",
+"f8g7",
+"g1e2"
+],
+"line": "3. exf5 g6 4. fxg6 hxg6 5. g3 Bg7 6. Ne2",
+"evalBest": 597,
+"why": "Your e4 pawn attacks f5. The bishop walked into it."
+},
+{
+"id": "dev-italian-quiet-b-8-c1f4",
+"lineId": "italian-quiet-b",
+"side": "b",
+"ply": 8,
+"before": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 1 5",
+"fen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1PB2/3P1N2/PPP2PPP/RN1QK2R b KQkq - 2 5",
+"last": "c1f4",
+"lastLabel": "5.Bf4",
+"bookLabel": "5.c3",
+"accepted": [
+"e5f4"
+],
+"best": "e5f4",
+"bestSan": "exf4",
+"pv": [
+"e5f4",
+"d3d4",
+"c5b6",
+"e4e5",
+"d7d5",
+"e5f6",
+"d5c4"
+],
+"line": "5...exf4 6. d4 Bb6 7. e5 d5 8. exf6 dxc4",
+"evalBest": 383,
+"why": "Your pawn on e5 attacks f4. The bishop walked into it."
+},
+{
+"id": "dev-ruy-exchange-14-b1d2",
+"lineId": "ruy-exchange",
+"side": "b",
+"ply": 14,
+"before": "r1bqkbnr/1pp3pp/p4p2/2p5/3NP3/8/PPP2PPP/RNBQ1RK1 w kq - 0 8",
+"fen": "r1bqkbnr/1pp3pp/p4p2/2p5/3NP3/8/PPPN1PPP/R1BQ1RK1 b kq - 1 8",
+"last": "b1d2",
+"lastLabel": "8.Nd2",
+"bookLabel": "8.Nb3",
+"accepted": [
+"c5d4",
+"d8d4"
+],
+"best": "c5d4",
+"bestSan": "cxd4",
+"pv": [
+"c5d4",
+"e4e5",
+"c8e6",
+"f1e1",
+"d8d5",
+"d1h5",
+"g7g6"
+],
+"line": "8...cxd4 9. e5 Be6 10. Re1 Qd5 11. Qh5+ g6",
+"evalBest": 383,
+"why": "Your pawn on c5 was already attacking the knight on d4. 8.Nd2 ignores it: take it."
+},
+{
+"id": "dev-scotch-main-8-f1d3",
+"lineId": "scotch-main",
+"side": "b",
+"ply": 8,
+"before": "r1bqkb1r/pppp1ppp/2n2n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 1 5",
+"fen": "r1bqkb1r/pppp1ppp/2n2n2/8/3NP3/3B4/PPP2PPP/RNBQK2R b KQkq - 2 5",
+"last": "f1d3",
+"lastLabel": "5.Bd3",
+"bookLabel": "5.Nxc6",
+"accepted": [
+"c6d4"
+],
+"best": "c6d4",
+"bestSan": "Nxd4",
+"pv": [
+"c6d4",
+"e4e5",
+"f6g8",
+"e1g1",
+"d7d5",
+"c2c4",
+"d5c4"
+],
+"line": "5...Nxd4 6. e5 Ng8 7. O-O d5 8. c4 dxc4",
+"evalBest": 356,
+"why": "Your knight on c6 was already attacking the knight on d4. 5.Bd3 ignores it: take it."
+},
+{
+"id": "dev-scotch-gambit-b-10-e1g1",
+"lineId": "scotch-gambit-b",
+"side": "b",
+"ply": 10,
+"before": "r1bqkb1r/ppp2ppp/2n2n2/3pP3/2Bp4/5N2/PPP2PPP/RNBQK2R w KQkq d6 0 6",
+"fen": "r1bqkb1r/ppp2ppp/2n2n2/3pP3/2Bp4/5N2/PPP2PPP/RNBQ1RK1 b kq - 1 6",
+"last": "e1g1",
+"lastLabel": "6.O-O",
+"bookLabel": "6.Bb5",
+"accepted": [
+"d5c4"
+],
+"best": "d5c4",
+"bestSan": "dxc4",
+"pv": [
+"d5c4",
+"e5f6",
+"g7f6",
+"c2c3",
+"d4d3",
+"f1e1",
+"c8e6"
+],
+"line": "6...dxc4 7. exf6 gxf6 8. c3 d3 9. Re1+ Be6",
+"evalBest": 251,
+"why": "Your pawn on d5 was already attacking the bishop on c4. 6.O-O ignores it: take it."
+},
+{
+"id": "dev-four-knights-bc4-12-e1g1",
+"lineId": "four-knights-bc4",
+"side": "b",
+"ply": 12,
+"before": "r1bqkb1r/ppp2ppp/2n5/4p3/4p3/3B1N2/PPPP1PPP/R1BQK2R w KQkq - 0 7",
+"fen": "r1bqkb1r/ppp2ppp/2n5/4p3/4p3/3B1N2/PPPP1PPP/R1BQ1RK1 b kq - 1 7",
+"last": "e1g1",
+"lastLabel": "7.O-O",
+"bookLabel": "7.Bxe4",
+"accepted": [
+"e4d3"
+],
+"best": "e4d3",
+"bestSan": "exd3",
+"pv": [
+"e4d3",
+"f1e1",
+"f8d6",
+"b2b4",
+"e8g8",
+"c1b2",
+"c6b4"
+],
+"line": "7...exd3 8. Re1 Bd6 9. b4 O-O 10. Bb2 Nxb4",
+"evalBest": 618,
+"why": "Your pawn on e4 was already attacking the bishop on d3. 7.O-O ignores it: take it."
+},
+{
+"id": "dev-kg-main-6-f1e2",
+"lineId": "kg-main",
+"side": "b",
+"ply": 6,
+"before": "rnbqkbnr/ppp2ppp/8/3p4/4Pp2/5N2/PPPP2PP/RNBQKB1R w KQkq - 0 4",
+"fen": "rnbqkbnr/ppp2ppp/8/3p4/4Pp2/5N2/PPPPB1PP/RNBQK2R b KQkq - 1 4",
+"last": "f1e2",
+"lastLabel": "4.Be2",
+"bookLabel": "4.exd5",
+"accepted": [
+"d5e4"
+],
+"best": "d5e4",
+"bestSan": "dxe4",
+"pv": [
+"d5e4",
+"d2d4",
+"e4f3",
+"e2f3",
+"d8h4",
+"e1f1",
+"h4d8"
+],
+"line": "4...dxe4 5. d4 exf3 6. Bxf3 Qh4+ 7. Kf1 Qd8",
+"evalBest": 500,
+"why": "Your pawn on d5 was already attacking the pawn on e4. 4.Be2 ignores it: take it."
+},
+{
+"id": "dev-qgd-bf4-6-c3d5",
+"lineId": "qgd-bf4",
+"side": "b",
+"ply": 6,
+"before": "rnbqkb1r/ppp2ppp/4pn2/3p4/2PP4/2N5/PP2PPPP/R1BQKBNR w KQkq - 2 4",
+"fen": "rnbqkb1r/ppp2ppp/4pn2/3N4/2PP4/8/PP2PPPP/R1BQKBNR b KQkq - 0 4",
+"last": "c3d5",
+"lastLabel": "4.Nxd5",
+"bookLabel": "4.Nf3",
+"accepted": [
+"e6d5"
+],
+"best": "e6d5",
+"bestSan": "exd5",
+"pv": [
+"e6d5",
+"c4d5",
+"d8d5",
+"g1f3",
+"f8e7",
+"e2e3",
+"e8g8"
+],
+"line": "4...exd5 5. cxd5 Qxd5 6. Nf3 Be7 7. e3 O-O",
+"evalBest": 419,
+"why": "d5 was guarded by your pawn on e6. 4.Nxd5 gives you a knight for a pawn: take back."
+},
+{
+"id": "dev-english-6-f3e5",
+"lineId": "english",
+"side": "b",
+"ply": 6,
+"before": "r1bqkb1r/pppp1ppp/2n2n2/4p3/2P5/2N2N2/PP1PPPPP/R1BQKB1R w KQkq - 4 4",
+"fen": "r1bqkb1r/pppp1ppp/2n2n2/4N3/2P5/2N5/PP1PPPPP/R1BQKB1R b KQkq - 0 4",
+"last": "f3e5",
+"lastLabel": "4.Nxe5",
+"bookLabel": "4.g3",
+"accepted": [
+"c6e5"
+],
+"best": "c6e5",
+"bestSan": "Nxe5",
+"pv": [
+"c6e5",
+"e2e4",
+"c7c5",
+"d2d4",
+"c5d4",
+"d1d4",
+"e5c6"
+],
+"line": "4...Nxe5 5. e4 c5 6. d4 cxd4 7. Qxd4 Nc6",
+"evalBest": 303,
+"why": "e5 was guarded by your knight on c6. 4.Nxe5 gives you a knight for a pawn: take back."
+},
+{
+"id": "dev-english-10-f3e5",
+"lineId": "english",
+"side": "b",
+"ply": 10,
+"before": "r1bqkb1r/ppp2ppp/2n5/3np3/8/2N2NP1/PP1PPP1P/R1BQKB1R w KQkq - 0 6",
+"fen": "r1bqkb1r/ppp2ppp/2n5/3nN3/8/2N3P1/PP1PPP1P/R1BQKB1R b KQkq - 0 6",
+"last": "f3e5",
+"lastLabel": "6.Nxe5",
+"bookLabel": "6.Bg2",
+"accepted": [
+"c6e5"
+],
+"best": "c6e5",
+"bestSan": "Nxe5",
+"pv": [
+"c6e5",
+"f1g2",
+"c7c6",
+"d2d4",
+"d5c3",
+"b2c3",
+"e5c4"
+],
+"line": "6...Nxe5 7. Bg2 c6 8. d4 Nxc3 9. bxc3 Nc4",
+"evalBest": 289,
+"why": "e5 was guarded by your knight on c6. 6.Nxe5 gives you a knight for a pawn: take back."
+},
+{
+"id": "dev-levitsky-4-b1c3",
+"lineId": "levitsky",
+"side": "b",
+"ply": 4,
+"before": "rnbqkbnr/ppp1ppp1/7p/3p2B1/3P4/8/PPP1PPPP/RN1QKBNR w KQkq - 0 3",
+"fen": "rnbqkbnr/ppp1ppp1/7p/3p2B1/3P4/2N5/PPP1PPPP/R2QKBNR b KQkq - 1 3",
+"last": "b1c3",
+"lastLabel": "3.Nc3",
+"bookLabel": "3.Bh4",
+"accepted": [
+"h6g5"
+],
+"best": "h6g5",
+"bestSan": "hxg5",
+"pv": [
+"h6g5",
+"e2e4",
+"d5e4",
+"c3e4",
+"g5g4",
+"f1c4",
+"g8f6"
+],
+"line": "3...hxg5 4. e4 dxe4 5. Nxe4 g4 6. Bc4 Nf6",
+"evalBest": 478,
+"why": "Your pawn on h6 was already attacking the bishop on g5. 3.Nc3 ignores it: take it."
+},
+{
+"id": "dev-levitsky-8-f1c4",
+"lineId": "levitsky",
+"side": "b",
+"ply": 8,
+"before": "rnb1kbnr/pp2ppp1/1qp4p/3p4/3P3B/4P3/PPP2PPP/RN1QKBNR w KQkq - 1 5",
+"fen": "rnb1kbnr/pp2ppp1/1qp4p/3p4/2BP3B/4P3/PPP2PPP/RN1QK1NR b KQkq - 2 5",
+"last": "f1c4",
+"lastLabel": "5.Bc4",
+"bookLabel": "5.b3",
+"accepted": [
+"b6b2",
+"d5c4",
+"g7g5"
+],
+"best": "b6b2",
+"bestSan": "Qxb2",
+"pv": [
+"b6b2",
+"b1d2",
+"d5c4",
+"a2a4",
+"b2b6",
+"g1e2",
+"g8f6"
+],
+"line": "5...Qxb2 6. Nd2 dxc4 7. a4 Qb6 8. Ne2 Nf6",
+"evalBest": 374,
+"why": "Your queen on b6 was already attacking the pawn on b2. 5.Bc4 ignores it: take it."
+},
+{
+"id": "dev-italian-hungarian-11-f6e4",
+"lineId": "italian-hungarian",
+"side": "w",
+"ply": 11,
+"before": "r1bqk2r/ppppbppp/2n2n2/8/2BNP3/2N5/PPP2PPP/R1BQK2R b KQkq - 2 6",
+"fen": "r1bqk2r/ppppbppp/2n5/8/2BNn3/2N5/PPP2PPP/R1BQK2R w KQkq - 0 7",
+"last": "f6e4",
+"lastLabel": "6...Nxe4",
+"bookLabel": "6...O-O",
+"accepted": [
+"c3e4"
+],
+"best": "c3e4",
+"bestSan": "Nxe4",
+"pv": [
+"c3e4",
+"d7d5",
+"c4b5",
+"d5e4",
+"d4c6",
+"b7c6",
+"b5c6"
+],
+"line": "7. Nxe4 d5 8. Bb5 dxe4 9. Nxc6 bxc6 10. Bxc6+",
+"evalBest": 243,
+"why": "e4 was guarded by your knight on c3. 6...Nxe4 gives you a knight for a pawn: take back."
+},
+{
+"id": "dev-italian-hungarian-7-f7f5",
+"lineId": "italian-hungarian",
+"side": "w",
+"ply": 7,
+"before": "r1bqk1nr/ppppbppp/2n5/4p3/2BPP3/5N2/PPP2PPP/RNBQK2R b KQkq - 0 4",
+"fen": "r1bqk1nr/ppppb1pp/2n5/4pp2/2BPP3/5N2/PPP2PPP/RNBQK2R w KQkq - 0 5",
+"last": "f7f5",
+"lastLabel": "4...f5",
+"bookLabel": "4...exd4",
+"accepted": [
+"f3e5",
+"d4e5"
+],
+"best": "f3e5",
+"bestSan": "Nxe5",
+"pv": [
+"f3e5",
+"c6e5",
+"d4e5",
+"c7c6",
+"c4g8",
+"d8a5",
+"b1c3"
+],
+"line": "5. Nxe5 Nxe5 6. dxe5 c6 7. Bxg8 Qa5+ 8. Nc3",
+"evalBest": 383,
+"why": "4...f5 leaves e5 short of defenders. Take it: Nxe5 Nxe5 dxe5 wins a pawn, and Black's kingside is loose."
+},
+{
+"id": "dev-petrov-15-c8d7",
+"lineId": "petrov",
+"side": "w",
+"ply": 15,
+"before": "r1bqk2r/ppp1bppp/2n5/3p4/2PPn3/3B1N2/PP3PPP/RNBQ1RK1 b kq - 0 8",
+"fen": "r2qk2r/pppbbppp/2n5/3p4/2PPn3/3B1N2/PP3PPP/RNBQ1RK1 w kq - 1 9",
+"last": "c8d7",
+"lastLabel": "8...Bd7",
+"bookLabel": "8...Nb4",
+"accepted": [
+"c4d5"
+],
+"best": "c4d5",
+"bestSan": "cxd5",
+"pv": [
+"c4d5",
+"c6d4",
+"f3d4",
+"e4f6",
+"b1c3",
+"e8g8",
+"d4f5"
+],
+"line": "9. cxd5 Nxd4 10. Nxd4 Nf6 11. Nc3 O-O 12. Nf5",
+"evalBest": 550,
+"why": "Your pawn on c4 was already attacking the pawn on d5. 8...Bd7 ignores it: take it."
+},
+{
+"id": "dev-alapin-nc6-15-e8c8",
+"lineId": "alapin-nc6",
+"side": "w",
+"ply": 15,
+"before": "r3kbnr/pp3ppp/2n1p3/3q4/3P2b1/2N2N2/PP2BPPP/R1BQK2R b KQkq - 1 8",
+"fen": "2kr1bnr/pp3ppp/2n1p3/3q4/3P2b1/2N2N2/PP2BPPP/R1BQK2R w KQ - 2 9",
+"last": "e8c8",
+"lastLabel": "8...O-O-O",
+"bookLabel": "8...Qd7",
+"accepted": [
+"c3d5"
+],
+"best": "c3d5",
+"bestSan": "Nxd5",
+"pv": [
+"c3d5",
+"d8d5",
+"e1g1",
+"g8e7",
+"c1e3",
+"e7f5",
+"h2h3"
+],
+"line": "9. Nxd5 Rxd5 10. O-O Nge7 11. Be3 Nf5 12. h3",
+"evalBest": 607,
+"why": "Your knight on c3 was already attacking the queen on d5. 8...O-O-O ignores it: take it."
+},
+{
+"id": "dev-alapin-nc6-9-g8f6",
+"lineId": "alapin-nc6",
+"side": "w",
+"ply": 9,
+"before": "r1bqkbnr/pp2pppp/2n5/3P4/3P4/8/PP3PPP/RNBQKBNR b KQkq - 0 5",
+"fen": "r1bqkb1r/pp2pppp/2n2n2/3P4/3P4/8/PP3PPP/RNBQKBNR w KQkq - 1 6",
+"last": "g8f6",
+"lastLabel": "5...Nf6",
+"bookLabel": "5...Qxd5",
+"accepted": [
+"d5c6"
+],
+"best": "d5c6",
+"bestSan": "dxc6",
+"pv": [
+"d5c6",
+"e7e5",
+"g1f3",
+"b7c6",
+"b1c3",
+"c8g4",
+"f1e2"
+],
+"line": "6. dxc6 e5 7. Nf3 bxc6 8. Nc3 Bg4 9. Be2",
+"evalBest": 529,
+"why": "Your pawn on d5 was already attacking the knight on c6. 5...Nf6 ignores it: take it."
+},
+{
+"id": "dev-alapin-e6-13-c8g4",
+"lineId": "alapin-e6",
+"side": "w",
+"ply": 13,
+"before": "r1bqk1nr/pp3ppp/2nb4/1BPp4/8/2P2N2/PP3PPP/RNBQK2R b KQkq - 0 7",
+"fen": "r2qk1nr/pp3ppp/2nb4/1BPp4/6b1/2P2N2/PP3PPP/RNBQK2R w KQkq - 1 8",
+"last": "c8g4",
+"lastLabel": "7...Bg4",
+"bookLabel": "7...Bxc5",
+"accepted": [
+"c5d6",
+"b5c6"
+],
+"best": "c5d6",
+"bestSan": "cxd6",
+"pv": [
+"c5d6",
+"g8f6",
+"h2h3",
+"g4h5",
+"e1g1",
+"e8g8",
+"c1e3"
+],
+"line": "8. cxd6 Nf6 9. h3 Bh5 10. O-O O-O 11. Be3",
+"evalBest": 533,
+"why": "Your pawn on c5 was already attacking the bishop on d6. 7...Bg4 ignores it: take it."
+},
+{
+"id": "dev-french-bd7-5-f8d6",
+"lineId": "french-bd7",
+"side": "w",
+"ply": 5,
+"before": "rnbqkbnr/ppp2ppp/4p3/3pP3/3P4/8/PPP2PPP/RNBQKBNR b KQkq - 0 3",
+"fen": "rnbqk1nr/ppp2ppp/3bp3/3pP3/3P4/8/PPP2PPP/RNBQKBNR w KQkq - 1 4",
+"last": "f8d6",
+"lastLabel": "3...Bd6",
+"bookLabel": "3...c5",
+"accepted": [
+"e5d6"
+],
+"best": "e5d6",
+"bestSan": "exd6",
+"pv": [
+"e5d6",
+"c7d6",
+"c2c4",
+"g8f6",
+"c4d5",
+"e8g8",
+"f1d3"
+],
+"line": "4. exd6 cxd6 5. c4 Nf6 6. cxd5 O-O 7. Bd3",
+"evalBest": 478,
+"why": "Your pawn on e5 attacks d6. The bishop walked into it."
+},
+{
+"id": "dev-scandi-qd6-5-c8g4",
+"lineId": "scandi-qd6",
+"side": "w",
+"ply": 5,
+"before": "rnb1kbnr/ppp1pppp/8/3q4/8/2N5/PPPP1PPP/R1BQKBNR b KQkq - 1 3",
+"fen": "rn2kbnr/ppp1pppp/8/3q4/6b1/2N5/PPPP1PPP/R1BQKBNR w KQkq - 2 4",
+"last": "c8g4",
+"lastLabel": "3...Bg4",
+"bookLabel": "3...Qd6",
+"accepted": [
+"c3d5",
+"d1g4"
+],
+"best": "c3d5",
+"bestSan": "Nxd5",
+"pv": [
+"c3d5",
+"g4d1",
+"e1d1",
+"e8d8",
+"d5e3",
+"g8f6",
+"g1f3"
+],
+"line": "4. Nxd5 Bxd1 5. Kxd1 Kd8 6. Ne3 Nf6 7. Nf3",
+"evalBest": 605,
+"why": "Your knight on c3 was already attacking the queen on d5. 3...Bg4 ignores it: take it."
+},
+{
+"id": "dev-modern-7-c8f5",
+"lineId": "modern",
+"side": "w",
+"ply": 7,
+"before": "rnbqk1nr/ppp1ppbp/3p2p1/8/3PP3/2N1B3/PPP2PPP/R2QKBNR b KQkq - 1 4",
+"fen": "rn1qk1nr/ppp1ppbp/3p2p1/5b2/3PP3/2N1B3/PPP2PPP/R2QKBNR w KQkq - 2 5",
+"last": "c8f5",
+"lastLabel": "4...Bf5",
+"bookLabel": "4...a6",
+"accepted": [
+"e4f5"
+],
+"best": "e4f5",
+"bestSan": "exf5",
+"pv": [
+"e4f5",
+"g6f5",
+"g1f3",
+"e7e6",
+"g2g3",
+"c7c6",
+"f1g2"
+],
+"line": "5. exf5 gxf5 6. Nf3 e6 7. g3 c6 8. Bg2",
+"evalBest": 535,
+"why": "Your pawn on e4 attacks f5. The bishop walked into it."
+},
+{
+"id": "dev-odd-nc6-5-g8f6",
+"lineId": "odd-nc6",
+"side": "w",
+"ply": 5,
+"before": "r1bqkbnr/ppp1pppp/2n5/3pP3/3P4/8/PPP2PPP/RNBQKBNR b KQkq - 0 3",
+"fen": "r1bqkb1r/ppp1pppp/2n2n2/3pP3/3P4/8/PPP2PPP/RNBQKBNR w KQkq - 1 4",
+"last": "g8f6",
+"lastLabel": "3...Nf6",
+"bookLabel": "3...Bf5",
+"accepted": [
+"e5f6"
+],
+"best": "e5f6",
+"bestSan": "exf6",
+"pv": [
+"e5f6",
+"g7f6",
+"b1c3",
+"h8g8",
+"c1e3",
+"e7e5",
+"g1f3"
+],
+"line": "4. exf6 gxf6 5. Nc3 Rg8 6. Be3 e5 7. Nf3",
+"evalBest": 332,
+"why": "Your pawn on e5 attacks f6. The knight walked into it."
+},
+{
+"id": "dev-odd-a6-7-b7e4",
+"lineId": "odd-a6",
+"side": "w",
+"ply": 7,
+"before": "rn1qkbnr/1bpppppp/p7/1p6/3PP3/3B1N2/PPP2PPP/RNBQK2R b KQkq - 3 4",
+"fen": "rn1qkbnr/2pppppp/p7/1p6/3Pb3/3B1N2/PPP2PPP/RNBQK2R w KQkq - 0 5",
+"last": "b7e4",
+"lastLabel": "4...Bxe4",
+"bookLabel": "4...e6",
+"accepted": [
+"d3e4"
+],
+"best": "d3e4",
+"bestSan": "Bxe4",
+"pv": [
+"d3e4",
+"d7d5",
+"e4d3",
+"e7e6",
+"c2c3",
+"c7c5",
+"d4c5"
+],
+"line": "5. Bxe4 d5 6. Bd3 e6 7. c3 c5 8. dxc5",
+"evalBest": 483,
+"why": "e4 was guarded by your bishop on d3. 4...Bxe4 gives you a bishop for a pawn: take back."
+},
+{
+"id": "dev-italian-d4-b-12-c1g5",
+"lineId": "italian-d4-b",
+"side": "b",
+"ply": 12,
+"before": "r1bqkb1r/ppp2ppp/2n5/1B1pP3/3pn3/5N2/PPP2PPP/RNBQK2R w KQkq - 2 7",
+"fen": "r1bqkb1r/ppp2ppp/2n5/1B1pP1B1/3pn3/5N2/PPP2PPP/RN1QK2R b KQkq - 3 7",
+"last": "c1g5",
+"lastLabel": "7.Bg5",
+"bookLabel": "7.Nxd4",
+"accepted": [
+"e4g5"
+],
+"best": "e4g5",
+"bestSan": "Nxg5",
+"pv": [
+"e4g5",
+"f3d4",
+"c8d7",
+"b5c6",
+"b7c6",
+"e1g1",
+"f8c5"
+],
+"line": "7...Nxg5 8. Nxd4 Bd7 9. Bxc6 bxc6 10. O-O Bc5",
+"evalBest": 475,
+"why": "The bishop on g5 is attacked by your knight on e4 and your queen on d8, and only the f3 knight defends it. Take it."
+},
+{
+"id": "dev-ruy-d3-10-e1g1",
+"lineId": "ruy-d3",
+"side": "b",
+"ply": 10,
+"before": "r1bqkb1r/2pp1ppp/p1n2n2/1p2p3/B3P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 0 6",
+"fen": "r1bqkb1r/2pp1ppp/p1n2n2/1p2p3/B3P3/3P1N2/PPP2PPP/RNBQ1RK1 b kq - 1 6",
+"last": "e1g1",
+"lastLabel": "6.O-O",
+"bookLabel": "6.Bb3",
+"accepted": [
+"b5a4"
+],
+"best": "b5a4",
+"bestSan": "bxa4",
+"pv": [
+"b5a4",
+"c2c4",
+"f8c5",
+"d1a4",
+"e8g8",
+"b1c3",
+"c6d4"
+],
+"line": "6...bxa4 7. c4 Bc5 8. Qxa4 O-O 9. Nc3 Nd4",
+"evalBest": 424,
+"why": "Your pawn on b5 was already attacking the bishop on a4. 6.O-O ignores it: take it."
+},
+{
+"id": "dev-four-knights-scotch-8-f1d3",
+"lineId": "four-knights-scotch",
+"side": "b",
+"ply": 8,
+"before": "r1bqkb1r/pppp1ppp/2n2n2/8/3pP3/2N2N2/PPP2PPP/R1BQKB1R w KQkq - 0 5",
+"fen": "r1bqkb1r/pppp1ppp/2n2n2/8/3pP3/2NB1N2/PPP2PPP/R1BQK2R b KQkq - 1 5",
+"last": "f1d3",
+"lastLabel": "5.Bd3",
+"bookLabel": "5.Nxd4",
+"accepted": [
+"d4c3"
+],
+"best": "d4c3",
+"bestSan": "dxc3",
+"pv": [
+"d4c3",
+"e4e5",
+"f6g4",
+"d1e2",
+"d8e7",
+"e1g1",
+"g4e5"
+],
+"line": "5...dxc3 6. e5 Ng4 7. Qe2 Qe7 8. O-O Ngxe5",
+"evalBest": 451,
+"why": "Your pawn on d4 was already attacking the knight on c3. 5.Bd3 ignores it: take it."
+},
+{
+"id": "dev-four-knights-scotch-10-f1d3",
+"lineId": "four-knights-scotch",
+"side": "b",
+"ply": 10,
+"before": "r1bqk2r/pppp1ppp/2n2n2/8/1b1NP3/2N5/PPP2PPP/R1BQKB1R w KQkq - 1 6",
+"fen": "r1bqk2r/pppp1ppp/2n2n2/8/1b1NP3/2NB4/PPP2PPP/R1BQK2R b KQkq - 2 6",
+"last": "f1d3",
+"lastLabel": "6.Bd3",
+"bookLabel": "6.Nxc6",
+"accepted": [
+"c6d4"
+],
+"best": "c6d4",
+"bestSan": "Nxd4",
+"pv": [
+"c6d4",
+"e1g1",
+"d4c6",
+"c3d5",
+"f6d5",
+"e4d5",
+"c6e5"
+],
+"line": "6...Nxd4 7. O-O Nc6 8. Nd5 Nxd5 9. exd5 Ne5",
+"evalBest": 278,
+"why": "Your knight on c6 was already attacking the knight on d4. 6.Bd3 ignores it: take it."
+},
+{
+"id": "dev-vienna-bc4-10-e1g1",
+"lineId": "vienna-bc4",
+"side": "b",
+"ply": 10,
+"before": "r1bqk2r/ppp2ppp/2n2n2/3pp3/1bB1P3/2NP1N2/PPP2PPP/R1BQK2R w KQkq - 0 6",
+"fen": "r1bqk2r/ppp2ppp/2n2n2/3pp3/1bB1P3/2NP1N2/PPP2PPP/R1BQ1RK1 b kq - 1 6",
+"last": "e1g1",
+"lastLabel": "6.O-O",
+"bookLabel": "6.exd5",
+"accepted": [
+"d5c4"
+],
+"best": "d5c4",
+"bestSan": "dxc4",
+"pv": [
+"d5c4",
+"c1g5",
+"c4d3",
+"g5f6",
+"g7f6",
+"c3d5",
+"d3c2"
+],
+"line": "6...dxc4 7. Bg5 cxd3 8. Bxf6 gxf6 9. Nd5 dxc2",
+"evalBest": 449,
+"why": "Your pawn on d5 was already attacking the bishop on c4. 6.O-O ignores it: take it."
+},
+{
+"id": "dev-vienna-bc4-14-e1g1",
+"lineId": "vienna-bc4",
+"side": "b",
+"ply": 14,
+"before": "r1bqk2r/ppp2ppp/2n5/4p3/1bB5/2nP1N2/PPPB1PPP/R2QK2R w KQkq - 0 8",
+"fen": "r1bqk2r/ppp2ppp/2n5/4p3/1bB5/2nP1N2/PPPB1PPP/R2Q1RK1 b kq - 1 8",
+"last": "e1g1",
+"lastLabel": "8.O-O",
+"bookLabel": "8.bxc3",
+"accepted": [
+"c3d1"
+],
+"best": "c3d1",
+"bestSan": "Nxd1",
+"pv": [
+"c3d1",
+"a1d1",
+"b4c5",
+"d2e3",
+"c5d6",
+"d3d4",
+"e5d4"
+],
+"line": "8...Nxd1 9. Raxd1 Bc5 10. Be3 Bd6 11. d4 exd4",
+"evalBest": 663,
+"why": "Their king left e1, where it guarded the queen on d1. Take it."
+},
+{
+"id": "dev-kg-bc4-6-b1a3",
+"lineId": "kg-bc4",
+"side": "b",
+"ply": 6,
+"before": "rnbqkb1r/pppp1ppp/5n2/8/2B1Pp2/8/PPPP2PP/RNBQK1NR w KQkq - 2 4",
+"fen": "rnbqkb1r/pppp1ppp/5n2/8/2B1Pp2/N7/PPPP2PP/R1BQK1NR b KQkq - 3 4",
+"last": "b1a3",
+"lastLabel": "4.Na3",
+"bookLabel": "4.Nc3",
+"accepted": [
+"f6e4",
+"f8a3",
+"d7d5"
+],
+"best": "f6e4",
+"bestSan": "Nxe4",
+"pv": [
+"f6e4",
+"c4f7",
+"e8f7",
+"d1h5",
+"g7g6",
+"h5d5",
+"f7g7"
+],
+"line": "4...Nxe4 5. Bxf7+ Kxf7 6. Qh5+ g6 7. Qd5+ Kg7",
+"evalBest": 197,
+"why": "Your knight on f6 was already attacking the pawn on e4. 4.Na3 ignores it: take it."
+},
+{
+"id": "dev-kg-bc4-6-c4f7",
+"lineId": "kg-bc4",
+"side": "b",
+"ply": 6,
+"before": "rnbqkb1r/pppp1ppp/5n2/8/2B1Pp2/8/PPPP2PP/RNBQK1NR w KQkq - 2 4",
+"fen": "rnbqkb1r/pppp1Bpp/5n2/8/4Pp2/8/PPPP2PP/RNBQK1NR b KQkq - 0 4",
+"last": "c4f7",
+"lastLabel": "4.Bxf7+",
+"bookLabel": "4.Nc3",
+"accepted": [
+"e8f7"
+],
+"best": "e8f7",
+"bestSan": "Kxf7",
+"pv": [
+"e8f7",
+"e4e5",
+"f6d5",
+"b1c3",
+"d5c3",
+"d2c3",
+"d8h4"
+],
+"line": "4...Kxf7 5. e5 Nd5 6. Nc3 Nxc3 7. dxc3 Qh4+",
+"evalBest": 269,
+"why": "f7 was guarded by your king on e8. 4.Bxf7+ gives you a bishop for a pawn: take back."
+},
+{
+"id": "dev-qgd-exchange-12-f1b5",
+"lineId": "qgd-exchange",
+"side": "b",
+"ply": 12,
+"before": "rnbqk2r/pp2bppp/2p2n2/3p2B1/3P4/2N1P3/PP3PPP/R2QKBNR w KQkq - 1 7",
+"fen": "rnbqk2r/pp2bppp/2p2n2/1B1p2B1/3P4/2N1P3/PP3PPP/R2QK1NR b KQkq - 2 7",
+"last": "f1b5",
+"lastLabel": "7.Bb5",
+"bookLabel": "7.Bd3",
+"accepted": [
+"c6b5"
+],
+"best": "c6b5",
+"bestSan": "cxb5",
+"pv": [
+"c6b5",
+"g5f6",
+"e7f6",
+"d1b3",
+"a7a6",
+"c3d5",
+"b8c6"
+],
+"line": "7...cxb5 8. Bxf6 Bxf6 9. Qb3 a6 10. Nxd5 Nc6",
+"evalBest": 415,
+"why": "Your pawn on c6 attacks b5. The bishop walked into it."
+},
+{
+"id": "dev-torre-10-f1c4",
+"lineId": "torre",
+"side": "b",
+"ply": 10,
+"before": "r1bqkb1r/pp3ppp/2n1pn2/2pp2B1/3P4/2P1PN2/PP3PPP/RN1QKB1R w KQkq - 1 6",
+"fen": "r1bqkb1r/pp3ppp/2n1pn2/2pp2B1/2BP4/2P1PN2/PP3PPP/RN1QK2R b KQkq - 2 6",
+"last": "f1c4",
+"lastLabel": "6.Bc4",
+"bookLabel": "6.Nbd2",
+"accepted": [
+"d5c4"
+],
+"best": "d5c4",
+"bestSan": "dxc4",
+"pv": [
+"d5c4",
+"b1d2",
+"c5d4",
+"e3d4",
+"f8e7",
+"d2c4",
+"b7b5"
+],
+"line": "6...dxc4 7. Nbd2 cxd4 8. exd4 Be7 9. Nxc4 b5",
+"evalBest": 425,
+"why": "Your pawn on d5 attacks c4. The bishop walked into it."
+},
+{
+"id": "dev-bdg-8-f1c4",
+"lineId": "bdg",
+"side": "b",
+"ply": 8,
+"before": "rnbqkb1r/ppp1pppp/5n2/8/3P4/2N2p2/PPP3PP/R1BQKBNR w KQkq - 0 5",
+"fen": "rnbqkb1r/ppp1pppp/5n2/8/2BP4/2N2p2/PPP3PP/R1BQK1NR b KQkq - 1 5",
+"last": "f1c4",
+"lastLabel": "5.Bc4",
+"bookLabel": "5.Nxf3",
+"accepted": [
+"f3g2"
+],
+"best": "f3g2",
+"bestSan": "fxg2",
+"pv": [
+"f3g2",
+"d1f3",
+"g2h1q",
+"f3h1",
+"d8d4",
+"c4b5",
+"c7c6"
+],
+"line": "5...fxg2 6. Qf3 gxh1=Q 7. Qxh1 Qxd4 8. Bb5+ c6",
+"evalBest": 657,
+"why": "Their bishop left f1, where it guarded the pawn on g2. Take it."
+},
+{
+"id": "dev-italian-shilling-11-c8f5",
+"lineId": "italian-shilling",
+"side": "w",
+"ply": 11,
+"before": "r1bqkbnr/ppp2ppp/3p4/8/2BpP3/2P5/PP1P1PPP/RNBQ1RK1 b kq - 0 6",
+"fen": "r2qkbnr/ppp2ppp/3p4/5b2/2BpP3/2P5/PP1P1PPP/RNBQ1RK1 w kq - 1 7",
+"last": "c8f5",
+"lastLabel": "6...Bf5",
+"bookLabel": "6...dxc3",
+"accepted": [
+"e4f5"
+],
+"best": "e4f5",
+"bestSan": "exf5",
+"pv": [
+"e4f5",
+"d6d5",
+"f1e1",
+"g8e7",
+"c4b5",
+"c7c6",
+"b5d3"
+],
+"line": "7. exf5 d5 8. Re1+ Ne7 9. Bb5+ c6 10. Bd3",
+"evalBest": 519,
+"why": "Your pawn on e4 attacks f5. The bishop walked into it."
+},
+{
+"id": "dev-petrov-copy-11-c8e6",
+"lineId": "petrov-copy",
+"side": "w",
+"ply": 11,
+"before": "rnb1kb1r/ppp1qppp/3p4/4N3/3PQ3/8/PPP2PPP/RNB1KB1R b KQkq - 0 6",
+"fen": "rn2kb1r/ppp1qppp/3pb3/4N3/3PQ3/8/PPP2PPP/RNB1KB1R w KQkq - 1 7",
+"last": "c8e6",
+"lastLabel": "6...Be6",
+"bookLabel": "6...dxe5",
+"accepted": [
+"e4b7"
+],
+"best": "e4b7",
+"bestSan": "Qxb7",
+"pv": [
+"e4b7",
+"d6e5",
+"f1b5",
+"c7c6",
+"b5c6",
+"b8c6",
+"b7c6"
+],
+"line": "7. Qxb7 dxe5 8. Bb5+ c6 9. Bxc6+ Nxc6 10. Qxc6+",
+"evalBest": 610,
+"why": "Their bishop left c8, where it guarded the pawn on b7. Take it."
+},
+{
+"id": "dev-petrov-copy-7-b8c6",
+"lineId": "petrov-copy",
+"side": "w",
+"ply": 7,
+"before": "rnbqkb1r/pppp1ppp/8/4N3/4n3/8/PPPPQPPP/RNB1KB1R b KQkq - 1 4",
+"fen": "r1bqkb1r/pppp1ppp/2n5/4N3/4n3/8/PPPPQPPP/RNB1KB1R w KQkq - 2 5",
+"last": "b8c6",
+"lastLabel": "4...Nc6",
+"bookLabel": "4...Qe7",
+"accepted": [
+"e5c6"
+],
+"best": "e5c6",
+"bestSan": "Nxc6",
+"pv": [
+"e5c6",
+"b7c6",
+"e2e4",
+"f8e7",
+"d2d4",
+"d7d5",
+"e4f3"
+],
+"line": "5. Nxc6 bxc6 6. Qxe4+ Be7 7. d4 d5 8. Qf3",
+"evalBest": 401,
+"why": "Their knight on e4 is pinned to the king by your queen on e2. 4...Nc6 doesn't help: Nxc6, then Qxe4+ wins a piece."
+},
+{
+"id": "dev-alapin-d5-5-c8e6",
+"lineId": "alapin-d5",
+"side": "w",
+"ply": 5,
+"before": "rnbqkbnr/pp2pppp/8/2pP4/8/2P5/PP1P1PPP/RNBQKBNR b KQkq - 0 3",
+"fen": "rn1qkbnr/pp2pppp/4b3/2pP4/8/2P5/PP1P1PPP/RNBQKBNR w KQkq - 1 4",
+"last": "c8e6",
+"lastLabel": "3...Be6",
+"bookLabel": "3...Qxd5",
+"accepted": [
+"d5e6"
+],
+"best": "d5e6",
+"bestSan": "dxe6",
+"pv": [
+"d5e6",
+"f7f5",
+"d2d4",
+"d8d5",
+"d1b3",
+"d5b3",
+"a2b3"
+],
+"line": "4. dxe6 f5 5. d4 Qd5 6. Qb3 Qxb3 7. axb3",
+"evalBest": 656,
+"why": "Your pawn on d5 attacks e6. The bishop walked into it."
+},
+{
+"id": "dev-alapin-d6-9-c8e6",
+"lineId": "alapin-d6",
+"side": "w",
+"ply": 9,
+"before": "r1bqkb1r/pp2pppp/2np1n2/2p5/3PP3/2PB1N2/PP3PPP/RNBQK2R b KQkq - 4 5",
+"fen": "r2qkb1r/pp2pppp/2npbn2/2p5/3PP3/2PB1N2/PP3PPP/RNBQK2R w KQkq - 5 6",
+"last": "c8e6",
+"lastLabel": "5...Be6",
+"bookLabel": "5...Bg4",
+"accepted": [
+"d4d5"
+],
+"best": "d4d5",
+"bestSan": "d5",
+"pv": [
+"d4d5",
+"f6d5",
+"e4d5",
+"e6d5",
+"e1g1",
+"g7g6",
+"d3a6"
+],
+"line": "6. d5 Nxd5 7. exd5 Bxd5 8. O-O g6 9. Ba6",
+"evalBest": 278,
+"why": "d5 forks the bishop on e6 and the knight on c6."
+},
+{
+"id": "dev-caro-c5-7-g8f6",
+"lineId": "caro-c5",
+"side": "w",
+"ply": 7,
+"before": "rnbqkbnr/pp2pppp/8/2PpP3/8/8/PPP2PPP/RNBQKBNR b KQkq - 0 4",
+"fen": "rnbqkb1r/pp2pppp/5n2/2PpP3/8/8/PPP2PPP/RNBQKBNR w KQkq - 1 5",
+"last": "g8f6",
+"lastLabel": "4...Nf6",
+"bookLabel": "4...e6",
+"accepted": [
+"e5f6"
+],
+"best": "e5f6",
+"bestSan": "exf6",
+"pv": [
+"e5f6",
+"g7f6",
+"b1c3",
+"d5d4",
+"f1c4",
+"b8c6",
+"c3e4"
+],
+"line": "5. exf6 gxf6 6. Nc3 d4 7. Bc4 Nc6 8. Ne4",
+"evalBest": 364,
+"why": "Your pawn on e5 attacks f6. The knight walked into it."
+},
+{
+"id": "dev-scandi-nf6-13-e8g8",
+"lineId": "scandi-nf6",
+"side": "w",
+"ply": 13,
+"before": "rn1qk2r/ppp1bppp/4p3/3n4/2PP2b1/5N2/PP2BPPP/RNBQ1RK1 b kq - 0 7",
+"fen": "rn1q1rk1/ppp1bppp/4p3/3n4/2PP2b1/5N2/PP2BPPP/RNBQ1RK1 w - - 1 8",
+"last": "e8g8",
+"lastLabel": "7...O-O",
+"bookLabel": "7...Nb6",
+"accepted": [
+"c4d5",
+"h2h3"
+],
+"best": "c4d5",
+"bestSan": "cxd5",
+"pv": [
+"c4d5",
+"e6d5",
+"b1c3",
+"c7c6",
+"a2a4",
+"b8d7",
+"a4a5"
+],
+"line": "8. cxd5 exd5 9. Nc3 c6 10. a4 Nd7 11. a5",
+"evalBest": 439,
+"why": "Your pawn on c4 was already attacking the knight on d5. 7...O-O ignores it: take it."
+},
+{
+"id": "dev-odd-damiano-5-f8c5",
+"lineId": "odd-damiano",
+"side": "w",
+"ply": 5,
+"before": "rnbqkbnr/pppp2pp/5p2/4N3/4P3/8/PPPP1PPP/RNBQKB1R b KQkq - 0 3",
+"fen": "rnbqk1nr/pppp2pp/5p2/2b1N3/4P3/8/PPPP1PPP/RNBQKB1R w KQkq - 1 4",
+"last": "f8c5",
+"lastLabel": "3...Bc5",
+"bookLabel": "3...fxe5",
+"accepted": [
+"d1h5"
+],
+"best": "d1h5",
+"bestSan": "Qh5+",
+"pv": [
+"d1h5",
+"g7g6",
+"e5g6",
+"h7g6",
+"h5h8",
+"e8f8",
+"f1c4"
+],
+"line": "4. Qh5+ g6 5. Nxg6 hxg6 6. Qxh8 Kf8 7. Bc4",
+"evalBest": 705,
+"why": "...f6 opened Black's king. Qh5+ g6 Nxg6! wins the rook on h8."
+},
+{
+"id": "dev-odd-damiano-13-c8e6",
+"lineId": "odd-damiano",
+"side": "w",
+"ply": 13,
+"before": "rnbq1bnr/ppp2kpp/8/3BQ3/4P3/8/PPPP1PPP/RNB1K2R b KQ - 0 7",
+"fen": "rn1q1bnr/ppp2kpp/4b3/3BQ3/4P3/8/PPPP1PPP/RNB1K2R w KQ - 1 8",
+"last": "c8e6",
+"lastLabel": "7...Be6",
+"bookLabel": "7...Kg6",
+"accepted": [
+"e5e6"
+],
+"best": "e5e6",
+"bestSan": "Qxe6#",
+"pv": [
+"e5e6"
+],
+"line": "8. Qxe6#",
+"evalBest": 2999,
+"why": "Qxe6 is checkmate."
+},
+{
+"id": "dev-odd-elephant-5-c8e6",
+"lineId": "odd-elephant",
+"side": "w",
+"ply": 5,
+"before": "rnbqkbnr/ppp2ppp/8/3Pp3/8/5N2/PPPP1PPP/RNBQKB1R b KQkq - 0 3",
+"fen": "rn1qkbnr/ppp2ppp/4b3/3Pp3/8/5N2/PPPP1PPP/RNBQKB1R w KQkq - 1 4",
+"last": "c8e6",
+"lastLabel": "3...Be6",
+"bookLabel": "3...e4",
+"accepted": [
+"d5e6"
+],
+"best": "d5e6",
+"bestSan": "dxe6",
+"pv": [
+"d5e6",
+"f7e6",
+"d2d4",
+"b8c6",
+"f1b5",
+"d8d5",
+"b5c6"
+],
+"line": "4. dxe6 fxe6 5. d4 Nc6 6. Bb5 Qd5 7. Bxc6+",
+"evalBest": 614,
+"why": "Your pawn on d5 attacks e6. The bishop walked into it."
+},
+{
+"id": "dev-odd-owen-11-f8d6",
+"lineId": "odd-owen",
+"side": "w",
+"ply": 11,
+"before": "rn1qkb1r/pb1p1ppp/1p2pn2/2p5/3PP3/2PB1N2/PP2QPPP/RNB1K2R b KQkq - 2 6",
+"fen": "rn1qk2r/pb1p1ppp/1p1bpn2/2p5/3PP3/2PB1N2/PP2QPPP/RNB1K2R w KQkq - 3 7",
+"last": "f8d6",
+"lastLabel": "6...Bd6",
+"bookLabel": "6...Be7",
+"accepted": [
+"e4e5"
+],
+"best": "e4e5",
+"bestSan": "e5",
+"pv": [
+"e4e5",
+"d6e7",
+"e5f6",
+"g7f6",
+"c1f4",
+"h8g8",
+"f4g3"
+],
+"line": "7. e5 Be7 8. exf6 gxf6 9. Bf4 Rg8 10. Bg3",
+"evalBest": 413,
+"why": "e5 forks the bishop on d6 and the knight on f6."
+}
+]
