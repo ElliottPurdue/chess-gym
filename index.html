@@ -814,6 +814,41 @@ html.standalone button,html.standalone a,html.standalone .sq{touch-action:manipu
   html.standalone nav{padding-bottom:max(8px,calc(env(safe-area-inset-bottom) - 14px))!important}
   html.standalone #scroller{padding-bottom:calc(64px + env(safe-area-inset-bottom))}
 }
+
+/* tappable header stats + progress sheet */
+.stat[data-sheet]{cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s,opacity .12s}
+.stat[data-sheet]:active{transform:scale(.94);opacity:.8}
+.stat[data-sheet]:focus-visible{outline:2px solid var(--acc,#6ea8dc);outline-offset:2px;border-radius:10px}
+.sheet{position:fixed;inset:0;z-index:100;background:rgba(3,6,10,0);display:flex;align-items:center;justify-content:center;transition:background .18s}
+.sheet.open{background:rgba(3,6,10,.55)}
+.shcard{position:relative;width:min(440px,92vw);max-height:86vh;overflow:auto;background:var(--panel,#151c26);color:var(--ink);border:1px solid var(--hair,rgba(255,255,255,.08));border-radius:20px;padding:22px 20px 18px;box-shadow:0 20px 60px rgba(0,0,0,.5);transform:translateY(16px);opacity:0;transition:transform .18s,opacity .18s}
+.sheet.open .shcard{transform:none;opacity:1}
+.shcard section{padding:14px 2px;border-top:1px solid var(--hair,rgba(255,255,255,.08))}
+.shcard section:first-of-type{border-top:0;padding-top:2px}
+.shcard h3{margin:0 0 10px;font-size:17px}
+.shcard .focus h3{color:var(--acc,#8ab8e6)}
+.shx{position:absolute;top:10px;right:10px;width:34px;height:34px;font-size:15px}
+.shbar{height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin-bottom:10px}
+.shbar i{display:block;height:100%;border-radius:99px;background:var(--acc,#6ea8dc)}
+.shbar.g i{background:#5fd08e}
+.cal{display:grid;grid-template-columns:repeat(7,26px);gap:6px;margin-bottom:10px}
+.cal i{aspect-ratio:1;border-radius:6px;background:rgba(255,255,255,.06)}
+.cal i.part{background:rgba(255,160,60,.35)}
+.cal i.full{background:#ff8a2b}
+.cal i.now{outline:2px solid var(--ink);outline-offset:1px}
+@media (max-width:600px){
+  .sheet{align-items:flex-end}
+  .shcard{width:100%;max-width:none;border-radius:22px 22px 0 0;padding-bottom:calc(18px + env(safe-area-inset-bottom));transform:translateY(40px)}
+}
+/* home-screen app: no sideways rubber-banding, portrait only */
+html.standalone,html.standalone body,html.standalone #scroller{overscroll-behavior:none}
+html.standalone #scroller{overflow-x:hidden;touch-action:pan-y}
+html.standalone,html.standalone body{touch-action:pan-y}
+@media (max-width:600px){ html.standalone nav{padding-bottom:max(4px,calc(env(safe-area-inset-bottom) - 24px))!important} }
+.rotate{display:none}
+@media (orientation:landscape) and (max-height:500px){
+  html.standalone .rotate{display:flex;position:fixed;inset:0;z-index:200;background:var(--bg,#0b0f15);color:var(--ink,#eee);align-items:center;justify-content:center;text-align:center;font-weight:600}
+}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/app-180.png">
@@ -824,14 +859,16 @@ html.standalone button,html.standalone a,html.standalone .sq{touch-action:manipu
 <meta name="theme-color" content="#0b0f15">
 </head>
 <body>
+<div id="sheet" class="sheet" hidden></div>
+<div id="rotate" class="rotate" aria-hidden="true"><div><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18.5h2"/></svg><p>Turn your phone upright</p></div></div>
 <header class="top">
   <div class="topin">
     <h1><a href="#home" class="brand" title="Home"><img class="logo" src="favicon.png" alt=""><span class="bname">Chess Gym</span></a></h1>
     <nav aria-label="Sections"><a href="#home" data-nav="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a><a href="#openings" data-nav="openings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5zM4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg><span>Openings</span></a><a href="#practice" data-nav="practice"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a4 4 0 0 1 4 4c0 1.3-.6 2.4-1.5 3.1L16 18H8l1.5-7.9A4 4 0 0 1 12 3zM6 21h12"/></svg><span>Practice</span></a><a href="#positions" data-nav="positions"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Positions</span></a><a href="#session" data-nav="session"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z"/></svg><span>Session</span></a></nav>
     <div class="stats">
-    <div class="stat" title="Level"><div class="lvlpc pc" id="lvlpc"></div><div><div class="num" id="lvl">1</div><div class="lab" id="lvlname">Pawn</div><div class="xpbar"><i id="xpbar"></i></div></div></div>
-    <div class="stat" title="Day streak: days with 10+ puzzles or a finished session"><svg class="flame" id="flame" viewBox="0 0 30 34" aria-hidden="true"><path d="M15 1c2 7 9 10 9 19a9 9 0 0 1-18 0c0-5 3-7 4-11 1 3 3 4 4 4-1-4-1-8 1-12z" fill="#ff8a2b"/><path d="M15 15c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 3-6 1 1 1 2 2 2 0-2-1-4 0-6z" fill="#ffd34d"/></svg><div><div class="num" id="streak">0</div><div class="lab">day streak</div></div></div>
-    <div class="stat" title="Puzzles solved today"><svg class="ring" viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="17" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="6"/><circle id="ringarc" cx="21" cy="21" r="17" fill="none" stroke="#7fe0a5" stroke-width="6" stroke-linecap="round" transform="rotate(-90 21 21)" stroke-dasharray="106.8" stroke-dashoffset="106.8" style="transition:stroke-dashoffset .5s"/></svg><div><div class="num" id="today">0</div><div class="lab">puzzles today</div></div></div>
+    <div class="stat" title="Level" role="button" tabindex="0" data-sheet="level"><div class="lvlpc pc" id="lvlpc"></div><div><div class="num" id="lvl">1</div><div class="lab" id="lvlname">Pawn</div><div class="xpbar"><i id="xpbar"></i></div></div></div>
+    <div class="stat" title="Day streak: days with 10+ puzzles or a finished session" role="button" tabindex="0" data-sheet="streak"><svg class="flame" id="flame" viewBox="0 0 30 34" aria-hidden="true"><path d="M15 1c2 7 9 10 9 19a9 9 0 0 1-18 0c0-5 3-7 4-11 1 3 3 4 4 4-1-4-1-8 1-12z" fill="#ff8a2b"/><path d="M15 15c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 3-6 1 1 1 2 2 2 0-2-1-4 0-6z" fill="#ffd34d"/></svg><div><div class="num" id="streak">0</div><div class="lab">day streak</div></div></div>
+    <div class="stat" title="Puzzles solved today" role="button" tabindex="0" data-sheet="today"><svg class="ring" viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="17" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="6"/><circle id="ringarc" cx="21" cy="21" r="17" fill="none" stroke="#7fe0a5" stroke-width="6" stroke-linecap="round" transform="rotate(-90 21 21)" stroke-dasharray="106.8" stroke-dashoffset="106.8" style="transition:stroke-dashoffset .5s"/></svg><div><div class="num" id="today">0</div><div class="lab">puzzles today</div></div></div>
     </div>
     <span class="syncst" id="sync" hidden title="Progress sync between your devices"></span>
     <button class="iconbtn" id="snd" aria-label="Sound" title="Sound"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9h4l5-4v14l-5-4H4z"/><path id="sndw" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg></button>
@@ -1169,18 +1206,31 @@ import { Chess } from './chess.js';
   })();
 
   // ---------- sound ----------
-  let ac = null;
+  let ac = null, master = null;
+  // everything goes through one soft master: a bit quieter, with the harsh top end rolled off
+  function out() {
+    if (master) return master;
+    master = ac.createGain(); master.gain.value = 0.5;
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 4200; lp.Q.value = 0.5;
+    const comp = ac.createDynamicsCompressor(); comp.threshold.value = -20; comp.ratio.value = 3;
+    master.connect(lp); lp.connect(comp); comp.connect(ac.destination);
+    return master;
+  }
   function tone(seq) {
     if (!st.sound) return;
     try {
       ac = ac || new (window.AudioContext || window.webkitAudioContext)();
       if (ac.state === 'suspended') ac.resume();
       let t = ac.currentTime;
-      for (const [f, d, type] of seq) {
-        const o = ac.createOscillator(), g = ac.createGain();
-        o.type = type || 'sine'; o.frequency.value = f;
-        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.16, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
-        o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t + d + 0.02); t += d * 0.8;
+      // soft marimba-like notes: a sine plus a quiet fourth harmonic, quick attack, gentle decay
+      for (const [f, d, vol] of seq) {
+        for (const [mul, v] of [[1, vol || 0.09], [4, (vol || 0.09) * 0.12]]) {
+          const o = ac.createOscillator(), g = ac.createGain();
+          o.type = 'sine'; o.frequency.value = f * mul;
+          g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.006); g.gain.exponentialRampToValueAtTime(0.0001, t + d * (mul === 1 ? 1 : 0.4));
+          o.connect(g); g.connect(out()); o.start(t); o.stop(t + d + 0.03);
+        }
+        t += d * 0.55;
       }
     } catch (e) {}
   }
@@ -1188,19 +1238,19 @@ import { Chess } from './chess.js';
   let noiseBuf = null;
   function clack(at, f, vol, dur) {
     const n = ac.createBufferSource(); n.buffer = noiseBuf;
-    const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = f; bp.Q.value = 7;
+    const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = f; bp.Q.value = 4.5;
     const g = ac.createGain(); g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(vol, at + 0.002); g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
-    n.connect(bp); bp.connect(g); g.connect(ac.destination); n.start(at); n.stop(at + dur + 0.02);
+    n.connect(bp); bp.connect(g); g.connect(out()); n.start(at); n.stop(at + dur + 0.02);
     const o = ac.createOscillator(), og = ac.createGain(); o.type = 'sine';
     o.frequency.setValueAtTime(f * 0.42, at); o.frequency.exponentialRampToValueAtTime(f * 0.3, at + dur);
     og.gain.setValueAtTime(0.0001, at); og.gain.exponentialRampToValueAtTime(vol * 0.35, at + 0.003); og.gain.exponentialRampToValueAtTime(0.0001, at + dur * 0.8);
-    o.connect(og); og.connect(ac.destination); o.start(at); o.stop(at + dur + 0.02);
+    o.connect(og); og.connect(out()); o.start(at); o.stop(at + dur + 0.02);
   }
   function ping(at, f, vol, dur) {
     for (const [mul, v] of [[1, vol], [2.76, vol * 0.25]]) {
       const o = ac.createOscillator(), g = ac.createGain(); o.type = 'sine'; o.frequency.value = f * mul;
       g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(v, at + 0.004); g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
-      o.connect(g); g.connect(ac.destination); o.start(at); o.stop(at + dur + 0.02);
+      o.connect(g); g.connect(out()); o.start(at); o.stop(at + dur + 0.02);
     }
   }
   function pebble(kind) {
@@ -1210,17 +1260,18 @@ import { Chess } from './chess.js';
       if (ac.state === 'suspended') ac.resume();
       if (!noiseBuf) { noiseBuf = ac.createBuffer(1, Math.floor(ac.sampleRate * 0.25), ac.sampleRate); const d = noiseBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; }
       const t = ac.currentTime + 0.005, j = 1 + (Math.random() - 0.5) * 0.08;
-      if (kind === 'capture') { clack(t, 1900 * j, 0.9, 0.06); clack(t + 0.038, 2700 * j, 0.55, 0.05); }
-      else if (kind === 'castle') { clack(t, 2300 * j, 0.6, 0.05); clack(t + 0.11, 2100 * j, 0.6, 0.05); }
-      else if (kind === 'check') { clack(t, 2300 * j, 0.7, 0.05); ping(t + 0.03, 1480, 0.09, 0.32); }
-      else if (kind === 'promote') { clack(t, 2300 * j, 0.7, 0.05); ping(t + 0.04, 1180, 0.07, 0.2); ping(t + 0.14, 1570, 0.08, 0.3); }
-      else clack(t, 2350 * j, 0.6, 0.05);
+      // warmer, rounder stone-on-wood clicks (lower pitch, softer filter, slightly longer tail)
+      if (kind === 'capture') { clack(t, 1500 * j, 0.75, 0.075); clack(t + 0.045, 2000 * j, 0.4, 0.06); }
+      else if (kind === 'castle') { clack(t, 1750 * j, 0.5, 0.065); clack(t + 0.12, 1600 * j, 0.5, 0.065); }
+      else if (kind === 'check') { clack(t, 1750 * j, 0.55, 0.065); ping(t + 0.035, 1175, 0.05, 0.45); }
+      else if (kind === 'promote') { clack(t, 1750 * j, 0.55, 0.065); ping(t + 0.05, 988, 0.045, 0.3); ping(t + 0.17, 1319, 0.05, 0.45); }
+      else clack(t, 1800 * j, 0.5, 0.065);
     } catch (e) {}
   }
   const sMove = () => pebble('move');
   const sPiece = (m) => pebble(/[+#]/.test(m.san) ? 'check' : m.promotion ? 'promote' : m.captured ? 'capture' : /[kq]/.test(m.flags) ? 'castle' : 'move');
-  const sGood = () => tone([[660, 0.12], [880, 0.12], [1320, 0.22]]);
-  const sBad = () => tone([[180, 0.25, 'sawtooth']]);
+  const sGood = () => tone([[784, 0.22, 0.08], [988, 0.22, 0.08], [1319, 0.5, 0.07]]); // G, B, E: a soft rising chime
+  const sBad = () => tone([[392, 0.28, 0.07], [330, 0.45, 0.06]]); // a gentle falling pair, no buzz
   const sTick = () => pebble('move');
 
   // ---------- board ----------
@@ -1389,6 +1440,34 @@ import { Chess } from './chess.js';
     $('streak').textContent = streak(); $('flame').classList.toggle('off', t < GOAL);
     $('sndw').style.display = st.sound ? '' : 'none';
   }
+  // tap a header stat: a sheet with your level, streak calendar and today's goal
+  function bestStreak() { const ds = Object.keys(st.days).filter((d) => st.days[d] >= GOAL).sort(); let best = 0, run = 0, prev = null; for (const d of ds) { const t = new Date(d + 'T12:00'); run = prev && (t - prev) < 1.5 * DAY ? run + 1 : 1; best = Math.max(best, run); prev = t; } return best; }
+  function openSheet(which) {
+    const L = level(), ti = Math.floor((L.lv - 1) / 3), tier = TIERS[Math.min(TIERS.length - 1, ti)], next = TIERS[Math.min(TIERS.length - 1, ti + 1)];
+    const t = st.days[today()] || 0, cur = streak();
+    const cells = []; const d = new Date(); d.setDate(d.getDate() - 34);
+    for (let i = 0; i < 35; i++) { const k = d.toLocaleDateString('en-CA'), n = st.days[k] || 0; cells.push(`<i class="${n >= GOAL ? 'full' : n ? 'part' : ''}${i === 34 ? ' now' : ''}" title="${k}: ${n} puzzles"></i>`); d.setDate(d.getDate() + 1); }
+    const sh = $('sheet');
+    sh.innerHTML = `<div class="shcard" role="dialog" aria-modal="true" aria-label="Your progress"><button class="iconbtn shx" type="button" data-shclose aria-label="Close">✕</button>
+      <section id="sh-level"><h3>Level ${L.lv} · ${esc(tier[0])}</h3><div class="shbar"><i style="width:${(L.xp / L.need * 100).toFixed(1)}%"></i></div>
+        <p class="small">${L.xp} of ${L.need} XP to level ${L.lv + 1}${(L.lv % 3 === 0 && next !== tier) ? `, where you become a <b>${esc(next[0])}</b>` : ''}. ${st.xp} XP in total. Every solved puzzle, drill and finished session step earns XP; first-try solves earn the most.</p></section>
+      <section id="sh-streak"><h3>${cur} day streak${t >= GOAL ? '' : cur ? ' (today still open)' : ''}</h3><div class="cal">${cells.join('')}</div>
+        <p class="small">A day counts when you solve ${GOAL}+ puzzles or drills. Best streak: <b>${Math.max(bestStreak(), cur)}</b> days. The last 5 weeks are shown, today on the bottom right.</p></section>
+      <section id="sh-today"><h3>Today: ${t} of ${GOAL}</h3><div class="shbar g"><i style="width:${Math.min(100, t / GOAL * 100)}%"></i></div>
+        <p class="small">${t >= GOAL ? 'Today counts for your streak. Anything more is a bonus.' : `${GOAL - t} more to keep the streak going.`}</p>
+        <div class="acts"><button class="btn main" type="button" data-p="weak" data-shclose>Solve puzzles</button><a class="btn" href="#session" data-shclose>Today's session</a></div></section></div>`;
+    sh.hidden = false; requestAnimationFrame(() => sh.classList.add('open'));
+    const tgt = $('sh-' + which); if (tgt) { tgt.classList.add('focus'); setTimeout(() => tgt.scrollIntoView({ block: 'nearest' }), 50); }
+  }
+  function closeSheet() { const sh = $('sheet'); sh.classList.remove('open'); setTimeout(() => { sh.hidden = true; sh.innerHTML = ''; }, 180); }
+  document.addEventListener('click', (e) => {
+    const s = e.target.closest('[data-sheet]'); if (s) { openSheet(s.dataset.sheet); return; }
+    if (e.target.closest('[data-shclose]') || e.target.id === 'sheet') closeSheet();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !$('sheet').hidden) closeSheet();
+    const s = e.target.closest && e.target.closest('[data-sheet]'); if (s && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openSheet(s.dataset.sheet); }
+  });
   function gain(xp, countsAsPuzzle = true) {
     st.xp += xp; if (countsAsPuzzle) st.days[today()] = (st.days[today()] || 0) + 1; save(); stats();
     const fly = document.createElement('div'); fly.className = 'xpfly'; fly.textContent = `+${xp} XP`; $('res').appendChild(fly);

@@ -1,5 +1,5 @@
 // Chess Gym offline cache. Version changes whenever any app file changes, so an update is picked up on the next launch.
-const V = 'gym-77d96e088e', FILES = ["./", "index.html", "manifest.webmanifest", "chess.js", "pieces.css", "puzzles.json", "themes.json", "themes2.json", "openings.json", "deviations.json", "drills.json", "study.json", "favicon.png", "icons/app-180.png", "icons/app-192.png", "icons/app-512.png"];
+const V = 'gym-e5f6530076', FILES = ["./", "index.html", "manifest.webmanifest", "chess.js", "pieces.css", "puzzles.json", "themes.json", "themes2.json", "openings.json", "deviations.json", "drills.json", "study.json", "favicon.png", "icons/app-180.png", "icons/app-192.png", "icons/app-512.png"];
 self.addEventListener('install', (e) => { e.waitUntil(caches.open(V).then((c) => c.addAll(FILES)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== V).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', (e) => {
