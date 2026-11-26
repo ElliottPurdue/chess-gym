@@ -2391,8 +2391,16 @@ import { Chess } from './chess.js';
   // move progress between the offline (localhost) and online copies
   $('mv-copy').addEventListener('click', async () => {
     const json = canon(shareable(st)), box = $('mv-text');
-    try { await navigator.clipboard.writeText(json); $('mv-msg').textContent = 'Copied. Now open the other copy of the Gym and paste it into this box there.'; }
-    catch (e) { box.value = json; box.focus(); box.select(); $('mv-msg').textContent = 'Your progress is selected in the box: press Ctrl+C to copy it, then paste it into the other copy.'; }
+    const ok = (how) => { $('mv-msg').textContent = `Copied${how}. Now open the other copy of the Gym and paste it into this box there, then tap "Add pasted progress".`; };
+    // 1) modern clipboard (blocked inside some embedded pages), 2) the old copy command on a selected box (works on iPhone), 3) select it for a manual copy
+    try { await navigator.clipboard.writeText(json); return ok(''); } catch (e) {}
+    box.value = json; box.readOnly = true; box.focus(); box.select(); box.setSelectionRange(0, json.length);
+    let done = false; try { done = document.execCommand('copy'); } catch (e) {}
+    box.readOnly = false;
+    if (done) { box.value = ''; box.blur(); return ok(''); }
+    $('mv-msg').textContent = /iPhone|iPad|Android/.test(navigator.userAgent)
+      ? 'Your progress is in the box. Tap and hold inside it, choose Select All, then Copy, and paste it into the other copy.'
+      : 'Your progress is selected in the box: press Ctrl+C to copy it, then paste it into the other copy.';
   });
   $('mv-import').addEventListener('click', () => {
     let inc; try { inc = JSON.parse($('mv-text').value.trim()); } catch (e) { inc = null; }
