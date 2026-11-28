@@ -1081,6 +1081,9 @@ import { Chess } from './chess.js';
   const PLAY = stp('play', 'Play 15|10', 'The checklist on every move', 1), REVIEW = stp('review', 'Review it', 'Think first, then engine, then log', 1);
   const ROUTINES = {
     full: { name: 'Full warmup', mins: '35 min + game', desc: 'The standard: warm up, play a 15|10, review it.', steps: STEPS },
+    intensive: { name: 'Intensive day', mins: '20 min + 2 games', desc: 'Nov 30 to Dec 19 block: a short warm-up, then two reviewed games. Slow tactics, endgames and openings follow from your plan doc.', steps: [
+      stp('m1', 'Mate in 1', '5 quick ones', 5, { themes: ['mateIn1'] }), stp('threat', 'Their threat', '5 positions', 5), stp('safe', 'Is it safe?', '5 moves', 5),
+      PLAY, REVIEW, stp('play', 'Game 2: 15|10', 'Same 3 process goals', 1), stp('review', 'Review game 2', 'Think first, then engine, then log', 1)] },
     safety: { name: 'Blunder-proof', mins: '25 min + game', desc: 'Aimed at your biggest leak: missed threats and unsafe moves, from your own games.', steps: [
       stp('threat', 'Their threat', 'What would they play if you passed?', 8), stp('safe', 'Is it safe?', 'Your own moves: safe, or a blunder?', 10),
       stp('def', 'Defensive moves', 'Puzzles where the only good move is a defence', 5, { themes: ['defensiveMove'] }), stp('own', 'From your games', '5 of your own positions', 5), PLAY, REVIEW] },
@@ -1097,7 +1100,7 @@ import { Chess } from './chess.js';
     tired: { name: 'Tired night', mins: '10 min, no game', desc: "Low energy? Easy wins that still count. Stop whenever you like.", steps: [
       stp('m1', 'Mate in 1', '8 easy ones', 8, { themes: ['mateIn1'] }), stp('safe', 'Is it safe?', '5 moves', 5)] },
   };
-  const ROUTINE_ORDER = ['full', 'safety', 'pregame', 'quick', 'away', 'endgame', 'tired'];
+  const ROUTINE_ORDER = ['full', 'intensive', 'safety', 'pregame', 'quick', 'away', 'endgame', 'tired'];
   const routineOf = (s) => ROUTINES[(s && s.routine) || st.routine || 'full'] || ROUTINES.full;
   const ENDGAMES = {
     krr: { name: 'Two-rook ladder', short: 'Two rooks', pieces: ['R', 'R'], limit: 12, tip: 'Rooks take turns checking and cutting off a rank. Keep them far from the king.' },
